@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
  * Class Model
  * @package App\Models
  */
-abstract class Model extends BaseModel
+abstract class AbstractModel extends BaseModel
 {
     /**
      * @var string $dateFormat
