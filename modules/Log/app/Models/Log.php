@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Modules\Log\app\Models;
 
-use App\Models\Model;
+use App\Models\AbstractModel;
 
 /**
  * Class Log
@@ -21,7 +21,7 @@ use App\Models\Model;
  * @property string message
  * @property numeric updated_at
  */
-class Log extends Model
+class Log extends AbstractModel
 {
     /**
      * @var string[] $casts
