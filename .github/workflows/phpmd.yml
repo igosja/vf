@@ -1,0 +1,34 @@
+name: phpmd
+run-name: phpmd
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  PHPMD:
+    name: Run PHPMD scanning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: phpmd
+
+      - name: Run PHPMD
+        run: phpmd . github phpmd.xml --exclude 'vendor/*'
