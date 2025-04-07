@@ -18,14 +18,14 @@ return new class extends Migration {
                 $table->increments('id');
                 $table->string('channel')->nullable();
                 $table->json('context')->nullable();
-                $table->decimal('created_at', 17, 6);
+                $table->timestampTz('created_at', 6);
                 $table->string('datetime')->nullable();
                 $table->json('extra')->nullable();
                 $table->text('formatted')->nullable();
                 $table->integer('level')->default(0);
                 $table->string('level_name', 20);
                 $table->text('message')->nullable();
-                $table->decimal('updated_at', 17, 6);
+                $table->timestampTz('updated_at', 6);
             });
         }
     }
