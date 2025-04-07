@@ -16,13 +16,13 @@ return new class extends Migration {
         if (false === Schema::hasTable(self::TABLE)) {
             Schema::create(self::TABLE, function (Blueprint $table) {
                 $table->id();
-                $table->decimal('created_at', 17, 6);
+                $table->timestampTz('created_at', 6);
                 $table->string('email')->unique();
-                $table->timestamp('email_verified_at')->nullable();
+                $table->timestampTz('email_verified_at', 6)->nullable();
                 $table->string('name');
                 $table->string('password');
                 $table->rememberToken();
-                $table->decimal('updated_at', 17, 6);
+                $table->timestampTz('updated_at', 6);
             });
         }
     }

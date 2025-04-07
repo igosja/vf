@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 /**
- * Class Model
+ * Class AbstractModel
  * @package App\Models
  */
 abstract class AbstractModel extends BaseModel
@@ -14,5 +14,5 @@ abstract class AbstractModel extends BaseModel
     /**
      * @var string $dateFormat
      */
-    protected $dateFormat = 'U.u';
+    protected $dateFormat = 'Y-m-d H:i:s.u';
 }
