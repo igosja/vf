@@ -5,30 +5,33 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
+    private const string TABLE = 'users';
+
     /**
-     * Run the migrations.
+     * @return void
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('created_at', 15, 4);
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('name');
-            $table->string('password');
-            $table->rememberToken();
-            $table->decimal('updated_at', 15, 4);
-        });
+        if (false === Schema::hasTable(self::TABLE)) {
+            Schema::create(self::TABLE, function (Blueprint $table) {
+                $table->id();
+                $table->decimal('created_at', 17, 6);
+                $table->string('email')->unique();
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('name');
+                $table->string('password');
+                $table->rememberToken();
+                $table->decimal('updated_at', 17, 6);
+            });
+        }
     }
 
     /**
-     * Reverse the migrations.
+     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists(self::TABLE);
     }
 };
