@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Log\app\Loggers;
+namespace App\Loggers;
 
-use Modules\Log\app\Handlers\DatabaseHandler;
+use App\Handlers\DatabaseHandler;
 use Monolog\Logger;
 
 /**
  * Class DatabaseLogger
- * @package Modules\Log\app\Loggers
+ * @package App\Loggers
  */
 class DatabaseLogger
 {

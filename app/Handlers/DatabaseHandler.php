@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Log\app\Handlers;
+namespace App\Handlers;
 
-use Modules\Log\app\Models\Log;
+use App\Models\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\LogRecord;
 
 /**
  * Class DatabaseHandler
- * @package Modules\Log\app\Handlers
+ * @package App\Handlers
  */
 class DatabaseHandler extends AbstractProcessingHandler
 {
