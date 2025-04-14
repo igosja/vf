@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Log\app\Models;
-
-use App\Models\AbstractModel;
+namespace App\Models;
 
 /**
  * Class Log

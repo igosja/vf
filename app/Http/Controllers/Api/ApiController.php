@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\AbstractController;
 use App\Http\Resources\Resource;
 use Illuminate\Foundation\Application;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Modules\Log\app\Loggers\DatabaseLogger;
+use App\Loggers\DatabaseLogger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
