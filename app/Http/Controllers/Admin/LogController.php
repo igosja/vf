@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\Log\IndexRequest;
 use App\Models\Log;
 use App\Services\Log\LogTableViewService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Monolog\Level;
 
@@ -29,11 +28,6 @@ class LogController extends AbstractController
      */
     public function index(IndexRequest $request): View|RedirectResponse
     {
-        if ($request->has('locale')) {
-            Session::put('locale', $request->get('locale'));
-            return redirect()->route('logs.index');
-        }
-
         return view('log.index', [
             'levels' => Level::cases(),
             'logs' => $this->logTableViewService->getLogs($request),

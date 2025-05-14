@@ -28,23 +28,6 @@
                         <li><a class="dropdown-item" href="{{ route('logs.index') }}">Logs</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        {{ __('Language') }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['locale' => 'en']) }}">English</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['locale' => 'ru']) }}">Русский</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['locale' => 'uk']) }}">Українська</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>

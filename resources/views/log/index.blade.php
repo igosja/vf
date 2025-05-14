@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             <h1 class="text-center">
-                {{ __('Logs') }}
+                Logs
             </h1>
         </div>
     </div>
@@ -16,7 +16,7 @@
                         class="form-control @error('id') is-invalid @enderror"
                         type="number"
                         name="id"
-                        placeholder="{{ __('ID') }}"
+                        placeholder="ID"
                         value="{{ request('id') }}"
                     />
                     @error('id')
@@ -27,7 +27,7 @@
                 </div>
                 <div class="mb-3">
                     <select class="form-control" name="level">
-                        <option value="">{{ __('Level') }}</option>
+                        <option value="">Level</option>
                         @foreach($levels as $level)
                             <option value="{{ $level->value }}" @selected($level->value == request('level'))>
                                 {{ $level->name }}
@@ -36,10 +36,10 @@
                     </select>
                 </div>
                 <button class="btn btn-outline-primary" type="submit">
-                    {{ __('Filter') }}
+                    Filter
                 </button>
                 <a class="btn btn-light" href="{{ route('logs.index') }}">
-                    {{ __('Clear') }}
+                    Clear
                 </a>
             </form>
             <table class="table table-bordered">
@@ -51,12 +51,12 @@
                     </th>
                     <th>
                         <a href="{{ TableViewHelper::sortLink('created_at') }}">
-                            {{ __('Created at') }}
+                            Created at
                         </a>
                     </th>
                     <th>
                         <a href="{{ TableViewHelper::sortLink('level_name') }}">
-                            {{ __('Level') }}
+                            Level') }}
                         </a>
                     </th>
                     <th>
