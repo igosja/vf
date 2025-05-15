@@ -1,0 +1,39 @@
+name: next tests
+run-name: next tests
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+permissions:
+    contents: read
+
+jobs:
+    next-tests:
+        name: tests
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            security-events: write
+            actions: read
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v3
+                with:
+                    node-version: '20'
+
+            -   name: Install npm dependencies
+                run: |
+                    cd next
+                    npm install
+
+            -   name: Run Test check
+                run: |
+                    cd next
+                    npm run test:unit

@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
 
 /**
  * Class Log
- * @package App\Models
  *
  * @property int id
  * @property string channel
@@ -22,7 +22,7 @@ namespace App\Models;
 class Log extends AbstractModel
 {
     /**
-     * @var string[] $casts
+     * @var string[]
      */
     protected $casts = [
         'context' => 'array',

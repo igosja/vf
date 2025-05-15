@@ -1,0 +1,39 @@
+name: next eslint
+run-name: next eslint
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+permissions:
+    contents: read
+
+jobs:
+    next-eslint:
+        name: eslint
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            security-events: write
+            actions: read
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v3
+                with:
+                    node-version: '20'
+
+            -   name: Install npm dependencies
+                run: |
+                    cd next
+                    npm install
+
+            -   name: Run Lint check
+                run: |
+                    cd next
+                    npm run lint

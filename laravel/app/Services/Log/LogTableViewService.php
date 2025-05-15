@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Log;
@@ -9,14 +10,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class LogTableViewService
- * @package App\Services\Log
  */
 class LogTableViewService
 {
-    /**
-     * @param Request $request
-     * @return LengthAwarePaginator
-     */
     public function getLogs(Request $request): LengthAwarePaginator
     {
         $query = Log::query();

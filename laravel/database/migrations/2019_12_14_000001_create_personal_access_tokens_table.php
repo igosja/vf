@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
@@ -8,12 +9,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     private const string TABLE = 'personal_access_tokens';
 
-    /**
-     * @return void
-     */
     public function up(): void
     {
-        if (false === Schema::hasTable(self::TABLE)) {
+        if (Schema::hasTable(self::TABLE) === false) {
             Schema::create(self::TABLE, function (Blueprint $table) {
                 $table->id();
                 $table->text('abilities')->nullable();
@@ -28,9 +26,6 @@ return new class extends Migration {
         }
     }
 
-    /**
-     * @return void
-     */
     public function down(): void
     {
         Schema::dropIfExists(self::TABLE);

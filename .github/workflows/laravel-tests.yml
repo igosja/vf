@@ -1,0 +1,85 @@
+name: laravel tests
+run-name: laravel tests
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    laravel-tests:
+        runs-on: ubuntu-latest
+
+        services:
+            postgres:
+                image: postgres:17.2
+                ports:
+                    - 5432:5432
+                env:
+                    POSTGRES_USER: sail
+                    POSTGRES_PASSWORD: password
+                    POSTGRES_DB: laravel
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Set up PHP 8.3
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.3
+                    extensions: mbstring, pdo, pdo_pgsql
+                    tools: composer
+                    coverage: none
+
+            -   name: Copy .env.example
+                run: |
+                    cd laravel
+                    cp .env.example .env
+
+            -   name: Install PHP dependencies
+                run: |
+                    cd laravel
+                    composer install --no-progress --no-suggest --prefer-dist
+
+            -   name: Generate app key
+                run: |
+                    cd laravel
+                    php artisan key:generate
+
+            -   name: Wait for PostgreSQL to be ready
+                run: |
+                    for i in {1..10}; do
+                      pg_isready -h 127.0.0.1 -p 5432 -U laravel && break
+                      sleep 2
+                    done
+
+            -   name: Run migrations
+                env:
+                    DB_CONNECTION: pgsql
+                    DB_HOST: 127.0.0.1
+                    DB_PORT: 5432
+                    DB_DATABASE: laravel
+                    DB_USERNAME: sail
+                    DB_PASSWORD: password
+                run: |
+                    cd laravel
+                    php artisan migrate --force
+
+            -   name: Run tests
+                env:
+                    DB_CONNECTION: pgsql
+                    DB_HOST: 127.0.0.1
+                    DB_PORT: 5432
+                    DB_DATABASE: laravel
+                    DB_USERNAME: sail
+                    DB_PASSWORD: password
+                run: |
+                    cd laravel
+                    php artisan test

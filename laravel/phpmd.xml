@@ -16,4 +16,6 @@
     <rule ref="rulesets/design.xml"/>
     <rule ref="rulesets/naming.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>
+    <exclude-pattern>/tests/*</exclude-pattern>
+    <exclude-pattern>/vendor/*</exclude-pattern>
 </ruleset>
