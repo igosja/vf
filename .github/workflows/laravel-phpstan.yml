@@ -1,0 +1,36 @@
+name: phpmd
+run-name: phpmd
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+permissions:
+    contents: read
+
+jobs:
+    phpstan:
+        name: phpstan
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
+                with:
+                    php-version: '8.3'
+                    coverage: none
+                    tools: phpmd
+
+            -   name: Install composer dependencies
+                run: |
+                    cd laravel
+                    composer install -n --prefer-dist
+
+            -   name: Run Static Analysis
+                run: |
+                    cd laravel
+                    ./vendor/bin/phpstan analyse --error-format=github app config database resources routes tests
