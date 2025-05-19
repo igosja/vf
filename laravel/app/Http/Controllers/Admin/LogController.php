@@ -19,8 +19,7 @@ class LogController extends AbstractController
 {
     public function __construct(
         private readonly LogTableViewService $logTableViewService
-    ) {
-    }
+    ) {}
 
     public function index(IndexRequest $request): View|RedirectResponse
     {
