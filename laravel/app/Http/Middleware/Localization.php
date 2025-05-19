@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
@@ -11,15 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Localization
- * @package App\Http\Middleware
  */
 class Localization
 {
-    /**
-     * @param Request $request
-     * @param Closure $next
-     * @return Response
-     */
     public function handle(Request $request, Closure $next): Response
     {
         if (Session::has('locale')) {

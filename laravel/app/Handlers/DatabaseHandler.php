@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Handlers;
@@ -9,17 +10,12 @@ use Monolog\LogRecord;
 
 /**
  * Class DatabaseHandler
- * @package App\Handlers
  */
 class DatabaseHandler extends AbstractProcessingHandler
 {
-    /**
-     * @param LogRecord $record
-     * @return void
-     */
     protected function write(LogRecord $record): void
     {
-        $log = new Log();
+        $log = new Log;
         $log->channel = $record->channel;
         $log->context = $record->context;
         $log->datetime = $record->datetime->format('Y-m-d H:i:s.u');

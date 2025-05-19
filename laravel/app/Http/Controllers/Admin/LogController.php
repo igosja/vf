@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
@@ -13,19 +14,13 @@ use Monolog\Level;
 
 /**
  * Class LogController
- * @package App\Http\Controllers\Admin
  */
 class LogController extends AbstractController
 {
     public function __construct(
         private readonly LogTableViewService $logTableViewService
-    ) {
-    }
+    ) {}
 
-    /**
-     * @param IndexRequest $request
-     * @return View|RedirectResponse
-     */
     public function index(IndexRequest $request): View|RedirectResponse
     {
         return view('log.index', [
@@ -34,10 +29,6 @@ class LogController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Log $log
-     * @return View
-     */
     public function show(Log $log): View
     {
         return view('log.view', [
@@ -45,13 +36,10 @@ class LogController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Log $log
-     * @return RedirectResponse
-     */
     public function destroy(Log $log): RedirectResponse
     {
         $log->delete();
+
         return redirect()->route('logs.index');
     }
 }

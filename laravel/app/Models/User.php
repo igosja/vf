@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -14,7 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * @var string $dateFormat
+     * @var string
      */
     protected $dateFormat = 'Y-m-d H:i:s.u';
 

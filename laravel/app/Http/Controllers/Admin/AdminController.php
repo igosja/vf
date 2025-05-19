@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
@@ -9,12 +10,11 @@ use Illuminate\View\View;
 
 /**
  * Class AdminController
- * @package App\Http\Controllers\Admin
  */
 class AdminController extends AbstractController
 {
     /**
-     * @return Resource
+     * @return resource
      */
     public function index(): View
     {
