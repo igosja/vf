@@ -1,0 +1,11 @@
+services:
+    laravel.test:
+        ports:
+            - '${APP_PORT:-10010}:80'
+            - '${VITE_PORT:-10013}:${VITE_PORT:-5173}'
+    pgsql:
+        ports:
+            - '${FORWARD_DB_PORT:-10012}:5432'
+    redis:
+        ports:
+            - '${FORWARD_REDIS_PORT:-10019}:6379'
