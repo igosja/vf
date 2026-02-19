@@ -1,0 +1,73 @@
+<aside id="sidebar-secondary">
+  {{> _sidebar-close }}
+
+  <div class="sidebar-inner" data-simplebar>
+    <div class="sidebar-header">
+      {{> _sidebar-back}}
+
+      <h2 class="sidebar-title">File Manager</h2>
+    </div>
+
+    <div class="sidebar-action d-none d-xl-block">
+      <button class="btn btn-action">
+        <i class="ph ph-plus-circle"></i>
+        Upload File
+      </button>
+    </div>
+
+    <div class="fs-7 text-body-secondary mb-2 lh-1">Local Drive</div>
+
+    <nav class="nav nav-pills nav-pills-sidebar">
+      <a class="nav-link active" aria-current="page" href="#"
+        ><i class="ph ph-files"></i>All files and folders</a
+      >
+      <a class="nav-link" href="#"
+        ><i class="ph ph-circles-three"></i>Shared with me</a
+      >
+      <a class="nav-link" href="#"><i class="ph ph-clock"></i>Recently Added</a>
+      <a class="nav-link" href="#"
+        ><i class="ph ph-arrow-circle-up-right"></i>Transfers</a
+      >
+      <a class="nav-link" href="#"><i class="ph ph-calendar"></i>Scheduled</a>
+      <a class="nav-link" href="#"><i class="ph ph-trash"></i>Deleted files</a>
+    </nav>
+
+    <div class="fs-7 text-body-secondary mb-2 lh-1">Favorites</div>
+
+    <nav class="nav nav-pills nav-pills-sidebar">
+      <a class="nav-link" href="#"
+        ><i class="ph ph-file-audio"></i>Audio and Music</a
+      >
+      <a class="nav-link" href="#"><i class="ph ph-file-video"></i>Videos</a>
+      <a class="nav-link" href="#"><i class="ph ph-file-image"></i>Pictures</a>
+      <a class="nav-link" href="#"><i class="ph ph-file-doc"></i>Documents</a>
+      <a class="nav-link" href="#"
+        ><i class="ph ph-file-archive"></i>Archives</a
+      >
+    </nav>
+
+    <div class="fs-7 text-body-secondary mb-4 lh-1">Storage Information</div>
+
+    <div class="d-flex align-items-start">
+      <i class="ph ph-hard-drives fs-4 me-3"></i>
+
+      <div class="flex-grow-1">
+        <div class="text-body-emphasis mb-3 mt-npx fs-7">
+          82.2GB of 1000 GB used
+        </div>
+        <div
+          class="progress h-1 mb-2"
+          role="progressbar"
+          aria-label="Storage information"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar" style="width: 25%"></div>
+        </div>
+
+        <a href="" class="fs-7">Upgrade Storage</a>
+      </div>
+    </div>
+  </div>
+</aside>

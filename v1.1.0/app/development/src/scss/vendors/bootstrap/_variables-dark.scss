@@ -1,0 +1,42 @@
+@use "sass:color";
+@import "../../variables";
+
+//-------------------------------------------------------
+// Body
+//-------------------------------------------------------
+$body-bg-dark: #1c282f;
+$body-color-dark: #84b0d3;
+$body-emphasis-color-dark: #addaff;
+$body-secondary-color-dark: #577b99;
+$body-tertiary-color-dark: #256aa2;
+$body-tertiary-bg-dark: #1d2f39;
+$body-secondary-bg-dark: $dark-200;
+
+//-------------------------------------------------------
+// Border
+//-------------------------------------------------------
+$border-color-dark: $dark-100;
+
+//-------------------------------------------------------
+// Links
+//-------------------------------------------------------
+$link-color-dark: color.adjust($blue, $lightness: -7.5%);
+
+//-------------------------------------------------------
+// Colors
+//-------------------------------------------------------
+$primary-bg-subtle-dark: "#15416b";
+$secondary-bg-subtle-dark: "#223845";
+$success-bg-subtle-dark: "#05412e";
+$info-bg-subtle-dark: "#0b4148";
+$warning-bg-subtle-dark: "#4b3b0b";
+$danger-bg-subtle-dark: "#5f1e1e";
+$light-bg-subtle-dark: "#ffffff1c";
+$dark-bg-subtle-dark: "#131f26";
+
+//-------------------------------------------------------
+// Form
+//-------------------------------------------------------
+$form-switch-color-dark: $body-color-dark;
+$form-switch-bg-image-dark: none;
+$form-select-indicator-dark: url('data:image/svg+xml,<svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5L0.669874 0.500001L9.33013 0.5L5 5Z" fill="#{$dark-800}"/></svg>');

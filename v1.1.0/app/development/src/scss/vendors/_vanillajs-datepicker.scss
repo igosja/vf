@@ -1,0 +1,212 @@
+.range-picker {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  & > span {
+    position: relative;
+    margin: 0 -0.65rem;
+  }
+
+  & > .btn-theme {
+    padding-block: 0;
+    padding-inline: 1rem;
+
+    .form-control,
+    .form-control-sm {
+      border: 0;
+      background-color: transparent;
+      cursor: pointer;
+      color: $blue;
+      padding: var(--bs-btn-padding-y) 0;
+      font-size: $font-size-sm;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.range-picker-header {
+  .datepicker-dropdown {
+    left: 0 !important;
+  }
+}
+
+.datepicker {
+  &.datepicker-dropdown {
+    .datepicker-picker {
+      border: 0;
+      box-shadow: $dropdown-box-shadow;
+      padding: 0.75rem 0.5rem;
+      background-color: $dropdown-bg;
+      border-radius: $dropdown-border-radius;
+    }
+  }
+
+  .datepicker-picker {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    color: var(--bs-body-color);
+    background-color: transparent;
+
+    .datepicker-footer {
+      background-color: transparent;
+      box-shadow: none;
+
+      .datepicker-controls {
+        margin-top: 0.5rem;
+        margin-right: 0.25rem;
+        justify-content: flex-end;
+
+        .btn {
+          all: unset;
+          padding: 0.25rem 0.5rem;
+          border-radius: $border-radius;
+          color: var(--bs-emphasis-color);
+        }
+      }
+    }
+
+    .dow {
+      font-weight: $font-weight-normal;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .datepicker-view {
+    width: 16rem;
+  }
+
+  .datepicker-controls {
+    .view-switch {
+      --bs-btn-padding-x: 0.8rem;
+      order: -1;
+      justify-content: flex-start !important;
+    }
+
+    .btn {
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border: none;
+      color: var(--bs-emphasis-color);
+      font-weight: normal !important;
+
+      &.prev-btn,
+      &.next-btn {
+        @include squircle-mask();
+        @include squircle(2rem);
+
+        .ph {
+          font-size: $font-size-xl;
+        }
+      }
+
+      &:not(:disabled) {
+        &:focus,
+        &:active,
+        &:hover {
+          background: var(--bs-tertiary-bg);
+          color: var(--bs-emphasis-color);
+        }
+      }
+    }
+  }
+
+  .datepicker-header {
+    margin-bottom: 0.5rem;
+
+    .datepicker-controls {
+      padding: 0;
+    }
+  }
+
+  .datepicker-cell {
+    &.next,
+    &.prev {
+      &,
+      &:not(.disabled):not(.range-start):not(.range-end):not(.selected) {
+        color: var(--#{$prefix}secondary-color);
+      }
+    }
+
+    &:not(.day) {
+      height: 2rem;
+      margin: 0.5rem 0;
+      border-radius: $border-radius-pill !important;
+    }
+
+    &:not(.disabled):not(.range-start):not(.range-end):not(.selected) {
+      &:hover {
+        background: var(--bs-theme-popup-hover-bg);
+      }
+    }
+
+    &.disabled {
+      color: var(--#{$prefix}secondary-color);
+    }
+
+    &.selected {
+      &,
+      &:hover {
+        background: $blue;
+        color: $white;
+        font-weight: normal;
+      }
+    }
+
+    &.focused {
+      &:not(.selected) {
+        background-color: rgba($blue, 0.15);
+      }
+    }
+
+    &.range {
+      background: rgba($blue, 0.2);
+      border-radius: 0;
+
+      &:not(.disabled):not(.focused):not(.today):hover {
+        background: rgba($blue, 0.2);
+      }
+    }
+
+    &.range-end:not(.selected),
+    &.range-start:not(.selected):not(.range-end) {
+      background-color: $blue;
+    }
+
+    &.today {
+      &:not(.selected) {
+        color: var(--bs-emphasis-color) !important;
+        background-color: var(--bs-tertiary-bg) !important;
+      }
+    }
+
+    &:nth-child(7n + 1).range,
+    &:nth-child(7n).range {
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 10px;
+        top: 0;
+        background: rgba($blue, 0.2);
+        z-index: 0;
+      }
+    }
+
+    &:nth-child(7n).range:before {
+      right: -10px;
+    }
+
+    &:nth-child(7n + 1).range:before {
+      left: -10px;
+    }
+  }
+}

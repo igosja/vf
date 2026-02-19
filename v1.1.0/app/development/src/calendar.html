@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-page="calendar">
+  {{> _head title="Calendar" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> calendar/_sidebar }}
+
+      <div class="content-body h-screen">
+        <div id="calendar" class="calendar h-100"></div>
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-plus"></i>
+        <span class="d-none d-md-inline">Create New</span>
+      </button>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

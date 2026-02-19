@@ -1,66 +1,74 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Sidebar from "@/app/partials/_sidebar";
+import SidebarToggle from "@/app/partials/_sidebar-toggle";
+import SalesOverview from "@/app/partials/sales/_overview";
+import SalesHistory from "@/app/partials/sales/_sales-history";
+import StoreSessions from "@/app/partials/sales/_store-sessions";
+import RecentOrders from "@/app/partials/sales/_recent-orders";
+import TopProducts from "@/app/partials/sales/_top-products";
+import NavBar from "@/partials/_nav-bar";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    return (
+        <>
+            <Sidebar/>
+            <div id="content" data-simplebar>
+                <div className="content-body content-body-centered">
+                    <div className="header">
+                        <SidebarToggle/>
+
+                        <h2 className="header-title ps-xl-2">E-Commerce</h2>
+
+                        <i className="ms-auto"></i>
+
+                        <div className="range-picker range-picker-header d-none d-md-flex">
+                            <div className="btn btn-theme">
+                                <i className="ph ph-calendar-dots fs-3 me-2 position-relative"></i>
+                                <input
+                                    type="text"
+                                    name="start"
+                                    value="07/10/2023"
+                                    className="form-control w-24"
+                                    required
+                                    readOnly
+                                />
+                                <span className="mx-n6">-</span>
+                                <input
+                                    type="text"
+                                    name="end"
+                                    value="07/13/2023"
+                                    className="form-control text-end w-24"
+                                    required
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+
+                        <div className="d-flex gap-1.5 ms-4">
+                            <a href="" className="icon ph ph-plus-circle"></a>
+                            <a href="" className="icon ph ph-info"></a>
+                            <a href="" className="icon ph ph-circles-four"></a>
+                        </div>
+                    </div>
+
+                    <SalesOverview/>
+
+                    <div className="row row-cols-lg-2 g-4">
+                        <div className="col">
+                            <SalesHistory/>
+                        </div>
+                        <div className="col">
+                            <StoreSessions/>
+                        </div>
+                        <div className="col">
+                            <RecentOrders/>
+                        </div>
+                        <div className="col">
+                            <TopProducts/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <NavBar/>
+        </>
+    );
 }

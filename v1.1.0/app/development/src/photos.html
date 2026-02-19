@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-page="photos">
+  {{> _head title="Photos" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> photos/_sidebar }}
+
+      <div class="content-body">
+        <!-- Content header -->
+        {{> photos/_header }}
+
+        <div id="photos" class="card p-5"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-action btn-action-float d-xl-none">
+      <i class="ph ph-upload"></i>
+      <span class="d-none d-md-inline">Upload Photo</span>
+    </button>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

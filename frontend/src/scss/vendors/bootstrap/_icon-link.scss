@@ -1,0 +1,19 @@
+.icon-link {
+	line-height: 1;
+	height: 2rem;
+	border-radius: $border-radius;
+	padding: 0 0.6rem;
+	color: var(--#{$prefix}emphasis-color);
+	transition: color 300ms, background-color 300ms, box-shadow 300ms;
+
+	&.show,
+	&:hover {
+		background: var(--bs-secondary-bg);
+	}
+
+	& > .ph {
+		&:not([class*="fs-"]) {
+			font-size: 1.1rem;
+		}
+	}
+}

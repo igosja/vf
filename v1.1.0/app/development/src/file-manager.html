@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-page="file-manager">
+  {{> _head title="File Manager" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> file-manager/_sidebar }}
+
+      <div class="content-body">
+        <!-- Content header -->
+        {{> file-manager/_header }}
+
+        <div class="card p-5">
+          <div id="folders" class="mb-10 grid gap-3"></div>
+
+          <div class="d-flex align-items-center lh-1 fs-7 text-body-secondary my-5 px-4">
+            3562 Files
+            <i class="h-px bg-highlight flex-grow-1 ms-4 mt-1"></i>
+          </div>
+          <div id="files" class="grid gap-3"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-plus-circle"></i>
+        <span class="d-none d-md-inline">Upload File</span>
+      </button>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Development Dependencies | Materia Documentation</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Development Dependencies Materia relies on several open-source projects to function correctly. The following catalog outlines the primary dependencies and their roles within the project.
+Vite Materia uses Vite as its bundler. Vite is responsible for bundling all the required files and dependencies of the project into a single, optimized file that can be served to the browser.
+Following Vite commands are configured in package.json which you can run using npm &lt;command&gt;:
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.17c3ea7224d1406b054ea4dd19217469c556f3114d791f6858af917f5037f3c0.css" />
+
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Documentation</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+	
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+
+			
+				<a
+					href="./quick-start.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Quick Start
+
+					
+				</a>
+			
+				<a
+					href="./customization.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Customization
+
+					
+				</a>
+			
+				<a
+					href="./dark-mode.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Dark Mode
+
+					
+				</a>
+			
+				<a
+					href="./page-templates.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Page Templates
+
+					
+				</a>
+			
+				<a
+					href="./dev-dependencies.html"
+					class="
+						text-cyan-500 font-bold
+					 flex items-center py-1"
+					>Development Dependencies
+
+					
+				</a>
+			
+				<a
+					href="./browser-support.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Browser Support
+
+					
+				</a>
+			
+		</div>
+	
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Content</span>
+
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/content/reboot/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Base Styles
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/content/typography/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Typography
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/content/images/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Images
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/content/tables/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Tables
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/content/figures/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Figures
+
+					
+				</a>
+			
+				<a
+					href="./icons.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Icons
+
+					
+				</a>
+			
+		</div>
+	
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Forms</span>
+
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/forms/overview/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Overview
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/forms/input-group/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Input Groups
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/forms/layout/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Layouts
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/forms/validation/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Validations
+
+					
+				</a>
+			
+				<a
+					href="./form-templates.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Templates
+
+					
+				</a>
+			
+				<a
+					href="./form-components.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Components
+
+					
+				</a>
+			
+		</div>
+	
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">UI Components</span>
+
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/accordion/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Accordion
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/alerts/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Alerts
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/badge/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Badge
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/breadcrumb/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Breadcrumb
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/buttons/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Buttons
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/button-group/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Button Groups
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/card/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Card
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/carousel/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Carousel
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/close-button/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Close Button
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/collapse/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Collapse
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/dropdowns/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Dropdowns
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/list-group/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>List Group
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/modal/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Modal
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/navs-tabs/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Navs and Tabs
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/offcanvas/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Offcanvas
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/pagination/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Pagination
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/placeholders/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Placeholders
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/popovers/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Popovers
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/progress/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Progress
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/spinners/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Spinners
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/toasts/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Toasts
+
+					
+				</a>
+			
+				<a
+					href="https://getbootstrap.com/docs/5.3/components/tooltips/"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Tooltips
+
+					
+				</a>
+			
+		</div>
+	
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Maps</span>
+
+			
+				<a
+					href="./charts.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Charts
+
+					
+				</a>
+			
+				<a
+					href="./maps.html"
+					class="
+						text-slate-500 hover:text-slate-800
+					 flex items-center py-1"
+					>Maps
+
+					
+				</a>
+			
+		</div>
+	
+</aside>
+
+
+
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="development-dependencies">Development Dependencies</h1>
+<p>Materia relies on several open-source projects to function correctly. The following catalog outlines the primary dependencies and their roles within the project.</p>
+<h2 id="vite">Vite</h2>
+<p>Materia uses <a href="https://vite.dev/">Vite</a> as its bundler. Vite is responsible for bundling all the required files and dependencies of the project into a single, optimized file that can be served to the browser.</p>
+<p>Following Vite commands are configured in <code>package.json</code> which you can run using <code>npm &lt;command&gt;</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#eceff4">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a3be8c">&#34;scripts&#34;</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a3be8c">&#34;dev&#34;</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;vite&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a3be8c">&#34;build&#34;</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;vite build&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a3be8c">&#34;preview&#34;</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;vite preview&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">...</span>
+</span></span></code></pre></div><ul>
+<li>The <code>dev</code> (<code>npm run dev</code>) command runs your app in development mode and starts the local dev server at http://localhost:5173 (default).</li>
+<li>The <code>build</code> (<code>npm run build</code>) command builds your app for production. It generates a /dist folder with optimized assets.</li>
+<li>The <code>preview</code> (<code>npm run preview</code>) command serves the built project locally so you can preview it as if it were in production.</li>
+</ul>
+<p>The <code>vite.config.js</code> file can be found at the root of the project and it contains the configuration for Vite.</p>
+<p>To streamline and enhance the development experience, Beyonder integrates a set of Vite plugins that add powerful capabilities and reduce manual setup.</p>
+<h3 id="vite-plugin-handlebarshttpsgithubcomyoichirovite-plugin-handlebars"><a href="https://github.com/yoichiro/vite-plugin-handlebars">vite-plugin-handlebars</a></h3>
+<p>Materia utilizes <code>vite-plugin-handlebars</code> to process HTML files, particularly when serving partial HTML files using Handlebars.</p>
+<p><strong>Example usage:</strong></p>
+<p><em>partials/header.html</em></p>
+<pre tabindex="0"><code>&lt;header&gt;
+    &lt;h1&gt;This is a page header&lt;/h1&gt;
+&lt;/header&gt;
+</code></pre><p><em>index.html</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#5e81ac;font-style:italic">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">html</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">body</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>    {{&gt; header }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>...<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">body</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">html</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h3 id="vite-plugin-live-reloadhttpsgithubcomarnosonvite-plugin-live-reload"><a href="https://github.com/arnoson/vite-plugin-live-reload">vite-plugin-live-reload</a></h3>
+<p>By default, hot reloading does not work with partial file changes. To address this, we use the <code>vite-plugin-live-reload</code> plugin, which ensures that changes to partials are detected and the browser reloads automatically.</p>
+<h2 id="prettier">Prettier</h2>
+<p>Materia uses <a href="https://prettier.io/">Prettier</a> to format the code. To make any changes to Prettier&rsquo;s configuration, the <code>.prettierrc</code> file can be located at the root of the project.</p>
+<h2 id="postcss">PostCSS</h2>
+<p><a href="https://postcss.org/">PostCSS</a> is a tool for transforming CSS with JavaScript plugins. In Materia, PostCSS is used to automatically add vendor prefixes to CSS rules, ensuring compatibility across different browsers. The configuration file <code>.postcssrc</code> can be located at the root of the project directory.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div class="[li_ul]:ml-3 p-6 [&_a]:block [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900">
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#vite">Vite</a>
+      <ul>
+        <li><a href="#vite-plugin-handlebarshttpsgithubcomyoichirovite-plugin-handlebars"><a href="https://github.com/yoichiro/vite-plugin-handlebars">vite-plugin-handlebars</a></a></li>
+        <li><a href="#vite-plugin-live-reloadhttpsgithubcomarnosonvite-plugin-live-reload"><a href="https://github.com/arnoson/vite-plugin-live-reload">vite-plugin-live-reload</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#prettier">Prettier</a></li>
+    <li><a href="#postcss">PostCSS</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				
+	<footer class="mt-10 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+		Copyright © 2025 AvidTemplates.
+	</footer>
+
+
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.93985c029761434e76ee5e55e761d9392e5c8189450d4f443d6dec2250dfcae0.js"></script>
+
+
+	</body>
+</html>

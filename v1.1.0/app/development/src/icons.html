@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-page="icons">
+  {{> _head title="Icons" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+        {{> _sidebar-toggle }}
+
+        <h2 class="header-title">Icons</h2>
+
+        <div class="ms-3 fs-7 d-none d-sm-block">1248 Retina ready font icons</div>
+      </div>
+      <div class="content-body content-body-card" data-simplebar>
+        <div class="card py-4">
+          <div id="icons" class="grid gap-0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>
