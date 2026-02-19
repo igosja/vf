@@ -1,0 +1,43 @@
+.card {
+  .card {
+    --bs-card-border-radius: #{$border-radius};
+  }
+}
+
+.card-action {
+  background-color: var(--bs-tertiary-bg);
+  transition: background-color 300ms;
+
+  &:hover {
+    background-color: $theme-200;
+  }
+}
+
+.card-content {
+  --bs-card-border-radius: 0rem;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.card-title {
+  font-weight: $font-weight-medium;
+  margin-top: -0.1rem;
+
+  &:not([class*="fs-"]) {
+    font-size: $font-size-lg;
+  }
+}
+
+.card-subtitle {
+  font-weight: normal;
+  color: var(--bs-body-color);
+  line-height: 1.5;
+  font-size: $font-size-base;
+}
+
+.card-header {
+  .card-header-pills {
+    gap: 1px;
+    margin-left: -0.5rem;
+  }
+}

@@ -1,0 +1,60 @@
+//---------------------------------
+// Core Bootstrap
+// - Variables
+// - Mixins
+// - Core styles
+// - Overrides
+//---------------------------------
+@import "vendors/bootstrap/bootstrap";
+
+//---------------------------------
+// Theme variables and mixins
+//---------------------------------
+@import "mixins";
+@import "variables";
+@import "theme";
+
+//---------------------------------
+// Core styles
+//---------------------------------
+// Print
+@import "print";
+
+// Base
+@import "base";
+
+// Table
+@import "table";
+
+// Code
+@import "code";
+
+// Form
+@import "form";
+
+// Layout
+@import "layout";
+@import "sidebar";
+@import "nav-bar";
+@import "header";
+
+// Miscelaneous
+@import "misc";
+
+// Pages
+@import "pages";
+
+//---------------------------------
+// Third part vendor overrides
+//---------------------------------
+@import "vendors/simplebar";
+@import "vendors/jsvectormap";
+@import "vendors/chartjs";
+@import "vendors/vanillajs-datepicker";
+@import "vendors/quill";
+@import "vendors/fullcalendar";
+@import "vendors/nouislider";
+@import "vendors/overlay-scrollbars";
+
+@import "@phosphor-icons/web/regular";
+
