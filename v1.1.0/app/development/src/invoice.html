@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-page="invoice">
+  {{> _head title="Invoice" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="content-body content-body-centered mw-1000">
+        <div class="header">
+          <h2 class="header-title">Invoice</h2>
+
+          <nav class="hstack gap-1.5 ms-auto">
+            <button type="button" class="icon ph ph-info">
+              <span class="visually-hidden">Information</span>
+            </button>
+
+            <button type="button" class="icon-link">
+              <i class="ph ph-pencil-simple-line"></i>
+              Edit
+            </button>
+
+            <button type="button" class="btn btn-action btn-action-float" onclick="window.print()">
+              <i class="ph ph-printer"></i>
+              <span class="d-none d-md-inline">Print Invoice</span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="print-content card p-8">
+          <div class="mb-8">
+            <div
+              class="w-32 h-12 border border-2 border-current fs-5 rounded d-grid place-content-center"
+            >
+              Company Logo
+            </div>
+          </div>
+
+          <div class="mb-5 d-flex align-items-start border-bottom border-gray-400 pb-5">
+            <div class="flex-grow-1">
+              <div class="mb-2 fs-7 uppercase text-body-secondary">Bill to</div>
+              <address>
+                <span class="text-body-emphasis d-block mb-1">Catherine D Williams</span>
+                4587 Tree Frog Lane, Conyers, Georgia<br />
+                770-483-9707<br />
+                catherine@meantinc.com
+              </address>
+            </div>
+
+            <div class="flex-grow-1 text-end">
+              <div class="mb-2 fs-7 uppercase text-body-secondary">Bill from</div>
+              <address>
+                <span class="text-body-emphasis d-block mb-1">Abacaus Apple Inc</span>
+                2810 D Street, Center Line, Michigan<br />
+                586-497-1825<br />
+                sales@abacaus-apple.app
+              </address>
+            </div>
+          </div>
+
+          <div class="mb-10 pb-5 hstack border-bottom border-gray-400 pb-5 text-body-emphasis">
+            <div class="flex-grow-1">
+              <div class="mb-1"><span class="w-20 d-inline-block">Invoice:</span> 43125-002</div>
+              <div><span class="w-20 d-inline-block">Date:</span> 5th August 2024</div>
+            </div>
+            <div class="fs-4">$1,835.19</div>
+          </div>
+
+          <table class="mb-12 table">
+            <thead>
+              <tr class="text-sm uppercase text-body-secondary">
+                <th>Description</th>
+                <th class="text-end">Qty</th>
+                <th class="text-end">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Samsung Galaxy S22 Ultra</td>
+                <td class="text-end">1</td>
+                <td class="text-end">$1,399.00</td>
+              </tr>
+              <tr>
+                <td>Apple AirPods Pro</td>
+                <td class="text-end">1</td>
+                <td class="text-end">$299.00</td>
+              </tr>
+              <tr>
+                <td>Mophie Charge Stream Pad Plus</td>
+                <td class="text-end">Subtotal</td>
+                <td class="text-end">$1,797.00</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-end">1</td>
+                <td class="text-end">$99.00</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-end">Discounts (5%)</td>
+                <td class="text-end">-$89.85</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-end">Tax (7.5%)</td>
+                <td class="text-end">$128.04</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-end fw-medium">
+                  <span class="text-body-emphasis">Total</span>
+                </td>
+                <td class="text-end fw-medium">
+                  <span class="text-body-emphasis"> $1,835.19 </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="mb-3 text-body-emphasis">Terms & Conditions</div>
+          <div>
+            Customers are eligible to initiate exchanges or request refunds for products within a
+            14-day window, provided that the specified conditions are precisely met. To qualify for
+            this service, the product must be in its original, unopened packaging, accompanied by
+            the original receipt or proof of purchase. Additionally, the item must be in pristine,
+            unused condition.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

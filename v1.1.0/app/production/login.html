@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materia | Login</title>
+  
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon-BNKYCYGX.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./assets/favicon-BNKYCYGX.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./assets/favicon-dark-B2qvF9dN.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+  
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/vendor-CnZkRgjl.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/vendor-D5ZcaGbn.css">
+  </head>
+
+  <body class="hstack p-5 h-screen">
+    <div class="card mw-400 w-100 m-auto p-8">
+      <h2 class="fs-4">Welcome to Materia!</h2>
+      <div class="text-body-secondary mb-6">Please sign in to continue to the system</div>
+
+      <form class="mb-5">
+        <div class="form-icon mb-3">
+          <i class="ph ph-user-circle"></i>
+          <input type="text" class="form-control rounded-pill" placeholder="Username" />
+        </div>
+        <div class="form-icon mb-8">
+          <i class="ph ph-keyhole"></i>
+          <input type="password" class="form-control rounded-pill" placeholder="Password" />
+        </div>
+
+        <button type="button" class="btn btn-primary w-100 text-uppercase">Sign In</button>
+      </form>
+
+      <div class="text-center fs-7">
+        <a href="register.html" class="link-secondary mb-1 d-block">Register for a new account</a>
+        <a href="forgot-password.html" class="link-secondary d-block">Forgot password?</a>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    <script>
+      // Get current color mode from LocalStorage or default to light var color =
+      var color = localStorage.getItem("color-mode") || "light";
+      document.documentElement.setAttribute("data-bs-theme", color);
+    </script>
+    
+  </body>
+</html>

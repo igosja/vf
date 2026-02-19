@@ -1,0 +1,122 @@
+@import "../../mixins";
+
+.nav-pills {
+  --nav-link-icon-gap: 1rem;
+  --nav-link-hover-bg: var(--bs-tertiary-bg);
+
+  .nav-link {
+    align-items: center;
+    gap: var(--nav-link-icon-gap);
+
+    &:not(.active):not(:disabled) {
+      &:hover {
+        background: var(--nav-link-hover-bg);
+      }
+    }
+
+    &:not(.d-none) {
+      display: flex;
+    }
+
+    & > .ph {
+      &:not([class*="fs-"]) {
+        font-size: 1.2rem;
+      }
+    }
+
+    .badge {
+      --bs-badge-padding-x: 0;
+      --bs-badge-padding-y: 0;
+      --bs-badge-color: var(--bs-body-color);
+      --bs-badge-font-size: #{$font-size-sm};
+      --bs-badge-font-weight: #{$font-weight-medium};
+
+      margin-left: auto;
+      line-height: 1;
+      display: inline-grid;
+      place-content: center;
+      min-width: 1.3rem;
+      height: 1.3rem;
+    }
+
+    &.active {
+      background-color: rgba($blue, 0.1);
+      color: $blue;
+      margin-bottom: 1px;
+    }
+  }
+}
+
+.nav-pills-sidebar {
+  font-weight: $font-weight-medium;
+  flex-direction: column;
+  margin: 0 -0.75rem 1.25rem;
+
+  --bs-nav-link-color: var(--bs-emphasis-color);
+  --nav-link-hover-bg: var(--bs-tertiary-emphasis-bg);
+}
+
+// Mobile friendly nav pills with a horizontal scroll
+.nav-scroll {
+  --bs-nav-link-padding-x: 1rem;
+  --nav-link-icon-gap: 0.5rem;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  gap: 1px;
+
+  @include hide-scrollbar();
+
+  .nav-link {
+    white-space: nowrap;
+  }
+}
+
+.nav {
+  // Plain navs
+  &.nav-plain {
+    gap: 1.1rem;
+
+    .nav-link {
+      --bs-nav-link-padding-y: 0;
+      --bs-nav-link-padding-x: 0;
+      --bs-nav-link-hover-color: #{gray-700};
+      --bs-nav-tabs-link-active-bg: transparent;
+      line-height: 1;
+
+      &.active {
+        color: $blue;
+      }
+    }
+  }
+
+  // Colored nav links
+  .nav-link {
+    &.text-danger {
+      --bs-nav-link-hover-color: #{$danger};
+      --bs-nav-link-hover-bg: #{rgba($danger, 0.15)};
+    }
+  }
+
+  &.nav-tabs {
+    gap: 1px;
+
+    .nav-link {
+      border-radius: $border-radius;
+
+      &:not(.active):not(.disabled) {
+        &:hover {
+          background-color: $gray-400;
+        }
+      }
+    }
+  }
+
+  &.nav-underline {
+    .nav-link.active,
+    .show > .nav-link {
+      font-weight: $font-weight-normal;
+    }
+  }
+}

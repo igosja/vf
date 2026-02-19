@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" data-page="forms-templates">
+  {{> _head title="Form Templates" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+        {{> _sidebar-toggle }}
+
+        <h2 class="header-title">Form Templates</h2>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Forms</li>
+          </ol>
+        </nav>
+
+        <i class="ms-auto"></i>
+
+        <div id="toc-wrapper"></div>
+      </div>
+      <div class="content-body mw-1200 mx-auto" data-simplebar>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Login form</h3>
+            <p class="card-subtitle mb-6">Sample login form with basic input fields.</p>
+
+            <form class="col-md-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="login-username"
+                  placeholder="Username"
+                />
+              </div>
+              <div class="mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="login-password"
+                  placeholder="Password"
+                />
+              </div>
+
+              <div class="form-check mb-5">
+                <input class="form-check-input" type="checkbox" value="" id="login-cb" />
+                <label class="form-check-label" for="login-cb">Stay logged in</label>
+              </div>
+
+              <button type="submit" class="btn btn-theme">Login</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Registration form</h3>
+            <p class="card-subtitle mb-6">
+              Sample sign up form basic with names, email and password fields.
+            </p>
+
+            <form class="row g-4 col-md-7">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="First Name" />
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="reg-lastname" placeholder="Last Name" />
+              </div>
+              <div class="col-md-12">
+                <input type="email" class="form-control" placeholder="Email Address" />
+              </div>
+              <div class="col-md-6">
+                <input type="password" class="form-control" placeholder="Password" />
+              </div>
+              <div class="col-md-6">
+                <input type="password" class="form-control" placeholder="Confirm Password" />
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-check mb-8">
+                  <input class="form-check-input" type="checkbox" value="" id="reg-cb" />
+                  <label class="form-check-label" for="reg-cb">
+                    I have read and accept the agreement
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn-theme">Create Account</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Contact form</h3>
+            <p class="card-subtitle mb-6">Sample contact form name, email and message fields.</p>
+
+            <div class="col-md-6">
+              <form>
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="contact-name" placeholder="Name" />
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control" placeholder="Email Address" />
+                </div>
+                <div class="mb-3">
+                  <textarea class="form-control" rows="3" placeholder="Message"></textarea>
+                </div>
+
+                <div class="form-check mb-5">
+                  <input class="form-check-input" type="checkbox" value="" id="account-cb" />
+                  <label class="form-check-label" for="account-cb">Agree to privacy policy</label>
+                </div>
+
+                <button type="submit" class="btn btn-theme">Send Message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Newsletter form</h3>
+            <p class="card-subtitle mb-6">Sample newsletter form with name and email address.</p>
+
+            <form class="col-md-6">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="newsletter-name" placeholder="Name" />
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email Address" />
+              </div>
+
+              <div class="form-check mb-5">
+                <input class="form-check-input" type="checkbox" value="" id="newsletter-cb" />
+                <label class="form-check-label" for="newsletter-cb">
+                  I have read and accept the agreement
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-theme">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title fs-5 mb-5">Advanced KYC Form</h3>
+
+            <p>
+              Materia includes an advanced KYC (Know Your Client) form template, comprising a
+              comprehensive array of fields such as account details, personal information, contact
+              details, and more.
+            </p>
+            <p class="mb-0">
+              You can access the demo by visiting
+              <code>user-preferences.html</code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

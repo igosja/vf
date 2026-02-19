@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-page="messages">
+  {{> _head title="Messages"}}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> messages/_sidebar }}
+
+      <div class="content-body p-0">
+        <!-- Content header -->
+        {{> messages/_header }}
+
+        <div class="card">
+          <div class="px-5 pb-5" id="conversation"></div>
+
+          <div class="messages-reply">
+            <div class="messages-reply-inner">
+              <div class="quill">
+                <div class="quill-inner"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-chat-centered-text"></i>
+        <span class="d-none d-md-inline">New Message</span>
+      </button>
+    </div>
+
+    <!-- Channel info -->
+    {{> messages/_channel-info }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<div class="header">
+  {{> _sidebar-toggle }}
+
+  <div id="header-default" class="align-items-center gap-4 flex-grow-1">
+    <div class="search-field search-field-kbd">
+      <i class="ph ph-magnifying-glass fs-5"></i>
+      <input type="text" class="form-control" placeholder="Search Photos..." />
+    </div>
+
+    <i class="ms-auto"></i>
+
+    <div class="d-flex gap-2 me-2">
+      <button type="button" class="icon ph ph-check-circle">
+        <span class="visually-hidden">check</span>
+      </button>
+      <button type="button" class="icon ph ph-squares-four d-none d-sm-flex">
+        <span class="visually-hidden">Thumbnail size</span>
+      </button>
+      <button type="button" class="icon ph ph-slideshow">
+        <span class="visually-hidden">Slideshow</span>
+      </button>
+      <button type="button" class="icon ph ph-sort-ascending d-none d-sm-flex">
+        <span class="visually-hidden">Sort</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="header-actions" class="align-items-center gap-2 flex-grow-1">
+    <button type="button" class="icon ph ph-arrow-left" id="photos-clear">
+      <span class="visually-hidden"> Go back</span>
+    </button>
+
+    <div id="photos-amount"></div>
+
+    <i class="ms-auto"></i>
+
+    <nav class="hstack gap-2 me-2">
+      <a class="icon ph ph-plus" href=""></a>
+      <a class="icon ph ph-heart d-none d-sm-inline-flex" href=""></a>
+      <a class="icon ph ph-share-fat d-none d-sm-inline-flex" href=""></a>
+      <a class="icon ph ph-trash" href=""></a>
+
+      <div class="dropdown">
+        <button
+          class="icon ph ph-dots-three-circle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span class="visually-hidden">More</span>
+        </button>
+
+        <div class="dropdown-menu">
+          <a href="" class="dropdown-item">
+            <i class="ph ph-download-simple"></i>
+            Download
+          </a>
+          <a href="" class="dropdown-item">
+            <i class="ph ph-heart"></i>
+            Favorite
+          </a>
+          <a href="" class="dropdown-item">
+            <i class="ph ph-calendar"> </i>
+            Edit Date and Time
+          </a>
+          <a href="" class="dropdown-item">
+            <i class="ph ph-map-pin"></i>
+            Edit Location
+          </a>
+          <a href="" class="dropdown-item">
+            <i class="ph ph-archive"></i>
+            Archive
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.pre {
+  background-color: var(--bs-theme-100);
+  border-radius: $border-radius;
+  padding: 1.25rem;;
+  color: var(--#{$prefix}emphasis-color);
+}

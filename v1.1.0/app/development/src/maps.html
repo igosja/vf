@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-page="charts-and-maps-maps">
+  {{> _head title="Maps" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+       {{> _sidebar-toggle }}
+
+        <h2 class="header-title">Maps</h2>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item"><a href="#">Charts and Maps</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Maps</li>
+          </ol>
+        </nav>
+
+        <i class="ms-auto"></i>
+      </div>
+      <div class="content-body mw-1200 mx-auto" data-simplebar>
+        <div id="maps-wrapper" class="row g-4"></div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-page="user-photos">
+  {{> _head title="User Photos" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="content-body content-body-centered">
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <h2 class="header-title">User Photos</h2>
+
+          <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Application Views</a></li>
+              <li class="breadcrumb-item"><a href="#">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Photos</li>
+            </ol>
+          </nav>
+
+          <div class="d-flex gap-2 ms-auto">
+            <a href="" class="icon ph ph-arrow-clockwise"></a>
+            <a href="" class="icon ph ph-gear"></a>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          {{> user/_cover active="photos"}}
+
+          <nav class="nav nav-pills nav-scroll fs-7 p-2 border-top">
+            <a class="nav-link active" href="#">All Photos</a>
+            <a class="nav-link" href="#">Uploaded</a>
+            <a class="nav-link" href="#">Videos</a>
+            <a class="nav-link" href="#">Albums</a>
+            <a class="nav-link" href="#">GIFs</a>
+            <a class="nav-link ms-auto d-none d-md-block" href="#"
+              >Add Photos/Videos</a
+            >
+          </nav>
+        </div>
+
+        <div id="user-photos" class="grid gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

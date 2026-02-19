@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en" data-page="bootstrap-progress">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materia | Progress</title>
+  
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon-BNKYCYGX.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./assets/favicon-BNKYCYGX.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./assets/favicon-dark-B2qvF9dN.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+  
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/vendor-CnZkRgjl.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/vendor-D5ZcaGbn.css">
+  </head>
+  <body>
+    <!-- Page loader -->
+    <div id="page-loader" class="placeholder-glow">
+      <div class="w-24 h-24 d-grid place-items-center">
+        <a href="/" class="logo">
+          <svg width="40" height="40" fill="none">
+            <path
+              d="M.888 14.467C-2.844 5.875 5.876-2.845 14.468.887l1.42.617c1.298.564 2.698.855 4.112.855s2.815-.291 4.113-.855l1.42-.617c8.593-3.732 17.313 4.988 13.581 13.58l-.617 1.42c-.564 1.298-.854 2.698-.854 4.113s.291 2.815.854 4.112l.617 1.42c3.732 8.593-4.989 17.313-13.58 13.581l-1.42-.617c-1.298-.564-2.698-.855-4.113-.855s-2.815.291-4.113.855l-1.42.617C5.875 42.845-2.845 34.125.887 25.533l.617-1.42c.564-1.298.855-2.698.855-4.113s-.291-2.815-.855-4.112l-.617-1.42.001-.001z"
+            />
+            <path
+              d="M27.804 19.999c2.824-3.965 4.265-8.064 2.262-10.067s-6.101-.563-10.067 2.262C16.034 9.37 11.935 7.93 9.932 9.932s-.563 6.101 2.262 10.067C9.37 23.965 7.93 28.063 9.932 30.066c.645.645 1.507.933 2.51.933 2.117 0 4.867-1.28 7.562-3.194 2.683 1.915 5.433 3.194 7.556 3.194 1.004 0 1.866-.289 2.51-.933 1.997-2.003.557-6.101-2.268-10.067zm.966-8.771c.875.875.284 3.712-2.122 7.25-.761-.942-1.572-1.844-2.428-2.701a34.43 34.43 0 0 0-2.701-2.424c3.538-2.406 6.375-3.002 7.25-2.125zm-3.238 8.771c-.811 1.026-1.682 2.002-2.608 2.925s-1.899 1.797-2.925 2.608c-1.026-.811-2.002-1.682-2.925-2.608s-1.797-1.899-2.608-2.925a34.22 34.22 0 0 1 5.533-5.533c1.026.811 2.002 1.682 2.925 2.608s1.797 1.899 2.608 2.925zm-14.304-8.771c.252-.253.668-.384 1.217-.384 1.354 0 3.516.791 6.032 2.509-.941.761-1.842 1.57-2.699 2.424a34.43 34.43 0 0 0-2.424 2.701c-2.406-3.538-3.001-6.375-2.125-7.25zm0 17.542c-.875-.875-.281-3.712 2.125-7.25a34.4 34.4 0 0 0 2.428 2.701c.856.854 1.757 1.664 2.697 2.424-3.538 2.406-6.375 3.002-7.25 2.125zm17.542 0c-.875.877-3.712.284-7.25-2.122a34.86 34.86 0 0 0 2.701-2.428 34.41 34.41 0 0 0 2.424-2.701c2.406 3.538 3.001 6.375 2.125 7.25zm-7.396-8.771c0 .272-.081.538-.232.764s-.366.402-.617.506-.528.131-.794.078-.512-.184-.704-.376-.323-.437-.376-.704-.026-.543.078-.794.28-.466.506-.617.492-.232.764-.232c.365 0 .714.145.972.403s.403.608.403.972z"
+            />
+          </svg>
+        
+          <div class="fs-4 d-xl-none">
+            <span class="fw-medium text-body-emphasis">Materia</span>
+          </div>
+        </a>
+        <div class="spinner-border w-20 h-20 position-absolute" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <aside class="nav-bar">
+      <ul class="navbar-menu">
+        <!-- Profile -->
+        <li>
+          <button
+            type="button"
+            class="p-2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="--squircle-size: 2.75rem"
+          >
+            <img class="avatar" src="./assets/2-DKAFNcdz.jpg" alt="" />
+          </button>
+    
+          <div class="dropdown-menu">
+            <a href="" class="dropdown-item">
+              <i class="ph ph-user-circle"></i>
+              Profile
+            </a>
+            <a href="" class="dropdown-item">
+              <i class="ph ph-currency-circle-dollar"></i>
+              Billing
+            </a>
+            <a href="" class="dropdown-item">
+              <i class="ph ph-gear"></i>
+              Settings
+            </a>
+            <a href="" class="dropdown-item">
+              <i class="ph ph-sign-out"></i>
+              Logout
+            </a>
+          </div>
+        </li>
+    
+        <!-- Languages -->
+        <li class="d-none d-sm-block">
+          <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="h-5 rounded-circle" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='199'%20height='199'%20fill-rule='evenodd'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20fill='%231b50c5'%20d='M0%200h199v199H0z'/%3e%3cg%20fill='%23ec3047'%20fill-rule='nonzero'%3e%3cpath%20d='M0%2035v17.426L84.498%20101.5%200%20150.575V168l99.5-57.787L199%20168v-17.425L114.502%20101.5%20199%2052.426V35L99.5%2092.787z'/%3e%3cpath%20d='M82.388%200v82.388H0v34.224h82.388V199h17.715%2016.509v-82.388H199V82.388h-82.388V0h-16.509z'/%3e%3c/g%3e%3cpath%20d='M79.323%200v75.445L0%2029.648v7.711l72.685%2041.965H55.937L0%2047.028v7.711l42.581%2024.584H0V86h54.147%2013.355%206.944c4.545%200%207.33-.19%2011.555-.19V79.3%200h-6.677zM113%200v79.274V86l11.555-.028h6.944%2013.355H199v-6.675h-42.581L199%2054.721v-7.709l-55.937%2032.284h-16.748L199%2037.346v-7.708L119.677%2075.42V0H113zM86%20113.081c-3.849%200-7.875-.081-11.556-.081h-6.943-13.355H0v6.677h42.581L0%20144.261v7.711l55.936-32.295h16.749L0%20161.641v7.711l79.323-45.797V199H86v-79.3-6.619zm27%200v6.619V199h6.677v-75.445L199%20169.352v-7.711l-72.685-41.964h16.749L199%20151.972v-7.711l-42.581-24.584H199V113h-54.146-13.355-6.943l-11.556.081z'%20fill='%23fff'%20fill-rule='nonzero'/%3e%3c/svg%3e" alt="" />
+          </button>
+    
+          <div class="dropdown-menu">
+            <a href="" class="dropdown-item">
+              <img class="h-5 rounded-circle" src="data:image/svg+xml,%3csvg%20width='199'%20height='199'%20viewBox='0%200%20199%20199'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_2_9)'%3e%3crect%20width='199'%20height='199'%20fill='%23F4F8FC'/%3e%3cmask%20id='mask0_2_9'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='199'%20height='199'%3e%3cpath%20d='M0%200H199V199H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_2_9)'%3e%3cpath%20d='M199%200H0V199H199V0Z'%20fill='%23F4F8FC'/%3e%3cpath%20d='M99.5%20135C119.106%20135%20135%20119.106%20135%2099.5C135%2079.894%20119.106%2064%2099.5%2064C79.894%2064%2064%2079.894%2064%2099.5C64%20119.106%2079.894%20135%2099.5%20135Z'%20fill='%23FE2257'/%3e%3c/g%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_2_9'%3e%3crect%20width='199'%20height='199'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" />
+              Japanese
+            </a>
+            <a href="" class="dropdown-item">
+              <img class="h-5 rounded-circle" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='199'%20height='199'%20fill-rule='evenodd'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20fill='%23fcd500'%20d='M0%20132h199v67H0z'/%3e%3cpath%20fill='%23d80b00'%20d='M0%2065h199v67H0z'/%3e%3cpath%20fill='%23000'%20d='M0%200h199v67H0z'/%3e%3c/svg%3e" alt="" />
+              German
+            </a>
+            <a href="" class="dropdown-item">
+              <img class="h-5 rounded-circle" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='199'%20height='199'%20fill-rule='evenodd'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20fill='%23f23d53'%20d='M0%200h199v199H0z'/%3e%3cpath%20d='M66.065%2092.539l-16.578-9.824-16.521%209.92%204.22-18.803-14.54-12.647%2019.186-1.797%207.535-17.736%207.638%2017.692%2019.197%201.685L61.736%2073.76zm46.494-60.427l-7.84%202.65-1.393%208.158-4.943-6.638-8.189%201.196%204.785-6.752-3.668-7.419%207.9%202.465%205.922-5.781.097%208.275zm15.869%2033.64l-7.964-2.25-5.764%205.939-.321-8.27-7.429-3.646%207.766-2.861%201.172-8.192%205.121%206.502%208.154-1.417-4.601%206.879zm-25.432%2060.321L98.24%20119.3l-8.219.967%204.972-6.616-3.459-7.518%207.829%202.684%206.081-5.613-.133%208.275%207.218%204.049-7.911%202.43zm23.097-26.363l-7.09-4.268-7.125%204.211%201.868-8.062-6.206-5.475%208.245-.714%203.289-7.594%203.227%207.621%208.239.781-6.25%205.424z'%20fill='%23ffde00'%20fill-rule='nonzero'/%3e%3c/svg%3e" alt="" />
+              Chinese
+            </a>
+            <a href="" class="dropdown-item">
+              <img class="h-5 rounded-circle" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='199'%20height='199'%20fill-rule='evenodd'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20fill='%23123ccb'%20d='M0%200h66v199H0z'/%3e%3cpath%20fill='%23fff'%20d='M66%200h67v199H66z'/%3e%3cpath%20fill='%23e6323e'%20d='M133%200h66v199h-66z'/%3e%3c/svg%3e" alt="" />
+              French
+            </a>
+          </div>
+        </li>
+    
+        <!-- Search -->
+        <li>
+          <button
+            type="button"
+            class="ph ph-magnifying-glass"
+            data-bs-toggle="dropdown"
+            data-bs-display="static"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            <span class="visually-hidden">Search</span>
+          </button>
+    
+          <div class="dropdown-menu navbar-dropdown-menu px-6">
+            <div class="d-flex align-items-center h-11 flex-shrink-0">
+              <div class="text-body-emphasis fw-medium">Search</div>
+    
+              <div class="d-flex ms-auto gap-1">
+                <button type="button" class="icon ph ph-broom">
+                  <span class="visually-hidden">Clear recent searches</span>
+                </button>
+                <button type="button" class="icon ph ph-gear ms-auto me-n1">
+                  <span class="visually-hidden">Settings</span>
+                </button>
+              </div>
+            </div>
+    
+            <div class="search-field mb-5 mx-n1">
+              <i class="ph ph-magnifying-glass"></i>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter a keyword"
+                aria-label="Search"
+                autofocus
+              />
+            </div>
+    
+            <div class="fs-7 text-body-secondary mb-1">Recent Searches</div>
+    
+            <div class="flex-grow-1 mx-n6" data-simplebar>
+              <div id="recent-searches"></div>
+            </div>
+          </div>
+        </li>
+    
+        <!-- Notifications -->
+        <li class="dropdown">
+          <span
+            data-badge-count="99+"
+            data-bs-toggle="dropdown"
+            data-bs-display="static"
+            data-bs-auto-close="outside"
+          >
+            <button type="button" class="ph ph-bell">
+              <span class="visually-hidden">Notifications</span>
+            </button>
+          </span>
+          <div class="dropdown-menu navbar-dropdown-menu px-6">
+            <div class="d-flex align-items-center h-11 flex-shrink-0">
+              <div class="text-body-emphasis fw-medium">Notifications</div>
+    
+              <div class="d-flex ms-auto me-n2.5 gap-1">
+                <button type="button" class="icon ph ph-check-circle">
+                  <span class="visually-hidden">Mark as read</span>
+                </button>
+                <button type="button" class="icon ph ph-app-window">
+                  <span class="visually-hidden">Open Notifications</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow-1 mx-n6" data-simplebar>
+              <div id="top-notifications"></div>
+            </div>
+          </div>
+        </li>
+    
+        <!-- Direct Messages -->
+        <li class="dropdown d-none d-sm-block">
+          <span
+            data-badge-count="12"
+            data-bs-toggle="dropdown"
+            data-bs-display="static"
+            data-bs-auto-close="outside"
+          >
+            <button type="button" class="ph ph-chat-centered-text">
+              <span class="visually-hidden">Direct Messages</span>
+            </button>
+          </span>
+          <div class="dropdown-menu navbar-dropdown-menu px-6">
+            <div class="d-flex align-items-center h-11 flex-shrink-0">
+              <div class="text-body-emphasis fw-medium">Direct Messages</div>
+    
+              <div class="d-flex ms-auto me-n2.5 gap-1">
+                <button type="button" class="icon ph ph-plus-circle">
+                  <span class="visually-hidden">Mark as read</span>
+                </button>
+                <button type="button" class="icon ph ph-app-window">
+                  <span class="visually-hidden">Open Direct Messages</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow-1 mx-n6" data-simplebar>
+              <div id="top-messages"></div>
+            </div>
+          </div>
+        </li>
+    
+        <!-- Ongoing Tasks -->
+        <li class="dropdown d-none d-sm-block">
+          <button
+            type="button"
+            class="ph ph-check-circle"
+            data-bs-toggle="dropdown"
+            data-bs-display="static"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            <span class="visually-hidden">Tasks</span>
+          </button>
+          <div class="dropdown-menu navbar-dropdown-menu px-6">
+            <div class="d-flex align-items-center h-11 flex-shrink-0">
+              <div class="text-body-emphasis fw-medium">Ongoing Tasks</div>
+    
+              <div class="d-flex ms-auto me-n2 gap-1">
+                <button type="button" class="icon ph ph-app-window">
+                  <span class="visually-hidden">Open Tasks</span>
+                </button>
+                <button type="button" class="icon ph ph-gear">
+                  <span class="visually-hidden">Settings</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow-1 pt-2 mx-n6" data-simplebar>
+              <div id="top-tasks"></div>
+            </div>
+          </div>
+        </li>
+    
+        <!-- Color mode toggler -->
+        <li>
+          <button id="color-mode-toggle" type="button">
+            <i class="ph ph-sun"></i>
+            <i class="ph ph-moon"></i>
+            <span class="visually-hidden">Search</span>
+          </button>
+        </li>
+    
+        <li class="d-sm-none icon">
+          <!-- Sidebar toggle -->
+          <button type="button" class="sidebar-toggle">
+            <svg class="pe-none" width="15" height="12" viewBox="0 0 16 13" fill="none">
+              <path
+                d="M1 1H15M1 6.25H10.5455M1 11.5H15"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="visually-hidden">Open Sidebar</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+    
+    <i class="backdrop backdrop-navbar"></i>
+
+    <!-- Site sidebar -->
+    <aside id="sidebar">
+      <button type="button" class="sidebar-close">
+      	<span>Close Sidebar</span>
+      </button>
+    
+      <div class="sidebar-inner">
+        <!-- Logo -->
+        <a href="/" class="logo">
+          <svg width="40" height="40" fill="none">
+            <path
+              d="M.888 14.467C-2.844 5.875 5.876-2.845 14.468.887l1.42.617c1.298.564 2.698.855 4.112.855s2.815-.291 4.113-.855l1.42-.617c8.593-3.732 17.313 4.988 13.581 13.58l-.617 1.42c-.564 1.298-.854 2.698-.854 4.113s.291 2.815.854 4.112l.617 1.42c3.732 8.593-4.989 17.313-13.58 13.581l-1.42-.617c-1.298-.564-2.698-.855-4.113-.855s-2.815.291-4.113.855l-1.42.617C5.875 42.845-2.845 34.125.887 25.533l.617-1.42c.564-1.298.855-2.698.855-4.113s-.291-2.815-.855-4.112l-.617-1.42.001-.001z"
+            />
+            <path
+              d="M27.804 19.999c2.824-3.965 4.265-8.064 2.262-10.067s-6.101-.563-10.067 2.262C16.034 9.37 11.935 7.93 9.932 9.932s-.563 6.101 2.262 10.067C9.37 23.965 7.93 28.063 9.932 30.066c.645.645 1.507.933 2.51.933 2.117 0 4.867-1.28 7.562-3.194 2.683 1.915 5.433 3.194 7.556 3.194 1.004 0 1.866-.289 2.51-.933 1.997-2.003.557-6.101-2.268-10.067zm.966-8.771c.875.875.284 3.712-2.122 7.25-.761-.942-1.572-1.844-2.428-2.701a34.43 34.43 0 0 0-2.701-2.424c3.538-2.406 6.375-3.002 7.25-2.125zm-3.238 8.771c-.811 1.026-1.682 2.002-2.608 2.925s-1.899 1.797-2.925 2.608c-1.026-.811-2.002-1.682-2.925-2.608s-1.797-1.899-2.608-2.925a34.22 34.22 0 0 1 5.533-5.533c1.026.811 2.002 1.682 2.925 2.608s1.797 1.899 2.608 2.925zm-14.304-8.771c.252-.253.668-.384 1.217-.384 1.354 0 3.516.791 6.032 2.509-.941.761-1.842 1.57-2.699 2.424a34.43 34.43 0 0 0-2.424 2.701c-2.406-3.538-3.001-6.375-2.125-7.25zm0 17.542c-.875-.875-.281-3.712 2.125-7.25a34.4 34.4 0 0 0 2.428 2.701c.856.854 1.757 1.664 2.697 2.424-3.538 2.406-6.375 3.002-7.25 2.125zm17.542 0c-.875.877-3.712.284-7.25-2.122a34.86 34.86 0 0 0 2.701-2.428 34.41 34.41 0 0 0 2.424-2.701c2.406 3.538 3.001 6.375 2.125 7.25zm-7.396-8.771c0 .272-.081.538-.232.764s-.366.402-.617.506-.528.131-.794.078-.512-.184-.704-.376-.323-.437-.376-.704-.026-.543.078-.794.28-.466.506-.617.492-.232.764-.232c.365 0 .714.145.972.403s.403.608.403.972z"
+            />
+          </svg>
+        
+          <div class="fs-4 d-xl-none">
+            <span class="fw-medium text-body-emphasis">Materia</span>
+          </div>
+        </a>
+    
+        <ul class="menu">
+          <li>
+            <div>
+              <i class="ph ph-squares-four"></i>
+              <span>Dashboards</span>
+            </div>
+    
+            <ul>
+              <li>
+                <a href="index.html">
+                  <i class="ph ph-shopping-bag"></i>
+                  E-Commerce
+                </a>
+              </li>
+              <li>
+                <a href="analytics">
+                  <i class="ph ph-globe-hemisphere-west"></i>
+                  Analytics
+                </a>
+              </li>
+              <li>
+                <a href="project-management.html">
+                  <i class="ph ph-kanban"></i>
+                  Project Management
+                </a>
+              </li>
+              <li>
+                <a href="crm.html">
+                  <i class="ph ph-address-book-tabs"></i>
+                  CRM
+                </a>
+              </li>
+              <li>
+                <a href="email-marketing.html">
+                  <i class="ph ph-tray"></i>
+                  Email Marketing
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div>
+              <i class="ph ph-app-window"></i>
+              <span>Applications</span>
+            </div>
+    
+            <ul>
+              <li class="menu-sub">
+                <a href="">
+                  <i class="ph ph-user-circle"></i>
+                  User
+                </a>
+                <ul>
+                  <li><a href="user-profile.html">Profile</a></li>
+                  <li><a href="user-timeline.html">Timeline</a></li>
+                  <li><a href="user-photos.html">Photos</a></li>
+                  <li><a href="user-connections.html">Connections</a></li>
+                  <li><a href="user-preferences.html">Preferences</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="file-manager.html">
+                  <i class="ph ph-folder"></i>
+                  File Manager
+                </a>
+              </li>
+              <li>
+                <a href="contacts.html">
+                  <i class="ph ph-user-rectangle"></i>
+                  Contacts
+                </a>
+              </li>
+              <li>
+                <a href="mail.html">
+                  <i class="ph ph-at"></i>
+                  Mail
+                </a>
+              </li>
+              <li>
+                <a href="messages.html">
+                  <i class="ph ph-chat-circle-text"></i>
+                  Messages
+                </a>
+              </li>
+              <li>
+                <a href="photos.html">
+                  <i class="ph ph-image"></i>
+                  Photos
+                </a>
+              </li>
+              <li>
+                <a href="todo-lists.html">
+                  <i class="ph ph-check-circle"></i>
+                  Todo Lists
+                </a>
+              </li>
+              <li>
+                <a href="calendar.html">
+                  <i class="ph ph-calendar-blank"></i>
+                  Calendar
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div>
+              <i class="ph ph-browser"></i>
+              <span>Pages</span>
+            </div>
+            <ul>
+              <li>
+                <a href="invoice.html">
+                  <i class="ph ph-invoice"></i>
+                  Invoice
+                </a>
+              </li>
+              <li>
+                <a href="pricing-table.html">
+                  <i class="ph ph-table"></i>
+                  Pricing Tables
+                </a>
+              </li>
+              <li>
+                <a href="search-results.html">
+                  <i class="ph ph-list-magnifying-glass"></i>
+                  Search Results
+                </a>
+              </li>
+              <li>
+                <a href="faq.html">
+                  <i class="ph ph-seal-question"></i>
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="team.html">
+                  <i class="ph ph-users-three"></i>
+                  Teams
+                </a>
+              </li>
+              <li>
+                <a href="login.html">
+                  <i class="ph ph-keyhole"></i>
+                  Login
+                </a>
+              </li>
+              <li>
+                <a href="register.html">
+                  <i class="ph ph-user-circle-plus"></i>
+                  Register
+                </a>
+              </li>
+              <li>
+                <a href="forgot-password.html">
+                  <i class="ph ph-lock-key-open"></i>
+                  Forgot Password
+                </a>
+              </li>
+              <li>
+                <a href="coming-soon.html">
+                  <i class="ph ph-clock-countdown"></i>
+                  Coming Soon
+                </a>
+              </li>
+              <li>
+                <a href="error.html">
+                  <i class="ph ph-warning"></i>
+                  Error
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div>
+              <i class="ph ph-article"></i>
+              <span>Content</span>
+            </div>
+            <ul>
+              <li>
+                <a href="typography.html">
+                  <i class="ph ph-text-t"></i>
+                  Typography
+                </a>
+              </li>
+              <li>
+                <a href="figures.html">
+                  <i class="ph ph-square-half-bottom"></i>
+                  Figures
+                </a>
+              </li>
+              <li>
+                <a href="images.html">
+                  <i class="ph ph-images"></i>
+                  Images
+                </a>
+              </li>
+              <li>
+                <a href="tables.html">
+                  <i class="ph ph-table"></i>
+                  Tables
+                </a>
+              </li>
+              <li>
+                <a href="icons.html">
+                  <i class="ph ph-smiley"></i>
+                  Icons
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div>
+              <i class="ph ph-puzzle-piece"></i>
+              <span>Components</span>
+            </div>
+            <ul>
+              <li class="menu-sub">
+                <a href="">
+                  <i class="ph ph-text-b"></i>
+                  Bootstrap
+                </a>
+                <ul>
+                  <li><a href="accordion.html">Accordion</a></li>
+                  <li><a href="alerts.html">Alerts</a></li>
+                  <li><a href="badge.html">Badge</a></li>
+                  <li><a href="breadcrumb.html">Breadcrumb</a></li>
+                  <li><a href="buttons.html">Buttons</a></li>
+                  <li><a href="card.html">Card</a></li>
+                  <li><a href="carousel.html">Carousel</a></li>
+                  <li><a href="collapse.html">Collapse</a></li>
+                  <li><a href="dropdown.html">Dropdown</a></li>
+                  <li><a href="listgroup.html">List Group</a></li>
+                  <li><a href="modal.html">Modal</a></li>
+                  <li><a href="nav.html">Nav</a></li>
+                  <li><a href="offcanvas.html">Offcanvas</a></li>
+                  <li><a href="pagination.html">Pagination</a></li>
+                  <li><a href="placeholders.html">Placeholders</a></li>
+                  <li><a href="popovers.html">Popovers</a></li>
+                  <li><a href="progress.html">Progress</a></li>
+                  <li><a href="spinners.html">Spinners</a></li>
+                  <li><a href="toasts.html">Toasts</a></li>
+                  <li><a href="tooltips.html">Tooltips</a></li>
+                </ul>
+              </li>
+              <li class="menu-sub">
+                <a href="file-manager.html">
+                  <i class="ph ph-rows"></i>
+                  Forms
+                </a>
+                <ul>
+                  <li><a href="form-elements.html">Form Elements</a></li>
+                  <li><a href="input-groups.html">Input Groups</a></li>
+                  <li><a href="form-layouts.html">Layouts</a></li>
+                  <li><a href="form-templates.html">Templates</a></li>
+                  <li><a href="form-validation.html">Validation</a></li>
+                  <li><a href="form-components.html">Components</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="charts.html">
+                  <i class="ph ph-chart-pie-slice"></i>
+                  Charts
+                </a>
+              </li>
+              <li>
+                <a href="maps.html">
+                  <i class="ph ph-globe-stand"></i>
+                  Maps
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div id="content" data-simplebar>
+      <div class="header">
+       <button type="button" class="sidebar-toggle icon d-none d-sm-flex d-xl-none">
+       	<svg class="pe-none" width="15" height="12" viewBox="0 0 16 13" fill="none">
+       		<path d="M1 1H15M1 6.25H10.5455M1 11.5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+       	</svg>
+       	<span class="visually-hidden">Open Sidebar</span>
+       </button>
+
+        <h2 class="header-title">Progress</h2>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Components</li>
+          </ol>
+        </nav>
+
+        <i class="ms-auto"></i>
+
+        <div id="toc-wrapper"></div>
+      </div>
+      <div class="content-body mw-1200 mx-auto" data-simplebar>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Basic example</h3>
+            <p class="card-subtitle mb-6">
+              Progress components are built with two HTML elements, some CSS to set the width, and a
+              few attributes.
+            </p>
+
+            <div class="col-md-8">
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 0%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 25%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 50%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 75%"></div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Width and height</h3>
+            <p class="card-subtitle mb-6">
+              Adjust the size of the progress using Bootstrap utilities.
+            </p>
+
+            <div class="col-md-8">
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar w-75"></div>
+              </div>
+
+              <div
+                class="progress mb-3 h-3"
+                role="progressbar"
+                aria-label="Basic example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar w-25"></div>
+              </div>
+
+              <div
+                class="progress mb-3 h-px"
+                role="progressbar"
+                aria-label="Example 1px high"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 50%"></div>
+              </div>
+              <div
+                class="progress h-4"
+                role="progressbar"
+                aria-label="Example 20px high"
+                aria-valuenow="90"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar" style="width: 90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Labels</h3>
+            <p class="card-subtitle mb-6">
+              Add labels to your progress bars by placing text within the
+              <code>.progress-bar</code>.
+            </p>
+
+            <div class="col-md-8">
+              <div
+                class="progress h-4"
+                role="progressbar"
+                aria-label="Example with label"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar lh-1" style="width: 25%">25%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Backgrounds</h3>
+            <p class="card-subtitle mb-6">
+              Use background utility classes to change the appearance of individual progress bars.
+            </p>
+
+            <div class="col-md-8">
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Success example"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar bg-success" style="width: 25%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Info example"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar bg-info" style="width: 50%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Warning example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar bg-warning" style="width: 75%"></div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Danger example"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar bg-danger" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Multiple bars</h3>
+            <p class="card-subtitle mb-6">
+              You can include multiple progress components inside a container with
+              <code>.progress-stacked</code> to create a single stacked progress bar.
+            </p>
+
+            <div class="progress-stacked">
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Segment one"
+                aria-valuenow="15"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 15%"
+              >
+                <div class="progress-bar"></div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Segment two"
+                aria-valuenow="30"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 30%"
+              >
+                <div class="progress-bar bg-success"></div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Segment three"
+                aria-valuenow="20"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 20%"
+              >
+                <div class="progress-bar bg-info"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Striped</h3>
+            <p class="card-subtitle mb-6">
+              Add <code>.progress-bar-striped</code> to any <code>.progress-bar</code> to apply a
+              stripe via CSS gradient over the progress bar’s background color.
+            </p>
+
+            <div class="col-md-8">
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Default striped example"
+                aria-valuenow="10"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar progress-bar-striped" style="width: 10%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Success striped example"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar progress-bar-striped bg-success" style="width: 25%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Info striped example"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar progress-bar-striped bg-info" style="width: 50%"></div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Warning striped example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar progress-bar-striped bg-warning" style="width: 75%"></div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Danger striped example"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-bar progress-bar-striped bg-danger" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Animated stripes</h3>
+            <p class="card-subtitle mb-6">
+              The striped gradient can also be animated. Add
+              <code>.progress-bar-animated</code> to <code>.progress-bar</code> to animate the
+              stripes right to left via CSS3 animations.
+            </p>
+
+            <div
+              class="progress col-md-8"
+              role="progressbar"
+              aria-label="Animated striped example"
+              aria-valuenow="75"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 75%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    <script>
+      // Get current color mode from LocalStorage or default to light var color =
+      var color = localStorage.getItem("color-mode") || "light";
+      document.documentElement.setAttribute("data-bs-theme", color);
+    </script>
+    
+  </body>
+</html>

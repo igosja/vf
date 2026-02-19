@@ -1,0 +1,432 @@
+@use "sass:color";
+
+#sidebar {
+  z-index: $navbar-z-index - 1;
+  transition:
+    transform 300ms,
+    opacity 300ms;
+  will-change: transform;
+  background-color: var(--bs-sidebar-bg);
+  flex-shrink: 0;
+  width: $sidebar-width;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+
+  @include media-breakpoint-down(xl) {
+    transform: translate3d(-105%, 0, 0);
+    width: $sidebar-mobile-width;
+    z-index: $navbar-z-index + 3;
+    left: 0.5rem;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+    border-radius: $border-radius-xl;
+    background-color: var(--bs-sidebar-sub-bg);
+
+    &.toggled {
+      transform: translate3d(0, 0, 0);
+
+      .sidebar-close {
+        display: block;
+      }
+    }
+  }
+
+  .sidebar-inner {
+    @include hide-scrollbar();
+
+    @include media-breakpoint-up(xl) {
+      padding: 0;
+      overflow-y: hidden;
+    }
+  }
+}
+
+.sidebar-inner {
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include media-breakpoint-down(xl) {
+    margin: -0.5rem 0 1.5rem;
+  }
+}
+
+#sidebar-back,
+.sidebar-close {
+  display: none;
+}
+
+#sidebar-back {
+  @include media-breakpoint-down(xl) {
+    display: inline-flex;
+  }
+}
+
+.sidebar-close {
+  & > span {
+    font-size: 0;
+    height: 5rem;
+    width: 0.4rem;
+    background-color: var(--bs-sidebar-close-handle-bg);
+    border-radius: $border-radius-pill;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    right: -0.9rem;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.sidebar-action {
+  position: sticky;
+  top: 0;
+  padding: 0.75rem;
+  background: linear-gradient(0deg, transparent 0, rgb(var(--bs-body-bg-rgb)) 0.75rem);
+  margin: 0 -0.35rem 1rem;
+  z-index: 1;
+
+  .btn {
+    margin-left: -0.75rem;
+  }
+}
+
+.sidebar-title {
+  font-size: $font-size-lg;
+  margin: 0;
+  color: var(--bs-emphasis-color);
+}
+
+// Logo
+.logo {
+  display: block;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  @include media-breakpoint-up(xl) {
+    padding: 1.5rem 0 0.5rem;
+    justify-content: center;
+  }
+
+  svg {
+    path {
+      &:first-child {
+        fill: var(--bs-logo-fill);
+      }
+
+      &:last-child {
+        fill: var(--bs-emphasis-color);
+      }
+    }
+  }
+}
+
+// Menu
+.menu {
+  --menu-link-color: var(--#{$prefix}emphasis-color);
+  --menu-icon-scale: 0.8;
+  --menu-icon-opacity: 0;
+  --menu-link-bg: transparent;
+  --menu-link-highlight-bg: #{rgba($blue, 0.1)};
+  --menu-link-hover-color: #{color.adjust($blue, $lightness: -2.5%)};
+
+  flex: 1 1 auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+
+  & > li {
+    padding-block: 0.75rem;
+
+    &:has(a.active) {
+      & > div {
+        --menu-link-color: var(--menu-link-hover-color);
+        --menu-icon-scale: 1;
+        --menu-icon-opacity: 1;
+      }
+    }
+
+    & > a,
+    & > div {
+      color: var(--menu-link-color);
+      text-align: center;
+      display: block;
+      font-size: $font-size-sm;
+      transition: color 200ms;
+
+      @include media-breakpoint-down(xl) {
+        text-align: left;
+        margin-bottom: 0.5rem;
+        color: var(--bs-secondary-color);
+      }
+
+      & > .ph {
+        font-size: 1.5rem;
+        position: relative;
+        isolation: isolate;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+
+        &:after {
+          content: "";
+          position: absolute;
+          inset: -0.15rem -0.8rem;
+          background-color: var(--menu-link-highlight-bg);
+          z-index: -1;
+          border-radius: 2rem;
+          transform: scale(var(--menu-icon-scale));
+          opacity: var(--menu-icon-opacity);
+          transition:
+            transform 200ms,
+            opacity 200ms,
+            background-color 200ms;
+        }
+
+        @include media-breakpoint-down(xl) {
+          display: none;
+        }
+      }
+
+      & > span {
+        display: block;
+        line-height: 1;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      &:not(.active) {
+        &:hover {
+          --menu-icon-scale: 1;
+          --menu-icon-opacity: 1;
+        }
+      }
+
+      &.active {
+        & > div {
+          --menu-link-color: var(--menu-link-hover-color);
+          --menu-icon-scale: 1;
+          --menu-icon-opacity: 1;
+        }
+      }
+    }
+
+    & > ul {
+      list-style: none;
+
+      @include media-breakpoint-up(xl) {
+        @include hide-scrollbar();
+        overflow-y: auto;
+        opacity: 0;
+        will-change: transform;
+        border-right: 1px solid transparent;
+        background-color: transparent;
+        padding: 1.5rem 0;
+        margin: 0;
+        border-radius: 0 1rem 1rem 0;
+        width: 0;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: $sidebar-width;
+        height: 100%;
+        z-index: $navbar-z-index - 1;
+        background-color: var(--bs-sidebar-sub-bg);
+        transition:
+          opacity 500ms,
+          width 300ms,
+          box-shadow 300ms,
+          border-color 300ms,
+          padding-inline 300ms;
+      }
+
+      @include media-breakpoint-down(xl) {
+        padding: 0;
+        margin: 0 -1rem;
+      }
+
+      & > li {
+        margin-bottom: 1px;
+
+        & > a {
+          color: var(--menu-link-color);
+          background-color: var(--menu-link-bg);
+          height: 2.4rem;
+          display: flex;
+          gap: 0.8rem;
+          padding: 0 1rem;
+          align-items: center;
+          border-radius: $border-radius-pill;
+          transition: background-color 300ms;
+          white-space: nowrap;
+
+          & > .ph {
+            font-size: 1.2rem;
+          }
+
+          &.active {
+            --menu-link-color: #{$blue};
+            --menu-link-bg: var(--menu-link-highlight-bg);
+          }
+
+          &:not(.active) {
+            &:hover {
+              --menu-link-bg: var(--bs-tertiary-emphasis-bg);
+            }
+          }
+        }
+      }
+    }
+
+    &:hover {
+      & > ul {
+        @include media-breakpoint-up(xl) {
+          width: 14rem;
+          box-shadow: 0.35rem 0 0.35rem 0 var(--bs-sidebar-box-shadow);
+          border-color: var(--bs-sidebar-border-color);
+          pointer-events: auto;
+          padding-inline: 0.75rem;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.menu-sub {
+  &.opened {
+    & > a {
+      &:after {
+        transform: rotate(90deg);
+      }
+
+      &:before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    & > ul {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &.active {
+    --menu-link-bg: var(--menu-link-highlight-bg);
+
+    & > a {
+      --menu-link-color: #{$blue};
+    }
+
+    & > ul {
+      display: block;
+    }
+  }
+
+  & > a {
+    position: relative;
+
+    &:after {
+      opacity: 1;
+      @include font-icon("\E13A", $font-size-sm);
+      position: absolute;
+      right: 0.8rem;
+      top: 0.6rem;
+      transition:
+        transform 300ms,
+        opacity 300ms;
+      pointer-events: none;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  & > ul {
+    padding: 0 0 0 2.25rem;
+    list-style: none;
+    overflow: hidden;
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+    display: none;
+    margin: 0;
+    will-change: height, opacity;
+    transition:
+      height 300ms,
+      opacity 400ms;
+
+    & > li {
+      & > a {
+        font-size: $font-size-md;
+        display: block;
+        padding: 0.25rem 0.75rem;
+        color: var(--menu-link-color);
+        transition: color 300ms;
+        border-radius: $border-radius-pill;
+        white-space: nowrap;
+      }
+
+      &:hover > a,
+      & > a.active {
+        --menu-link-color: #{$blue};
+      }
+
+      &:last-child {
+        padding-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// Sidebar list
+// Secondary sidebar in 2 and 3 column layouts
+// e.g contacts, messages, file manager, etc
+#sidebar-secondary {
+  height: 100vh;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  width: $sidebar-mobile-width;
+
+  @include media-breakpoint-up(xl) {
+    padding: 0 0.25rem;
+  }
+
+  @include media-breakpoint-down(xl) {
+    background-color: var(--bs-sidebar-sub-bg);
+    will-change: transform, opacity;
+    position: fixed;
+    left: 0.5rem;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+    z-index: $navbar-z-index + 3;
+    border-radius: $border-radius-xl;
+    border-right: 1px solid var(--#{$prefix}sidebar-mobile-border-color);
+    transform: translate3d(-100%, 0, 0);
+    transition:
+      transform 300ms,
+      opacity 300ms;
+    opacity: 0;
+
+    &.toggled {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+
+      .sidebar-close {
+        display: block;
+      }
+    }
+  }
+}

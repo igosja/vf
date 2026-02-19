@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-page="figures">
+  {{> _head title="Figures" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+        {{> _sidebar-toggle }}
+
+        <h2 class="header-title">Typography</h2>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Content</li>
+          </ol>
+        </nav>
+
+        <i class="ms-auto"></i>
+
+        <div id="toc-wrapper"></div>
+      </div>
+      <div class="content-body mw-1200 mx-auto" data-simplebar>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Basic example</h3>
+            <p class="card-subtitle mb-6">
+              Anytime you need to display a piece of content—like an image with an optional caption,
+              consider using a
+              <code>&lt;figure&gt;</code>.
+            </p>
+
+            <figure class="figure mb-0">
+              <img
+                src="./img/gallery/1.jpg"
+                class="figure-img img-fluid rounded"
+                alt=""
+                width="500"
+              />
+              <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Alignment</h3>
+            <p class="card-subtitle mb-6">
+              Aligning the figure’s caption is easy with Bootstrap's
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="https://getbootstrap.com/docs/5.3/utilities/text/"
+                >text utilities</a
+              >.
+            </p>
+
+            <figure class="figure mb-0">
+              <img
+                src="./img/gallery/2.jpg"
+                class="figure-img img-fluid rounded"
+                alt=""
+                width="500"
+              />
+              <figcaption class="figure-caption text-end">
+                A caption for the above image.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

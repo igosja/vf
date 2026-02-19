@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-page="user-connections">
+  {{> _head title="User Connections"}}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <div id="content" data-simplebar>
+      <div class="content-body content-body-centered">
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <h2 class="header-title">User Connections</h2>
+
+          <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Application Views</a></li>
+              <li class="breadcrumb-item"><a href="#">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Connections
+              </li>
+            </ol>
+          </nav>
+
+          <div class="d-flex gap-2 ms-auto">
+            <a href="" class="icon ph ph-arrow-clockwise"></a>
+            <a href="" class="icon ph ph-gear"></a>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          {{> user/_cover active="connections"}}
+
+          <nav class="nav nav-pills nav-scroll fs-7 p-2 border-top">
+            <a class="nav-link active" href="#">All Connections</a>
+            <a class="nav-link" href="#">Work</a>
+            <a class="nav-link" href="#">College</a>
+            <a class="nav-link" href="#">Current City</a>
+            <a class="nav-link" href="#">Following</a>
+            <a class="nav-link ms-auto d-none d-md-block" href="#">Requests</a>
+            <a class="nav-link d-none d-md-block" href="#">Find Connections</a>
+          </nav>
+        </div>
+
+        <div id="user-connections" class="grid gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>
