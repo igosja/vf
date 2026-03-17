@@ -26,8 +26,8 @@ class Generator extends Command
     public function handle()
     {
 //        $this->generateGame();
-        $this->generateChampionship();
-//        $this->generateChampionshipHistory();
+//        $this->generateChampionship();
+        $this->generateChampionshipHistory();
 //        $this->generateCupHistory();
     }
 
