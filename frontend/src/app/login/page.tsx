@@ -9,13 +9,17 @@ const LoginPage = () => {
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
+        // const response = await axios.get('http://localhost:10010/user', {
+        //     headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }
+        // });
+        // const data = await response.data;
+        // console.log(data);
+
         const formData = new FormData(event.currentTarget)
         const response = await axios.post('http://localhost:10010/login', formData);
-
-        // Handle response if necessary
+        //
         const data = await response.data;
-        console.log(data);
-        // ...
+        localStorage.setItem('authToken', data.authToken);
     }
 
     return (
