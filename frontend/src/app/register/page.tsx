@@ -13,7 +13,7 @@ const RegisterPage = () => {
 
         // Handle response if necessary
         const data = await response.data;
-        console.log(data);
+        localStorage.setItem('authToken', data.authToken);
         // ...
     }
 

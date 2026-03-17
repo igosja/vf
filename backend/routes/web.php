@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -8,3 +9,8 @@ Route::get('/', function () {
 });
 Route::post('login', AuthController::class . '@login');
 Route::post('register', AuthController::class . '@register');
+
+Route::get('user', function () {
+    return Auth::user();
+})->middleware('auth:sanctum');
+

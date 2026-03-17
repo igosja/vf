@@ -19,10 +19,11 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($validated)) {
-            return new JsonResponse(Auth::user());
+            $token = Auth::user()->createToken('authToken');
+            return new JsonResponse(['authToken' => $token->plainTextToken]);
         }
 
-        return new JsonResponse($validated);
+        return new JsonResponse($validated, 422);
     }
 
     public function register(Request $request)
@@ -39,6 +40,8 @@ class AuthController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return new JsonResponse($user);
+        $token = $user->createToken('authToken');
+
+        return new JsonResponse(['authToken' => $token->plainTextToken]);
     }
 }
