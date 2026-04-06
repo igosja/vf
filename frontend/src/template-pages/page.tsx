@@ -1,10 +1,10 @@
-import Sidebar from "@/partials/_sidebar";
-import SidebarToggle from "@/partials/_sidebar-toggle";
-import SalesOverview from "@/partials/sales/_overview";
-import SalesHistory from "@/partials/sales/_sales-history";
-import StoreSessions from "@/partials/sales/_store-sessions";
-import RecentOrders from "@/partials/sales/_recent-orders";
-import TopProducts from "@/partials/sales/_top-products";
+import Sidebar from "@/app/partials/_sidebar";
+import SidebarToggle from "@/app/partials/_sidebar-toggle";
+import SalesOverview from "@/app/partials/sales/_overview";
+import SalesHistory from "@/app/partials/sales/_sales-history";
+import StoreSessions from "@/app/partials/sales/_store-sessions";
+import RecentOrders from "@/app/partials/sales/_recent-orders";
+import TopProducts from "@/app/partials/sales/_top-products";
 import NavBar from "@/partials/_nav-bar";
 
 export default function Home() {
