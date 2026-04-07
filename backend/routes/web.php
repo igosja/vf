@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,6 +10,7 @@ Route::get('/', function () {
 });
 Route::post('login', AuthController::class . '@login');
 Route::post('register', AuthController::class . '@register');
+Route::get('team', TeamController::class . '@index');
 
 Route::get('user', function () {
     return Auth::user();
