@@ -160,7 +160,7 @@ class CountrySeeder extends Seeder
         ['name' => 'Namibia', 'code' => 'NAM'],
         ['name' => 'Nauru', 'code' => 'NRU'],
         ['name' => 'Nepal', 'code' => 'NPL'],
-        ['name' => 'Netherlands (Holland)', 'code' => 'NLD'],
+        ['name' => 'Netherlands', 'code' => 'NLD'],
         ['name' => 'Netherlands\' Antilles', 'code' => 'ANT'],
         ['name' => 'new Caledonia', 'code' => 'NCL'],
         ['name' => 'new Zealand', 'code' => 'NZL'],
