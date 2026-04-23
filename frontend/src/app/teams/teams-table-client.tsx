@@ -3,8 +3,8 @@
 import React, {useState} from 'react';
 import TeamsTable, {TeamInterface} from "./teams-table";
 import Pagination, {LinkInterface} from "@/app/teams/pagination";
-import Loading from "@/app/loading";
 import api from "@/api/api";
+import TeamsPlaceholderTable from "@/app/teams/teams-placeholder-table";
 
 export interface TeamDataResponseInterface {
     data: TeamInterface[],
@@ -38,7 +38,7 @@ const TeamsTableClient:React.FunctionComponent<TeamTableClintProps> = ({initialD
     };
 
     const handlePageChange = (page: number) => {
-        if (page == currentPage) {
+        if (page == currentPage || loading) {
             return;
         }
 
@@ -48,8 +48,8 @@ const TeamsTableClient:React.FunctionComponent<TeamTableClintProps> = ({initialD
     return (
         <>
             <div className="table-responsive">
-                {loading && <Loading/>}
-                <TeamsTable teams={teams}/>
+                {loading && <TeamsPlaceholderTable/>}
+                {!loading && <TeamsTable teams={teams}/>}
                 <Pagination
                     links={links}
                     onPageChange={handlePageChange}

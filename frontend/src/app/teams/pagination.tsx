@@ -24,7 +24,7 @@ const Pagination:React.FunctionComponent<PaginationProps> = ({ links, onPageChan
                             className={"page-link" + (link.page ? '' : ' disabled')}
                             onClick={() => onPageChange(link.page)}
                         >
-                            {link.label}
+                            {new DOMParser().parseFromString(link.label, "text/html").documentElement.textContent}
                         </button>
                     </li>
                 ))}
