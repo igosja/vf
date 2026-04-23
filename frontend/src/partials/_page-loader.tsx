@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useEffect} from 'react';
-import Logo from "@/app/partials/_logo";
+import Logo from "@/partials/_logo";
 
 const PageLoader = () => {
     useEffect(() => {

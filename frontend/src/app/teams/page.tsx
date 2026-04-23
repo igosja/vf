@@ -1,13 +1,18 @@
+import React from 'react';
 import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
-import SalesOverview from "@/partials/sales/_overview";
-import SalesHistory from "@/partials/sales/_sales-history";
-import StoreSessions from "@/partials/sales/_store-sessions";
-import RecentOrders from "@/partials/sales/_recent-orders";
-import TopProducts from "@/partials/sales/_top-products";
 import NavBar from "@/partials/_nav-bar";
+import TeamsTableClient, {TeamDataResponseInterface} from "@/app/teams/teams-table-client";
+import api from "@/api/api";
 
-export default function Home() {
+async function getInitialTeams() {
+    const response = await api.get<TeamDataResponseInterface>('teams?page=1');
+    return response.data;
+}
+
+const TeamsPage:React.FunctionComponent = async () => {
+    const initialData = await getInitialTeams();
+
     return (
         <>
             <Sidebar/>
@@ -16,7 +21,7 @@ export default function Home() {
                     <div className="header">
                         <SidebarToggle/>
 
-                        <h2 className="header-title ps-xl-2">E-Commerce</h2>
+                        <h2 className="header-title ps-xl-2">Teams</h2>
 
                         <i className="ms-auto"></i>
 
@@ -50,20 +55,15 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <SalesOverview/>
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="d-flex align-items-start mb-5">
+                                <h5 className="card-title mb-0 flex-grow-1">Teams</h5>
+                            </div>
 
-                    <div className="row row-cols-lg-2 g-4">
-                        <div className="col">
-                            <SalesHistory/>
-                        </div>
-                        <div className="col">
-                            <StoreSessions/>
-                        </div>
-                        <div className="col">
-                            <RecentOrders/>
-                        </div>
-                        <div className="col">
-                            <TopProducts/>
+                            <div className="table-responsive">
+                                <TeamsTableClient initialData={initialData}/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,4 +71,6 @@ export default function Home() {
             <NavBar/>
         </>
     );
-}
+};
+
+export default TeamsPage;

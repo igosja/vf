@@ -23,7 +23,7 @@ class AuthController extends Controller
             return new JsonResponse(['authToken' => $token->plainTextToken]);
         }
 
-        return new JsonResponse($validated, 422);
+        return new JsonResponse(['message' => 'Invalid credentials'], 422);
     }
 
     public function register(Request $request)
