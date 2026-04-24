@@ -3,10 +3,10 @@ import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
 import TeamsTableClient, {TeamsDataResponseInterface} from "@/app/teams/teams-table-client";
-import api from "@/api/api";
+import apiClient from "@/shared/lib/apiClient";
 
 async function getInitialTeams() {
-    const response = await api.get<TeamsDataResponseInterface>('teams?page=1');
+    const response = await apiClient.get<TeamsDataResponseInterface>('teams?page=1');
     return response.data;
 }
 

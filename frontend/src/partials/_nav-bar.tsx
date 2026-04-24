@@ -43,11 +43,11 @@ const NavBar = () => {
 
                         <div className="dropdown-menu">
                             <a href="" className="dropdown-item">
-                                <img className="h-5 rounded-circle" src="./img/flags/japan.svg" alt=""/>
+                                <img className="h-5 rounded-circle" src="/img/flags/japan.svg" alt=""/>
                                 Japanese
                             </a>
                             <a href="" className="dropdown-item">
-                                <img className="h-5 rounded-circle" src="./img/flags/germany.svg" alt=""/>
+                                <img className="h-5 rounded-circle" src="/img/flags/germany.svg" alt=""/>
                                 German
                             </a>
                             <a href="" className="dropdown-item">
