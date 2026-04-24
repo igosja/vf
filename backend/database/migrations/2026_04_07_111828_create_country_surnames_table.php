@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private const string TABLE = 'country_surname';
+    private const string TABLE = 'country_surnames';
 
     public function up(): void
     {
         if (false === Schema::hasTable(self::TABLE)) {
             Schema::create(self::TABLE, function (Blueprint $table) {
                 $table->foreignId('country_id')->constrained()->cascadeOnDelete();
+                $table->unsignedSmallInteger('frequency');
                 $table->foreignId('surname_id')->constrained()->cascadeOnDelete();
                 $table->timestampsTz(6);
 

@@ -2,16 +2,21 @@ import React from 'react';
 import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
-import TeamsTableClient, {TeamsDataResponseInterface} from "@/app/teams/teams-table-client";
 import api from "@/api/api";
+import {TeamInterface} from "@/app/teams/teams-table";
 
-async function getInitialTeams() {
-    const response = await api.get<TeamsDataResponseInterface>('teams?page=1');
+interface TeamPageProps {
+    params: Promise<{ id: number }>
+}
+
+async function getInitialTeam(id: number) {
+    const response = await api.get<TeamInterface>('teams/' + id);
     return response.data;
 }
 
-const TeamsPage:React.FunctionComponent = async () => {
-    const initialData = await getInitialTeams();
+const TeamPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
+    const {id} = await params;
+    const initialData = await getInitialTeam(id);
 
     return (
         <>
@@ -21,7 +26,7 @@ const TeamsPage:React.FunctionComponent = async () => {
                     <div className="header">
                         <SidebarToggle/>
 
-                        <h2 className="header-title ps-xl-2">Teams</h2>
+                        <h2 className="header-title ps-xl-2">Team</h2>
 
                         <i className="ms-auto"></i>
 
@@ -58,11 +63,40 @@ const TeamsPage:React.FunctionComponent = async () => {
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex align-items-start mb-5">
-                                <h5 className="card-title mb-0 flex-grow-1">Teams</h5>
+                                <h5 className="card-title mb-0 flex-grow-1">Team</h5>
                             </div>
 
-                            <div className="table-responsive">
-                                <TeamsTableClient initialData={initialData}/>
+                            <div className="row">
+                                <div className="col text-end">
+                                    Name
+                                </div>
+                                <div className="col">
+                                    {initialData.name}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col text-end">
+                                    Stadium
+                                </div>
+                                <div className="col">
+                                    {initialData.stadium.capacity}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col text-end">
+                                    City
+                                </div>
+                                <div className="col">
+                                    {initialData.stadium.city.name}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col text-end">
+                                    Country
+                                </div>
+                                <div className="col">
+                                    {initialData.stadium.city.country.name}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,4 +107,4 @@ const TeamsPage:React.FunctionComponent = async () => {
     );
 };
 
-export default TeamsPage;
+export default TeamPage;

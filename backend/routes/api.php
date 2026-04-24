@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 Route::post('login', AuthController::class . '@login');
 Route::post('register', AuthController::class . '@register');
+Route::get('teams/{id}', TeamController::class . '@show');
 Route::get('teams', TeamController::class . '@index');
 
 Route::get('user', function () {

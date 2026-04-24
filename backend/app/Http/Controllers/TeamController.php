@@ -11,7 +11,6 @@ class TeamController extends Controller
 {
     public function index(): JsonResponse
     {
-        sleep(1);
         return new JsonResponse(
             Team::query()
                 ->select(['id', 'name', 'stadium_id'])
@@ -28,6 +27,28 @@ class TeamController extends Controller
                         }]);
                 }])
                 ->paginate()
+        );
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        return new JsonResponse(
+            Team::query()
+                ->select(['id', 'name', 'stadium_id'])
+                ->with(['stadium' => function (BelongsTo $query) {
+                    $query
+                        ->select(['id', 'capacity', 'city_id', 'name'])
+                        ->with(['city' => function (BelongsTo $query) {
+                            $query
+                                ->select(['id', 'country_id', 'name'])
+                                ->with(['country' => function (BelongsTo $query) {
+                                    $query
+                                        ->select(['id', 'name']);
+                                }]);
+                        }]);
+                }])
+                ->where('id', $id)
+                ->first()
         );
     }
 }

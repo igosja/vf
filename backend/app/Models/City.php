@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @property Country $country
  */
 class City extends AbstractModel
 {

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\City;
 use App\Models\Country;
+use App\Models\CountryName;
+use App\Models\Name;
 use Illuminate\Database\Seeder;
 
 class NameSeeder extends Seeder
@@ -526,14 +527,23 @@ class NameSeeder extends Seeder
 
     public function run(): void
     {
-        City::query()->truncate();
+        Name::query()->truncate();
+        CountryName::query()->truncate();
 
-        foreach (self::CITIES as $countryName => $cities) {
+        foreach (self::NAMES as $countryName => $names) {
             $country = Country::query()->where('name', $countryName)->first();
-            foreach ($cities as $city) {
-                $model = new City();
-                $model->name = $city;
-                $model->country()->associate($country);
+            foreach ($names as $name => $frequency) {
+                $nameModel = Name::query()->where(['name' => $name])->first();
+                if (!$nameModel) {
+                    $nameModel = new Name();
+                    $nameModel->name = $name;
+                    $nameModel->save();
+                }
+
+                $model = new CountryName();
+                $model->country_id = $country->id;
+                $model->frequency = $frequency;
+                $model->name_id = $nameModel->id;
                 $model->save();
             }
         }
