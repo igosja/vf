@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $stadium_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @property Stadium $stadium
  */
 class Team extends AbstractModel
 {

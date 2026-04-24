@@ -6,14 +6,14 @@ import Pagination, {LinkInterface} from "@/app/teams/pagination";
 import api from "@/api/api";
 import TeamsPlaceholderTable from "@/app/teams/teams-placeholder-table";
 
-export interface TeamDataResponseInterface {
+export interface TeamsDataResponseInterface {
     data: TeamInterface[],
     links: LinkInterface[],
     current_page: number,
 }
 
 interface TeamTableClintProps {
-    initialData: TeamDataResponseInterface,
+    initialData: TeamsDataResponseInterface,
 }
 
 const TeamsTableClient:React.FunctionComponent<TeamTableClintProps> = ({initialData}) => {
@@ -25,7 +25,7 @@ const TeamsTableClient:React.FunctionComponent<TeamTableClintProps> = ({initialD
     const loadPage = async (page:number) => {
         setLoading(true);
         try {
-            const response = await api.get<TeamDataResponseInterface>(`teams?page=${page}`);
+            const response = await api.get<TeamsDataResponseInterface>(`teams?page=${page}`);
             const data = response.data;
             setTeams(data.data);
             setLinks(data.links);

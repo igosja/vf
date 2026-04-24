@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from "next/dist/client/link";
 
 interface CountryInterface {
     id: number,
@@ -49,7 +50,11 @@ const TeamsTable:React.FunctionComponent<TeamTableProps> = ({teams}) => {
                     <tbody>
                     {teams.map((team) => (
                         <tr key={team.id}>
-                            <td>{team.name}</td>
+                            <td>
+                                <Link href={'teams/' + team.id}>
+                                    {team.name}
+                                </Link>
+                            </td>
                             <td>{team.stadium.capacity}</td>
                             <td>{team.stadium.city.name}</td>
                             <td>{team.stadium.city.country.name}</td>

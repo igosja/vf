@@ -2,11 +2,11 @@ import React from 'react';
 import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
-import TeamsTableClient, {TeamDataResponseInterface} from "@/app/teams/teams-table-client";
+import TeamsTableClient, {TeamsDataResponseInterface} from "@/app/teams/teams-table-client";
 import api from "@/api/api";
 
 async function getInitialTeams() {
-    const response = await api.get<TeamDataResponseInterface>('teams?page=1');
+    const response = await api.get<TeamsDataResponseInterface>('teams?page=1');
     return response.data;
 }
 
