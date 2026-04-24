@@ -14,18 +14,24 @@ class TeamController extends Controller
         return new JsonResponse(
             Team::query()
                 ->select(['id', 'name', 'stadium_id'])
-                ->with(['stadium' => function (BelongsTo $query) {
-                    $query
-                        ->select(['id', 'capacity', 'city_id', 'name'])
-                        ->with(['city' => function (BelongsTo $query) {
-                            $query
-                                ->select(['id', 'country_id', 'name'])
-                                ->with(['country' => function (BelongsTo $query) {
+                ->with([
+                    'stadium' => function (BelongsTo $query) {
+                        $query
+                            ->select(['id', 'capacity', 'city_id', 'name'])
+                            ->with([
+                                'city' => function (BelongsTo $query) {
                                     $query
-                                        ->select(['id', 'name']);
-                                }]);
-                        }]);
-                }])
+                                        ->select(['id', 'country_id', 'name'])
+                                        ->with([
+                                            'country' => function (BelongsTo $query) {
+                                                $query
+                                                    ->select(['id', 'name']);
+                                            }
+                                        ]);
+                                }
+                            ]);
+                    }
+                ])
                 ->paginate()
         );
     }
@@ -35,18 +41,24 @@ class TeamController extends Controller
         return new JsonResponse(
             Team::query()
                 ->select(['id', 'name', 'stadium_id'])
-                ->with(['stadium' => function (BelongsTo $query) {
-                    $query
-                        ->select(['id', 'capacity', 'city_id', 'name'])
-                        ->with(['city' => function (BelongsTo $query) {
-                            $query
-                                ->select(['id', 'country_id', 'name'])
-                                ->with(['country' => function (BelongsTo $query) {
+                ->with([
+                    'stadium' => function (BelongsTo $query) {
+                        $query
+                            ->select(['id', 'capacity', 'city_id', 'name'])
+                            ->with([
+                                'city' => function (BelongsTo $query) {
                                     $query
-                                        ->select(['id', 'name']);
-                                }]);
-                        }]);
-                }])
+                                        ->select(['id', 'country_id', 'name'])
+                                        ->with([
+                                            'country' => function (BelongsTo $query) {
+                                                $query
+                                                    ->select(['id', 'name']);
+                                            }
+                                        ]);
+                                }
+                            ]);
+                    }
+                ])
                 ->where('id', $id)
                 ->first()
         );

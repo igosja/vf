@@ -4,6 +4,8 @@ import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
 import api from "@/api/api";
 import {TeamInterface} from "@/app/teams/teams-table";
+import TeamPlayersTableClient, {TeamPlayersDataResponseInterface} from "@/app/teams/[id]/team-players-table-client";
+import Link from "next/dist/client/link";
 
 interface TeamPageProps {
     params: Promise<{ id: number }>
@@ -14,9 +16,15 @@ async function getInitialTeam(id: number) {
     return response.data;
 }
 
+async function getInitialTeamPlayers(id: number) {
+    const response = await api.get<TeamPlayersDataResponseInterface>('players?team_id=' + id);
+    return response.data;
+}
+
 const TeamPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
     const {id} = await params;
     const initialData = await getInitialTeam(id);
+    const initialPlayersData = await getInitialTeamPlayers(id);
 
     return (
         <>
@@ -26,7 +34,7 @@ const TeamPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
                     <div className="header">
                         <SidebarToggle/>
 
-                        <h2 className="header-title ps-xl-2">Team</h2>
+                        <h2 className="header-title ps-xl-2"><Link href="/teams">Teams</Link></h2>
 
                         <i className="ms-auto"></i>
 
@@ -97,6 +105,10 @@ const TeamPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
                                 <div className="col">
                                     {initialData.stadium.city.country.name}
                                 </div>
+                            </div>
+
+                            <div className="table-responsive">
+                                <TeamPlayersTableClient initialData={initialPlayersData}/>
                             </div>
                         </div>
                     </div>
