@@ -2,19 +2,17 @@
 
 import React, {FormEvent} from 'react';
 import Link from "next/link";
-import api from "@/api/api";
+import apiClient from "@/shared/lib/apiClient";
 
 const RegisterPage = () => {
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        const response = await api.post('register', formData);
+        const response = await apiClient.post('register', formData);
 
-        // Handle response if necessary
         const data = await response.data;
         localStorage.setItem('authToken', data.authToken);
-        // ...
     }
 
     return (
@@ -44,7 +42,7 @@ const RegisterPage = () => {
             </form>
 
             <div className="text-center fs-7">
-                <Link href="login" className="link-secondary d-block">Already have an account?</Link>
+                <Link href="/login" className="link-secondary d-block">Already have an account?</Link>
             </div>
         </div>
     );

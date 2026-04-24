@@ -2,14 +2,14 @@
 
 import React, {FormEvent} from 'react';
 import Link from "next/link";
-import api from "@/api/api";
+import apiClient from "@/shared/lib/apiClient";
 
 const RegisterPage = () => {
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-        const response = await api.post('register', formData);
+        const response = await apiClient.post('register', formData);
 
         // Handle response if necessary
         const data = await response.data;

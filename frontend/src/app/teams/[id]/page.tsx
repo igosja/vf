@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
-import api from "@/api/api";
+import apiClient from "@/shared/lib/apiClient";
 import {TeamInterface} from "@/app/teams/teams-table";
 import TeamPlayersTableClient, {TeamPlayersDataResponseInterface} from "@/app/teams/[id]/team-players-table-client";
 import Link from "next/dist/client/link";
@@ -12,12 +12,12 @@ interface TeamPageProps {
 }
 
 async function getInitialTeam(id: number) {
-    const response = await api.get<TeamInterface>('teams/' + id);
+    const response = await apiClient.get<TeamInterface>('teams/' + id);
     return response.data;
 }
 
 async function getInitialTeamPlayers(id: number) {
-    const response = await api.get<TeamPlayersDataResponseInterface>('players?team_id=' + id);
+    const response = await apiClient.get<TeamPlayersDataResponseInterface>('players?team_id=' + id);
     return response.data;
 }
 

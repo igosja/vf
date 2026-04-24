@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('login', AuthController::class . '@login');
+Route::post('login', AuthController::class . '@login')->middleware('throttle:10,1');
 Route::post('register', AuthController::class . '@register');
 Route::get('teams/{id}', TeamController::class . '@show');
 Route::get('teams', TeamController::class . '@index');
