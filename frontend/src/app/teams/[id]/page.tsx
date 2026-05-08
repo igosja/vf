@@ -6,6 +6,7 @@ import apiClient from "@/shared/lib/apiClient";
 import {TeamInterface} from "@/app/teams/teams-table";
 import TeamPlayersTableClient, {TeamPlayersDataResponseInterface} from "@/app/teams/[id]/team-players-table-client";
 import Link from "next/dist/client/link";
+import Image from "next/image";
 
 interface TeamPageProps {
     params: Promise<{ id: number }>
@@ -29,86 +30,108 @@ const TeamPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
     return (
         <>
             <Sidebar/>
+
             <div id="content" data-simplebar>
                 <div className="content-body content-body-centered">
                     <div className="header">
                         <SidebarToggle/>
 
-                        <h2 className="header-title ps-xl-2"><Link href="/teams">Teams</Link></h2>
+                        <h2 className="header-title">Team Profile</h2>
 
-                        <i className="ms-auto"></i>
+                        <nav aria-label="breadcrumb" className="ms-6 d-none d-sm-flex">
+                            <ol className="breadcrumb">
+                                <li className="breadcrumb-item"><a href="#">Application Views</a></li>
+                                <li className="breadcrumb-item"><a href="#">{initialData.name}</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">
+                                    Profile
+                                </li>
+                            </ol>
+                        </nav>
 
-                        <div className="range-picker range-picker-header d-none d-md-flex">
-                            <div className="btn btn-theme">
-                                <i className="ph ph-calendar-dots fs-3 me-2 position-relative"></i>
-                                <input
-                                    type="text"
-                                    name="start"
-                                    value="07/10/2023"
-                                    className="form-control w-24"
-                                    required
-                                    readOnly
-                                />
-                                <span className="mx-n6">-</span>
-                                <input
-                                    type="text"
-                                    name="end"
-                                    value="07/13/2023"
-                                    className="form-control text-end w-24"
-                                    required
-                                    readOnly
-                                />
-                            </div>
-                        </div>
-
-                        <div className="d-flex gap-1.5 ms-4">
-                            <a href="" className="icon ph ph-plus-circle"></a>
-                            <a href="" className="icon ph ph-info"></a>
-                            <a href="" className="icon ph ph-circles-four"></a>
+                        <div className="d-flex gap-2 ms-auto">
+                            <a href="" className="icon ph ph-arrow-clockwise"></a>
+                            <a href="" className="icon ph ph-gear"></a>
                         </div>
                     </div>
 
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="d-flex align-items-start mb-5">
-                                <h5 className="card-title mb-0 flex-grow-1">Team</h5>
+                    <div className="card mb-4">
+                        <nav className="nav nav-pills nav-scroll fw-medium p-2">
+                            <Link className="nav-link active" href={'teams/' + id}>
+                                Roster
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Games
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 03
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 04
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 05
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 06
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 07
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 08
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 09
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 10
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 11
+                            </Link>
+                            <Link className="nav-link" href={'teams/' + id}>
+                                Link 12
+                            </Link>
+                        </nav>
+                    </div>
+
+                    <div className="d-lg-flex align-items-start gap-4">
+                        <div className="card w-lg-72 flex-shrink-0 mb-2 mt-32 mt-lg-0">
+                            <div className="mb-n1 text-center mt-n24 mt-lg-0 p-2">
+                                <img
+                                    className="w-48 w-lg-100 rounded-2"
+                                    src="/img/Real_Madrid_CF.svg.png"
+                                    alt={initialData.name + " logo"}
+                                />
                             </div>
 
-                            <div className="row">
-                                <div className="col text-end">
-                                    Name
+                            <div className="p-5">
+                                <div className="d-flex align-items-start mb-5">
+                                    <div className="flex-grow-1">
+                                        <h2 className="fs-5 text-body-emphasis mb-1">{initialData.name}</h2>
+                                    </div>
                                 </div>
-                                <div className="col">
-                                    {initialData.name}
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col text-end">
-                                    Stadium
-                                </div>
-                                <div className="col">
-                                    {initialData.stadium.capacity}
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col text-end">
-                                    City
-                                </div>
-                                <div className="col">
-                                    {initialData.stadium.city.name}
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col text-end">
-                                    Country
-                                </div>
-                                <div className="col">
-                                    {initialData.stadium.city.country.name}
-                                </div>
-                            </div>
 
-                            <div className="table-responsive">
-                                <TeamPlayersTableClient initialData={initialPlayersData}/>
+                                <ul className="list-unstyled vstack gap-4 m-0">
+                                    <li className="d-flex align-items-center" title="Stadium capacity">
+                                        <i className="ph ph-chair fs-4 me-3"></i>
+                                        {initialData.stadium.capacity}
+                                    </li>
+                                    <li className="d-flex align-items-center">
+                                        <i className="ph ph-map-pin-line fs-4 me-3"></i>
+                                        {initialData.stadium.city.name}, {initialData.stadium.city.country.name}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="flex-grow-1">
+                            <div className="card p-6 mb-4">
+                                <h2 className="fs-5 text-body-emphasis mb-5">Roster</h2>
+
+                                <div className="table-responsive">
+                                    <TeamPlayersTableClient initialData={initialPlayersData}/>
+                                </div>
                             </div>
                         </div>
                     </div>
