@@ -17,11 +17,20 @@ interface SurnameInterface {
     surname: string,
 }
 
+interface PlayerPositonInterface {
+    player_id: number,
+    position: number,
+}
+
 export interface PlayerInterface {
     id: number,
-    country: CountryInterface
-    name: NameInterface
-    surname: SurnameInterface
+    age: number,
+    fatigue: number,
+    power: number,
+    country: CountryInterface,
+    name: NameInterface,
+    surname: SurnameInterface,
+    player_positions: PlayerPositonInterface[],
 }
 
 interface TeamPlayerTableProps {
@@ -37,6 +46,10 @@ const TeamPlayersTable:React.FunctionComponent<TeamPlayerTableProps> = ({players
                     <tr>
                         <th>Name</th>
                         <th>Country</th>
+                        <th>Age</th>
+                        <th>Fatigue</th>
+                        <th>Power</th>
+                        <th>Position</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +59,14 @@ const TeamPlayersTable:React.FunctionComponent<TeamPlayerTableProps> = ({players
                                 {player.surname.surname} {player.name.name}
                             </td>
                             <td>{player.country.name}</td>
+                            <td>{player.age}</td>
+                            <td>{player.fatigue}</td>
+                            <td>{player.power}</td>
+                            <td>
+                                {player.player_positions.map((playerPosition) => (
+                                    <>{playerPosition.position}</>
+                                ))}
+                            </td>
                         </tr>
                     ))}
                     </tbody>

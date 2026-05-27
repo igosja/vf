@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\Position;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class PlayerController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        return new JsonResponse(
+        return new JsonResource(
             Player::query()
-                ->select(['id', 'country_id', 'name_id', 'surname_id'])
+                ->select(['id', 'age', 'country_id', 'name_id', 'surname_id', 'fatigue', 'power'])
                 ->with([
                     'country' => function (BelongsTo $query) {
                         $query
@@ -26,6 +28,11 @@ class PlayerController extends Controller
                     'surname' => function (BelongsTo $query) {
                         $query
                             ->select(['id', 'surname']);
+                    },
+                    'playerPositions' => function (HasMany $query) {
+                        $query
+                            ->select(['player_id', 'position'])
+                            ->withCasts(['position' => Position::class]);
                     },
                 ])
                 ->where('team_id', request()->input('team_id', 1))

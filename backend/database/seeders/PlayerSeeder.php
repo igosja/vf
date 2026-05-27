@@ -23,6 +23,9 @@ class PlayerSeeder extends Seeder
             $countryId = $team->stadium->city->country_id;
             for ($i = 0; $i < 22; $i++) {
                 $player = new Player();
+                $player->age = $this->getAge($i);
+                $player->power = $this->getPower($i);
+                $player->fatigue = random_int(15, 25);
                 $player->team_id = $team->id;
                 $player->country_id = $countryId;
                 $player->name_id = $this->getNameId($countryId);
@@ -30,6 +33,21 @@ class PlayerSeeder extends Seeder
                 $player->save();
             }
         });
+    }
+
+    private function getAge(int $index): int
+    {
+        $age = $index + 18;
+        if ($age > 35) {
+            $age = $age - 18;
+        }
+
+        return $age;
+    }
+
+    private function getPower(int $index): int
+    {
+        return $this->getAge($index) * 2;
     }
 
     private function getNameId(int $countryId): int
