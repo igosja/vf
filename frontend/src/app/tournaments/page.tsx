@@ -14,9 +14,7 @@ async function getInitialTeams() {
     return response.data;
 }
 
-const PlayersPage:React.FunctionComponent = async () => {
-    const initialData = await getInitialTeams();
-
+const TournamentsPage:React.FunctionComponent = async () => {
     return (
         <>
             <Sidebar/>
@@ -25,7 +23,7 @@ const PlayersPage:React.FunctionComponent = async () => {
                     <div className="header">
                         <SidebarToggle/>
 
-                        <h2 className="header-title ps-xl-2">Players</h2>
+                        <h2 className="header-title ps-xl-2">Tournaments</h2>
 
                         <i className="ms-auto"></i>
 
@@ -62,46 +60,28 @@ const PlayersPage:React.FunctionComponent = async () => {
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex align-items-start mb-5">
-                                <h5 className="card-title mb-0 flex-grow-1">Players</h5>
+                                <h5 className="card-title mb-0 flex-grow-1">Tournaments</h5>
                             </div>
 
                             <div className="table-responsive">
                                 <table className="table">
                                     <thead>
                                     <tr>
-                                        <th>Player</th>
-                                        <th>Team</th>
                                         <th>Country</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <Link href={'/players/1'}>
-                                                    John Dou
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link href={'/teams/1'}>
-                                                    Read Madrid
-                                                </Link>
-                                            </td>
+                                            <td>Champions League</td>
+                                        </tr>
+                                        <tr>
                                             <td>England</td>
+                                            <td>Championship</td>
+                                            <td>Cup</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul className="pagination">
-                                    <li className={"page-item active"}>
-                                        <button
-                                            className={"page-link"}
-                                        >
-                                            1
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -111,4 +91,4 @@ const PlayersPage:React.FunctionComponent = async () => {
     );
 };
 
-export default PlayersPage;
+export default TournamentsPage;

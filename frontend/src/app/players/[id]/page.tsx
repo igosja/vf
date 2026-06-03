@@ -114,34 +114,34 @@ const PlayerPage: React.FunctionComponent<TeamPageProps> = async ({params}) => {
                                 <h2 className="fs-5 text-body-emphasis mb-5">Games</h2>
 
                                 <div className="table-responsive">
-                                    <div className="table-responsive">
-                                        <div className="table-responsive">
-                                            <table className="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Home</th>
-                                                    <th>Guest</th>
-                                                    <th>Score</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <Link href="/teams/1">
-                                                            Real Madrid
-                                                        </Link>
-                                                    </td>
-                                                    <td>
-                                                        <Link href="/teams/1">
-                                                            Man City
-                                                        </Link>
-                                                    </td>
-                                                    <td>1:0</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <table className="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Home</th>
+                                            <th>Guest</th>
+                                            <th>Score</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <Link href="/teams/1">
+                                                    Real Madrid
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link href="/teams/1">
+                                                    Man City
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link href="/games/1">
+                                                    1:0
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
