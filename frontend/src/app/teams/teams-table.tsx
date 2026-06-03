@@ -51,7 +51,7 @@ const TeamsTable:React.FunctionComponent<TeamTableProps> = ({teams}) => {
                     {teams.map((team) => (
                         <tr key={team.id}>
                             <td>
-                                <Link href={'teams/' + team.id}>
+                                <Link href={'/teams/' + team.id}>
                                     {team.name}
                                 </Link>
                             </td>

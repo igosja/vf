@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from "next/dist/client/link";
 
 interface CountryInterface {
     id: number,
@@ -56,7 +57,9 @@ const TeamPlayersTable:React.FunctionComponent<TeamPlayerTableProps> = ({players
                     {players.map((player) => (
                         <tr key={player.id}>
                             <td>
-                                {player.surname.surname} {player.name.name}
+                                <Link href={'/players/' + player.id}>
+                                    {player.surname.surname} {player.name.name}
+                                </Link>
                             </td>
                             <td>{player.country.name}</td>
                             <td>{player.age}</td>
@@ -64,7 +67,9 @@ const TeamPlayersTable:React.FunctionComponent<TeamPlayerTableProps> = ({players
                             <td>{player.power}</td>
                             <td>
                                 {player.player_positions.map((playerPosition) => (
-                                    <>{playerPosition.position}</>
+                                    <span key={playerPosition.position}>
+                                        {playerPosition.position}
+                                    </span>
                                 ))}
                             </td>
                         </tr>

@@ -13,7 +13,7 @@ const NavBar = () => {
                             aria-expanded="false"
                             // style="--squircle-size: 2.75rem"
                         >
-                            <img className="avatar" src="./img/contacts/2.jpg" alt=""/>
+                            <img className="avatar" src="/img/contacts/2.jpg" alt=""/>
                         </button>
 
                         <div className="dropdown-menu">
