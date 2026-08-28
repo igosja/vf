@@ -7,9 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Team
- * @package App\Models
- *
  * @property int $id
  * @property string $name
  * @property int $stadium_id

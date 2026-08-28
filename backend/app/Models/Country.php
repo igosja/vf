@@ -6,9 +6,6 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
- * Class Country
- * @package App\Models
- *
  * @property int $id
  * @property string $code
  * @property string $name

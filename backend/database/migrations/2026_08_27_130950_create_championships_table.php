@@ -6,17 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private const string TABLE = 'player_positions';
+    private const string TABLE = 'championships';
 
     public function up(): void
     {
         if (false === Schema::hasTable(self::TABLE)) {
             Schema::create(self::TABLE, function (Blueprint $table) {
-                $table->foreignId('player_id')->constrained()->cascadeOnDelete();
-                $table->unsignedTinyInteger('position');
+                $table->id();
+                $table->foreignId('country_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('season_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('team_id')->constrained()->cascadeOnDelete();
                 $table->timestampsTz(6);
 
-                $table->unique(['player_id', 'position']);
+                $table->unique(['season_id', 'country_id', 'team_id']);
             });
         }
     }

@@ -7,9 +7,6 @@ use App\Enums\Position;
 use Carbon\Carbon;
 
 /**
- * Class PlayerPosition
- * @package App\Models
- *
  * @property int $player_id
  * @property Position $position
  * @property Carbon $created_at

@@ -6,14 +6,13 @@ namespace App\Models;
 use Carbon\Carbon;
 
 /**
+ * Class Season
+ * @package App\Models
+ *
  * @property int $id
- * @property int $country_id
- * @property int $frequency
- * @property int $surname_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class CountrySurname extends AbstractModel
+class Season extends AbstractModel
 {
-    public $incrementing = false;
 }

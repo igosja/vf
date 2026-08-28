@@ -2,19 +2,36 @@ import React from 'react';
 import Sidebar from "@/partials/_sidebar";
 import SidebarToggle from "@/partials/_sidebar-toggle";
 import NavBar from "@/partials/_nav-bar";
-import TeamsTableClient, {TeamsDataResponseInterface} from "@/app/teams/teams-table-client";
 import apiClient from "@/shared/lib/apiClient";
-import TeamsPlaceholderTable from "@/app/teams/teams-placeholder-table";
-import TeamsTable from "@/app/teams/teams-table";
-import Pagination from "@/app/teams/pagination";
+import {LinkInterface} from "@/app/teams/pagination";
 import Link from "next/dist/client/link";
 
-async function getInitialTeams() {
-    const response = await apiClient.get<TeamsDataResponseInterface>('teams?page=1');
+interface CountryInterface {
+    id: number,
+    name: string,
+}
+
+interface TournamentInterface {
+    id: number,
+    country_id: number,
+    country: CountryInterface,
+    season_id: number,
+    tournament_type: number,
+}
+
+interface TournamentsDataResponseInterface {
+    data: TournamentInterface[],
+    links: LinkInterface[],
+    current_page: number,
+}
+
+async function getInitialTournaments() {
+    const response = await apiClient.get<TournamentsDataResponseInterface>('tournaments?page=1');
     return response.data;
 }
 
 const TournamentsPage:React.FunctionComponent = async () => {
+    const initialData = await getInitialTournaments();
     return (
         <>
             <Sidebar/>
@@ -71,14 +88,23 @@ const TournamentsPage:React.FunctionComponent = async () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Champions League</td>
+                                    {initialData.data.map((tournament) => (
+                                        <tr key={tournament.id}>
+                                            <td>
+                                                {tournament.country.name}
+                                            </td>
+                                            <td>
+                                                <Link href={'/championships/' + tournament.country_id}>
+                                                    Championship
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link href={'/cup/' + tournament.country_id}>
+                                                    Cup
+                                                </Link>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>England</td>
-                                            <td>Championship</td>
-                                            <td>Cup</td>
-                                        </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                             </div>

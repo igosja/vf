@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property int $capacity
- * @property int $city_id
- * @property string $name
+ * @property int $country_id
+ * @property int $season_id
+ * @property int $team_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @property City $city
+ * @property Team $country
  */
-class Stadium extends AbstractModel
+class Championship extends AbstractModel
 {
-    public function city(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(Team::class);
     }
 }

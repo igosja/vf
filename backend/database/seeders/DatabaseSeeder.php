@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             NameSeeder::class,
             SurnameSeeder::class,
             PlayerSeeder::class,
+            SeasonSeeder::class,
+            TournamentSeeder::class,
+            ChampionshipSeeder::class,
         ]);
     }
 }

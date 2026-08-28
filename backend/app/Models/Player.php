@@ -3,16 +3,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Responses\PlayerResourceCollection;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class Player
- * @package App\Models
- *
  * @property int $id
  * @property int $age
  * @property int $country_id
