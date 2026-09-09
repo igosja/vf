@@ -7,19 +7,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private const string TABLE = 'tournaments';
+    private const string TABLE = 'schedules';
 
     public function up(): void
     {
         if (false === Schema::hasTable(self::TABLE)) {
             Schema::create(self::TABLE, function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('country_id')->constrained()->cascadeOnDelete();
+                $table->dateTimeTz('date');
+                $table->unsignedTinyInteger('round');
                 $table->foreignId('season_id')->constrained()->cascadeOnDelete();
                 $table->unsignedTinyInteger('tournament_type');
                 $table->timestampsTz(6);
-
-                $table->unique(['season_id', 'country_id', 'tournament_type']);
             });
         }
     }

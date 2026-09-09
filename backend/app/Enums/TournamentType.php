@@ -9,4 +9,6 @@ enum TournamentType: int
     case CHAMPIONS_LEAGUE = 2;
     case CHAMPIONSHIP = 3;
     case CUP = 4;
+    case PRE_SEASON = 5;
+    case FRIENDLY = 6;
 }

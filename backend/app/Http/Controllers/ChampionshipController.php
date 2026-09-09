@@ -13,12 +13,25 @@ class ChampionshipController extends Controller
     {
         return new JsonResponse(
             Championship::query()
-                ->select(['id', 'country_id', 'team_id'])
+                ->select([
+                    'id',
+                    'country_id',
+                    'draws',
+                    'goals_against',
+                    'goals_difference',
+                    'goals_for',
+                    'losses',
+                    'played',
+                    'points',
+                    'position',
+                    'team_id',
+                    'wins',
+                ])
                 ->with([
                     'team' => function (BelongsTo $query) {
                         $query
                             ->select(['id', 'name']);
-                    }
+                    },
                 ])
                 ->where('country_id', $id)
                 ->paginate(-1)

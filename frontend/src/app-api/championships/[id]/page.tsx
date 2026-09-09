@@ -13,8 +13,17 @@ interface ChampionshipPageProps {
 
 interface ChampionshipInterface {
     id: number,
-    country_id: string,
-    team_id: string,
+    country_id: number,
+    draws: number,
+    goals_against: number,
+    goals_difference: number,
+    goals_for: number,
+    losses: number,
+    played: number,
+    points: number,
+    position: number,
+    team_id: number,
+    wins: number,
     team: TeamInterface,
 }
 
@@ -54,16 +63,52 @@ const ChampionshipPage: React.FunctionComponent<ChampionshipPageProps> = async (
                                     <table className="table">
                                         <thead>
                                         <tr>
+                                            <th title="Position">Pos</th>
                                             <th>Team</th>
+                                            <th title="Played">MP</th>
+                                            <th title="Wins">W</th>
+                                            <th title="Draws">D</th>
+                                            <th title="Losses">L</th>
+                                            <th title="Goals For">GF</th>
+                                            <th title="Goals Against">GA</th>
+                                            <th title="Goal Difference">GD</th>
+                                            <th title="Points">Pts</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {initialData.data.map((championship) => (
                                             <tr key={championship.id}>
                                                 <td>
+                                                    {championship.position}
+                                                </td>
+                                                <td>
                                                     <Link href={'/teams/' + championship.team_id}>
                                                         {championship.team.name}
                                                     </Link>
+                                                </td>
+                                                <td>
+                                                    {championship.played}
+                                                </td>
+                                                <td>
+                                                    {championship.wins}
+                                                </td>
+                                                <td>
+                                                    {championship.draws}
+                                                </td>
+                                                <td>
+                                                    {championship.losses}
+                                                </td>
+                                                <td>
+                                                    {championship.goals_for}
+                                                </td>
+                                                <td>
+                                                    {championship.goals_against}
+                                                </td>
+                                                <td>
+                                                    {championship.goals_difference}
+                                                </td>
+                                                <td>
+                                                    {championship.points}
                                                 </td>
                                             </tr>
                                         ))}

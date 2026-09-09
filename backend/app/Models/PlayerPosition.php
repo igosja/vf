@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 /**
  * @property int $player_id
- * @property Position $position
+ * @property PlayerPosition $position
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -19,7 +19,7 @@ class PlayerPosition extends AbstractModel
     protected function casts(): array
     {
         return [
-            'position' => Position::class,
+            'position' => PlayerPosition::class,
         ];
     }
 }

@@ -12,10 +12,10 @@ class PlayerPositionSeeder extends Seeder
 {
     public function run(): void
     {
-        PlayerPosition::query()->truncate();
+        Position::query()->truncate();
 
         Player::query()->each(function (Player $player) {
-            $playerPosition = new PlayerPosition();
+            $playerPosition = new Position();
             $playerPosition->player_id = $player->id;
             $playerPosition->position = $this->getPosition($player->id);
             $playerPosition->save();

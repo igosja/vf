@@ -7,19 +7,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private const string TABLE = 'tournaments';
+    private const string TABLE = 'football_matches';
 
     public function up(): void
     {
         if (false === Schema::hasTable(self::TABLE)) {
             Schema::create(self::TABLE, function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('country_id')->constrained()->cascadeOnDelete();
-                $table->foreignId('season_id')->constrained()->cascadeOnDelete();
-                $table->unsignedTinyInteger('tournament_type');
+                $table->unsignedTinyInteger('away_score')->default(0);
+                $table->foreignId('away_team_id')->constrained('teams')->cascadeOnDelete();
+                $table->unsignedTinyInteger('home_score')->default(0);
+                $table->foreignId('home_team_id')->constrained('teams')->cascadeOnDelete();
+                $table->foreignId('schedule_id')->constrained()->cascadeOnDelete();
+                $table->unsignedTinyInteger('status');
                 $table->timestampsTz(6);
-
-                $table->unique(['season_id', 'country_id', 'tournament_type']);
             });
         }
     }

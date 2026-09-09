@@ -6,7 +6,6 @@ import apiClient from "@/shared/lib/apiClient";
 import {TeamInterface} from "@/app/teams/teams-table";
 import TeamPlayersTableClient, {TeamPlayersDataResponseInterface} from "@/app/teams/[id]/team-players-table-client";
 import Link from "next/dist/client/link";
-import Image from "next/image";
 
 interface TeamPageProps {
     params: Promise<{ id: number }>
