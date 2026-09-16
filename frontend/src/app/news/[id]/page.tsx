@@ -2,7 +2,7 @@ import React from "react";
 import {IdPageProps} from "@/app/idinterface";
 import Link from "next/link";
 
-const HomePage: React.FunctionComponent<IdPageProps> = async ({params}) => {
+const NewsIdPage: React.FunctionComponent<IdPageProps> = async ({params}) => {
     const {id} = await params;
 
     return (
@@ -11,7 +11,7 @@ const HomePage: React.FunctionComponent<IdPageProps> = async ({params}) => {
                 <div className="card p-6 mb-4">
                     <div className="row">
                         <div className="col-12">
-                            <h3>News #{id}</h3>
+                            <h3>News #{id + 1}</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent imperdiet arcu eget
                                 nulla egestas consectetur. Integer at mauris at mi sollicitudin tempor. Sed
                                 eleifend, enim bibendum tincidunt accumsan, erat ex tristique sem, nec lacinia lorem
@@ -26,7 +26,7 @@ const HomePage: React.FunctionComponent<IdPageProps> = async ({params}) => {
                     {Array.from({length: 10}).map((_, index: number) => (
                         <div key={index} className="row">
                             <div className="col-12">
-                                <h4>Comment #{index}</h4>
+                                <h4>Comment #{index + 1}</h4>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent imperdiet arcu
                                     eget nulla egestas consectetur. Integer at mauris at mi sollicitudin tempor. Sed
                                     eleifend, enim bibendum tincidunt accumsan, erat ex tristique sem, nec lacinia
@@ -44,4 +44,4 @@ const HomePage: React.FunctionComponent<IdPageProps> = async ({params}) => {
     );
 }
 
-export default HomePage;
+export default NewsIdPage;

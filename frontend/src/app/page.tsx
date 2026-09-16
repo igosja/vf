@@ -7,46 +7,17 @@ const HomePage: React.FunctionComponent = () => {
                 <div className="card p-6 mb-4">
                     <div className="row">
                         <div className="col-12">
-                            <h1>Lorem Ipsum</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent imperdiet arcu
-                                eget nulla egestas consectetur. Integer at mauris at mi sollicitudin tempor. Sed
-                                eleifend, enim bibendum tincidunt accumsan, erat ex tristique sem, nec lacinia
-                                lorem risus sit amet ligula. Vivamus imperdiet molestie orci ac aliquet. In hac
-                                habitasse platea dictumst. Aenean non risus sit amet nulla consectetur aliquam.
-                                Integer ultricies congue ipsum, vel dictum neque aliquam vel.</p>
-                            <p>Aenean quis dolor vel lacus imperdiet condimentum. Mauris in tincidunt est. Duis
-                                porta molestie leo, pharetra consectetur augue sagittis non. In hac habitasse
-                                platea dictumst. Morbi efficitur dui quam, sit amet interdum turpis scelerisque
-                                eu. Aliquam ut nunc vitae erat pharetra mattis. Cras sit amet tortor sit amet
-                                odio congue elementum ut quis lorem. Vestibulum ante ipsum primis in faucibus
-                                orci luctus et ultrices posuere cubilia curae; Sed in ultricies nulla. Mauris
-                                sollicitudin eros quis ligula dictum luctus. Nulla fermentum, sem at vulputate
-                                tincidunt, eros ligula facilisis elit, eget congue odio mi ac nulla.</p>
-                            <p>Integer tincidunt augue nunc, quis dignissim arcu tempor non. Ut et viverra nisi.
-                                Ut imperdiet purus convallis odio ullamcorper fringilla. Orci varius natoque
-                                penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
-                                faucibus ante in metus posuere lobortis. Morbi mattis elementum turpis, id
-                                lacinia ligula hendrerit in. Proin sed lobortis mauris. Duis lobortis libero nec
-                                sapien pulvinar, vel malesuada ipsum ultricies. Praesent a fringilla purus, eget
-                                pellentesque ex. Duis a magna eu lorem vehicula accumsan. Nam sed nisl nunc.
-                                Duis nec bibendum mauris. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit. Aenean mollis ipsum id libero commodo placerat.</p>
-                            <p>Quisque sagittis euismod mattis. Etiam nec risus dignissim, rutrum justo sed,
-                                scelerisque massa. Nam tristique risus nec felis efficitur, sed bibendum tortor
-                                lacinia. Suspendisse potenti. Etiam quis arcu risus. Ut laoreet mauris diam, ut
-                                volutpat nisi maximus ut. Vestibulum massa magna, consequat eget vehicula ut,
-                                lobortis nec elit. Nullam pulvinar scelerisque metus, vel mollis est volutpat
-                                at. Nullam nec lacus eget arcu elementum convallis vitae in lorem. Donec
-                                malesuada semper lacinia. Ut accumsan rhoncus placerat. Proin tincidunt neque
-                                eget purus maximus, sit amet convallis mi interdum. Phasellus tempor lectus nec
-                                venenatis egestas. Pellentesque ut aliquam nunc. Suspendisse a libero eget diam
-                                aliquam consectetur. Donec eu dui rutrum, consequat mauris ut, pretium erat.</p>
-                            <p>Sed id pretium lacus. Ut gravida in massa non dictum. Praesent tincidunt eget
-                                nulla vitae mattis. Vivamus ligula ipsum, imperdiet eu consequat nec, cursus vel
-                                ligula. Integer ipsum ligula, ultricies efficitur ultricies et, venenatis vel
-                                orci. Proin et nisl id turpis egestas suscipit. Vivamus quis leo massa. Aenean
-                                vel imperdiet lectus, sit amet tempor odio. Donec sit amet orci finibus, tempor
-                                sapien a, luctus odio. Etiam convallis eget massa ac fermentum.</p>
+                            <h1 className="text-center">Добро пожаловать в мир виртуального футбола!</h1>
+                            <p>Виртуальная Футбольная Лига - это онлайн игра, в которой вы становитесь тренером и менеджером футбольной команды. Ваши соперники - это несколько тысяч человек со всего мира, которые тоже управляют своими футбольными клубами и играют против вас.</p>
+                            <p>Внутри нашей игры - разные турниры, как в настоящем футболе: товарищеские матчи, национальные чемпионаты и кубки, лиги чемпионов разных континентов, кубки конфедераций, чемпионаты мира и континентов. Матчи проводятся раз в сутки. Один сезон мы играем за три месяца.</p>
+                            <p>В роли тренера ваши задачи: определять тактику, стратегию и схему игры в каждом матче, выбирать футболистов в стартовый состав, проводить замены. Следить за усталостью и формой футболистов, сыгранностью состава, проводить тренировки. Изучать скрытые параметры своих и чужих футболистов, эффективно использовать эти знания. Выигрывать матчи, перехитрив других тренеров, и завоевывать трофеи для своей команды.</p>
+                            <p>В роли менеджера ваши задачи: построить инфраструктуру команды - стадион, базу, спортивную школу, тренировочные и медицинские центры. Заключать сделки на трансферном, арендном и обменном рынках. Выбирать спонсорские контракты. Организовывать товарищеские матчи и коммерческие турниры. Следить за экономикой и финансовым положением команды.</p>
+                            <p>Вы можете делать карьеру, меняя места своей работы, или достигнуть футбольных вершин со своим первым клубом. Есть возможность управлять целой футбольной империей, состоящей из нескольких команд на разных континентах. Каждый сезон вы можете претендовать на место у руля национальных, молодежных и юношеских сборных.</p>
+                            <p>Участие в игре бесплатное. Управлять командой можно прямо в браузере. Мы - один из старейших футбольных менеджеров на русском языке! В августе 2026 года игре исполнилось 25 лет!</p>
+                            <h2 className="text-center">Как стать менеджером футбольной команды?</h2>
+                            <p>Для начала вам нужно зарегистрироваться в игре, придумав себе логин и пароль.</p>
+                            <p>Вы сразу же получите в своё управление команду, которой будете играть или обменяете её на другую.</p>
+                            <p>Вопросы можно задавать на форуме, в чате или на странице технической поддержки.</p>
                         </div>
                     </div>
                 </div>

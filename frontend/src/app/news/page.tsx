@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const HomePage: React.FunctionComponent = () => {
+const NewsPage: React.FunctionComponent = () => {
     return (
         <div className="d-lg-flex align-items-start gap-4">
             <div className="flex-grow-1">
@@ -9,7 +9,7 @@ const HomePage: React.FunctionComponent = () => {
                     {Array.from({length: 10}).map((_, index: number) => (
                         <div key={index} className="row">
                             <div className="col-12">
-                                <h3>News #{index}</h3>
+                                <h3>News #{index + 1}</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent imperdiet arcu
                                     eget nulla egestas consectetur. Integer at mauris at mi sollicitudin tempor. Sed
                                     eleifend, enim bibendum tincidunt accumsan, erat ex tristique sem, nec lacinia
@@ -28,4 +28,4 @@ const HomePage: React.FunctionComponent = () => {
     );
 }
 
-export default HomePage;
+export default NewsPage;

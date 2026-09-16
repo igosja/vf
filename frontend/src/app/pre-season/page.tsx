@@ -7,7 +7,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                 <div className="card p-6 mb-4">
                     <div className="row">
                         <div className="col-12 text-center">
-                            <h1>Чемпионат</h1>
+                            <h1>Кубок межсезонья</h1>
                         </div>
                     </div>
                     <div className="row">
@@ -21,126 +21,8 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12">
-                            <p>Чемпионаты стран - это основные турниры в Лиге. В каждой из стран, где зарегистрированы
-                                16 или более клубов, проводятся национальные чемпионаты. Все команды, которые были
-                                созданы на момент старта очередных чемпионатов, принимают в них участие. Национальные
-                                чемпионаты проводятся один раз в сезон.</p>
-                            <p>В одном национальном чемпионате может быть от двух до четырех дивизионов, в зависимости
-                                от числа команд в стране. Победители низших дивизионов получают право в следующем сезоне
-                                играть в более высоком дивизионе. Проигравшие вылетают в более низкий дивизион. Часть
-                                команд переходят не напрямую, а через переходные игры.</p>
-                            <p>В этом дивизионе 16 команд, каждая команда играет с другими по 2 матча: дома и на выезде.
-                                Всего каждая команда проводит 30 матчей. За победу начисляется три очка, за ничью -
-                                одно, за поражение - ноль.</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 text-center">
-                            Расписание:
-                            <select className="inline-block">
-                                {Array.from({length: 30}).map((_, index: number) => (
-                                    <option key={index}>{index}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 text-center">
-                            <p>Тур 26 - 2 сентября, 22:00</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Тростянец
-                        </div>
-                        <div className="col-2 text-center">
-                            4:0
-                        </div>
-                        <div className="col-5 text-start">
-                            Ворскла Полтава
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Динамо Киев
-                        </div>
-                        <div className="col-2 text-center">
-                            2:5
-                        </div>
-                        <div className="col-5 text-start">
-                            Шахтер
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            ВПК-Агро Магдалиновка
-                        </div>
-                        <div className="col-2 text-center">
-                            0:4
-                        </div>
-                        <div className="col-5 text-start">
-                            Агрон Великий Гай
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Ребель Киев
-                        </div>
-                        <div className="col-2 text-center">
-                            4:0
-                        </div>
-                        <div className="col-5 text-start">
-                            Судостроитель Николаев
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Диназ Вышгород
-                        </div>
-                        <div className="col-2 text-center">
-                            1:2
-                        </div>
-                        <div className="col-5 text-start">
-                            Волынь Луцк
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Днепр-1
-                        </div>
-                        <div className="col-2 text-center">
-                            2:1
-                        </div>
-                        <div className="col-5 text-start">
-                            Покуття Коломыя
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Металлист Харьков
-                        </div>
-                        <div className="col-2 text-center">
-                            3:0
-                        </div>
-                        <div className="col-5 text-start">
-                            Металлург
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5 text-end">
-                            Подолье Хмельницкий
-                        </div>
-                        <div className="col-2 text-center">
-                            0:0
-                        </div>
-                        <div className="col-5 text-start">
-                            МФК Николаев
-                        </div>
-                    </div>
-                    <div className="row">
                         <div className="col-12 table-responsive">
-                            <table className="table table-striped">
+                            <table className="table table-striped table-hover">
                                 <thead>
                                 <tr className="text-center">
                                     <th>М</th>
@@ -159,7 +41,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>1{'\u00A0'}(1)</td>
+                                    <td>1</td>
                                     <td>Тростянец</td>
                                     <td>26</td>
                                     <td>20</td>
@@ -173,7 +55,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>680</td>
                                 </tr>
                                 <tr>
-                                    <td>2{'\u00A0'}(2)</td>
+                                    <td>2</td>
                                     <td>Шахтер</td>
                                     <td>26</td>
                                     <td>20</td>
@@ -187,7 +69,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>651</td>
                                 </tr>
                                 <tr>
-                                    <td>3{'\u00A0'}(3)</td>
+                                    <td>3</td>
                                     <td>Агрон{'\u00A0'}Великий{'\u00A0'}Гай</td>
                                     <td>26</td>
                                     <td>17</td>
@@ -201,7 +83,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>655</td>
                                 </tr>
                                 <tr>
-                                    <td>4{'\u00A0'}(4)</td>
+                                    <td>4</td>
                                     <td>МФК{'\u00A0'}Николаев</td>
                                     <td>26</td>
                                     <td>15</td>
@@ -215,7 +97,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>616</td>
                                 </tr>
                                 <tr>
-                                    <td>5{'\u00A0'}(5)</td>
+                                    <td>5</td>
                                     <td>Динамо{'\u00A0'}Киев</td>
                                     <td>26</td>
                                     <td>15</td>
@@ -229,7 +111,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>437</td>
                                 </tr>
                                 <tr>
-                                    <td>6{'\u00A0'}(6)</td>
+                                    <td>6</td>
                                     <td>Подолье{'\u00A0'}Хмельницкий</td>
                                     <td>26</td>
                                     <td>14</td>
@@ -243,7 +125,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>660</td>
                                 </tr>
                                 <tr>
-                                    <td>7{'\u00A0'}(7)</td>
+                                    <td>7</td>
                                     <td>Волынь{'\u00A0'}Луцк</td>
                                     <td>26</td>
                                     <td>13</td>
@@ -257,7 +139,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>697</td>
                                 </tr>
                                 <tr>
-                                    <td>8{'\u00A0'}(8)</td>
+                                    <td>8</td>
                                     <td>Покуття{'\u00A0'}Коломыя</td>
                                     <td>26</td>
                                     <td>11</td>
@@ -271,7 +153,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>606</td>
                                 </tr>
                                 <tr>
-                                    <td>9{'\u00A0'}(9)</td>
+                                    <td>9</td>
                                     <td>Металлист{'\u00A0'}Харьков</td>
                                     <td>26</td>
                                     <td>9</td>
@@ -285,7 +167,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>883</td>
                                 </tr>
                                 <tr>
-                                    <td>10{'\u00A0'}(10)</td>
+                                    <td>10</td>
                                     <td>Ребель{'\u00A0'}Киев</td>
                                     <td>26</td>
                                     <td>8</td>
@@ -299,7 +181,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>568</td>
                                 </tr>
                                 <tr>
-                                    <td>11{'\u00A0'}(11)</td>
+                                    <td>11</td>
                                     <td>Днепр-1</td>
                                     <td>26</td>
                                     <td>9</td>
@@ -313,7 +195,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>892</td>
                                 </tr>
                                 <tr>
-                                    <td>12{'\u00A0'}(12)</td>
+                                    <td>12</td>
                                     <td>ВПК-Агро{'\u00A0'}Магдалиновка</td>
                                     <td>26</td>
                                     <td>7</td>
@@ -327,7 +209,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>595</td>
                                 </tr>
                                 <tr>
-                                    <td>13{'\u00A0'}(13)</td>
+                                    <td>13</td>
                                     <td>Металлург</td>
                                     <td>26</td>
                                     <td>6</td>
@@ -341,7 +223,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>501</td>
                                 </tr>
                                 <tr>
-                                    <td>14{'\u00A0'}(14)</td>
+                                    <td>14</td>
                                     <td>Диназ{'\u00A0'}Вышгород</td>
                                     <td>26</td>
                                     <td>6</td>
@@ -355,7 +237,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>359</td>
                                 </tr>
                                 <tr>
-                                    <td>15{'\u00A0'}(15)</td>
+                                    <td>15</td>
                                     <td>Судостроитель{'\u00A0'}Николаев</td>
                                     <td>26</td>
                                     <td>5</td>
@@ -369,7 +251,7 @@ const ChampionshipsPage: React.FunctionComponent = () => {
                                     <td>521</td>
                                 </tr>
                                 <tr>
-                                    <td>16{'\u00A0'}(16)</td>
+                                    <td>16</td>
                                     <td>Ворскла{'\u00A0'}Полтава</td>
                                     <td>26</td>
                                     <td>2</td>
