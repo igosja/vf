@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-page="mail">
+  {{> _head title="Mail" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> mail/_sidebar }}
+
+      <div class="content-body">
+        <!-- Content header -->
+        {{> mail/_header }}
+
+        <!-- Mail List -->
+        <div id="mail-list" class="card list-row-wrapper py-2"></div>
+
+        <!-- Mail Preview -->
+        {{> mail/_preview }}
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-pen"></i>
+        <span class="d-none d-md-inline">Compose Mail</span>
+      </button>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

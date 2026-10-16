@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Colors |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Colors
+Materia colors everything with two kinds of color:
+
+Theme colors have a role in their name: background, card, foreground, border, primary. Each one holds a different value in light and dark mode, so a page built from them works in both modes with no extra classes. Use them for surfaces, text, borders and interactive states. Theme Tokens lists all of them.
+Palette colors come straight from Tailwind&rsquo;s built-in palette: sky-500, emerald-500, amber-400 and so on. They look the same in light and dark mode. Use them for meaning: status, categories, chart series and icon tiles.
+
+This page covers the palette colors, plus the two theme colors that carry meaning, primary and destructive. Every class name below is the one the template uses. If you stick to these classes, a new widget will match the ones already in the template.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="colors">Colors</h1>
+<p>Materia colors everything with two kinds of color:</p>
+<ul>
+<li><strong>Theme colors</strong> have a role in their name: <code>background</code>, <code>card</code>, <code>foreground</code>, <code>border</code>, <code>primary</code>. Each one holds a different value in light and dark mode, so a page built from them works in both modes with no extra classes. Use them for surfaces, text, borders and interactive states. <a href="./theme-tokens.html">Theme Tokens</a> lists all of them.</li>
+<li><strong>Palette colors</strong> come straight from Tailwind&rsquo;s built-in palette: <code>sky-500</code>, <code>emerald-500</code>, <code>amber-400</code> and so on. They look the same in light and dark mode. Use them for meaning: status, categories, chart series and icon tiles.</li>
+</ul>
+<p>This page covers the palette colors, plus the two theme colors that carry meaning, <code>primary</code> and <code>destructive</code>. Every class name below is the one the template uses. If you stick to these classes, a new widget will match the ones already in the template.</p>
+<h2 id="the-palette">The palette</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4&#34;&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-primary&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-primary/15 text-primary&#34;&gt;Primary&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-primary&lt;br/&gt;text-primary&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-sky-500&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-sky-500/15 text-sky-500&#34;&gt;Sky&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-sky-500&lt;br/&gt;text-sky-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-emerald-500&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-emerald-500/15 text-emerald-500&#34;&gt;Emerald&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-emerald-500&lt;br/&gt;text-emerald-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-red-400&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-red-400/15 text-red-400&#34;&gt;Red&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-red-400&lt;br/&gt;text-red-400&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-amber-400&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-amber-400/15 text-amber-500&#34;&gt;Amber&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-amber-400&lt;br/&gt;text-amber-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-cyan-500&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-cyan-500/15 text-cyan-500&#34;&gt;Cyan&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-cyan-500&lt;br/&gt;text-cyan-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-purple-400&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-purple-400/15 text-purple-400&#34;&gt;Purple&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-purple-400&lt;br/&gt;text-purple-400&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-teal-500&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-teal-500/15 text-teal-500&#34;&gt;Teal&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-teal-500&lt;br/&gt;text-teal-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-pink-400&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-pink-400/15 text-pink-400&#34;&gt;Pink&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-pink-400&lt;br/&gt;text-pink-400&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-lime-500&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-lime-500/15 text-lime-500&#34;&gt;Lime&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-lime-500&lt;br/&gt;text-lime-500&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;mb-2 h-12 rounded-lg bg-indigo-400&#34;&gt;&lt;/div&gt;&lt;div class=&#34;mb-2 rounded-lg px-3 py-2 text-sm font-medium bg-indigo-400/15 text-indigo-500&#34;&gt;Indigo&lt;/div&gt;&lt;div class=&#34;text-xs leading-relaxed text-muted-foreground&#34;&gt;bg-indigo-400&lt;br/&gt;text-indigo-500&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-palette&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Color</th>
+          <th>What it means in Materia</th>
+          <th>Background</th>
+          <th>Text</th>
+          <th>Chart color</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Sky</td>
+          <td>The template&rsquo;s blue for display: information, the default badge, progress bars, the first series in a chart</td>
+          <td><code>bg-sky-500</code></td>
+          <td><code>text-sky-500</code></td>
+          <td><code>CHART_COLORS.sky</code></td>
+      </tr>
+      <tr>
+          <td>Emerald</td>
+          <td>Good news: growth, success, paid, active, completed, values going up</td>
+          <td><code>bg-emerald-500</code></td>
+          <td><code>text-emerald-500</code></td>
+          <td><code>CHART_COLORS.emerald</code></td>
+      </tr>
+      <tr>
+          <td>Red</td>
+          <td>Bad news: errors, failures, overdue items, values going down, destructive actions</td>
+          <td><code>bg-red-400</code></td>
+          <td><code>text-red-400</code></td>
+          <td><code>CHART_COLORS.red</code></td>
+      </tr>
+      <tr>
+          <td>Amber</td>
+          <td>Caution: pending, waiting, delayed and warnings. Charts also use it for the comparison series, such as last month next to this month</td>
+          <td><code>bg-amber-400</code></td>
+          <td><code>text-amber-500</code></td>
+          <td><code>CHART_COLORS.amber</code></td>
+      </tr>
+      <tr>
+          <td>Cyan</td>
+          <td>A category color with no status meaning</td>
+          <td><code>bg-cyan-500</code></td>
+          <td><code>text-cyan-500</code></td>
+          <td><code>CHART_COLORS.cyan</code></td>
+      </tr>
+      <tr>
+          <td>Purple</td>
+          <td>A category color</td>
+          <td><code>bg-purple-400</code></td>
+          <td><code>text-purple-400</code></td>
+          <td><code>CHART_COLORS.purple</code></td>
+      </tr>
+      <tr>
+          <td>Teal</td>
+          <td>A category color</td>
+          <td><code>bg-teal-500</code></td>
+          <td><code>text-teal-500</code></td>
+          <td><code>CHART_COLORS.teal</code></td>
+      </tr>
+      <tr>
+          <td>Pink</td>
+          <td>A category color</td>
+          <td><code>bg-pink-400</code></td>
+          <td><code>text-pink-400</code></td>
+          <td><code>CHART_COLORS.pink</code></td>
+      </tr>
+      <tr>
+          <td>Lime</td>
+          <td>A category color</td>
+          <td><code>bg-lime-500</code></td>
+          <td><code>text-lime-500</code></td>
+          <td><code>CHART_COLORS.lime</code></td>
+      </tr>
+      <tr>
+          <td>Indigo</td>
+          <td>A category color</td>
+          <td><code>bg-indigo-400</code></td>
+          <td><code>text-indigo-500</code></td>
+          <td><code>CHART_COLORS.indigo</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>Category colors tell series, people, files and plans apart. They say nothing about good or bad, so keep emerald, red and amber for status and pick from the category colors for everything else.</p>
+<p>Amber and indigo use a darker shade for text than for backgrounds. Text has to read on a white card, and <code>amber-400</code> is too pale for that.</p>
+<h3 id="other-utilities">Other utilities</h3>
+<p>Borders, rings, fills and strokes use the background shade:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Color</th>
+          <th>Border</th>
+          <th>Ring</th>
+          <th>Fill and stroke</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Sky</td>
+          <td><code>border-sky-500</code></td>
+          <td><code>ring-sky-500</code></td>
+          <td><code>fill-sky-500</code>, <code>stroke-sky-500</code></td>
+      </tr>
+      <tr>
+          <td>Emerald</td>
+          <td><code>border-emerald-500</code></td>
+          <td><code>ring-emerald-500</code></td>
+          <td><code>fill-emerald-500</code>, <code>stroke-emerald-500</code></td>
+      </tr>
+      <tr>
+          <td>Red</td>
+          <td><code>border-red-400</code></td>
+          <td><code>ring-red-400</code></td>
+          <td><code>fill-red-400</code>, <code>stroke-red-400</code></td>
+      </tr>
+      <tr>
+          <td>Amber</td>
+          <td><code>border-amber-400</code></td>
+          <td><code>ring-amber-400</code></td>
+          <td><code>fill-amber-400</code>, <code>stroke-amber-400</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>The category colors follow the same rule: <code>border-cyan-500</code>, <code>ring-purple-400</code>, <code>fill-teal-500</code> and so on.</p>
+<h3 id="opacity-steps">Opacity steps</h3>
+<p>Add <code>/</code> and a number to any palette class to make it see-through. The template uses a small set of steps, each for one job:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Step</th>
+          <th>Example</th>
+          <th>Used for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>/10</code></td>
+          <td><code>bg-emerald-500/10</code></td>
+          <td>Badge and alert backgrounds</td>
+      </tr>
+      <tr>
+          <td><code>/15</code></td>
+          <td><code>bg-teal-500/15</code></td>
+          <td>Icon tiles and soft highlights</td>
+      </tr>
+      <tr>
+          <td><code>/25</code>, <code>/30</code></td>
+          <td><code>bg-sky-500/25</code></td>
+          <td>Legend chips for the faded series in a chart</td>
+      </tr>
+      <tr>
+          <td><code>/50</code></td>
+          <td><code>border-red-400/50</code></td>
+          <td>Soft borders around a tinted box</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="primary-and-destructive">Primary and destructive</h2>
+<p>Two theme colors carry meaning, so they belong on this page as well.</p>
+<p><strong><code>primary</code></strong> is the color of actions. The default button, focus outlines, checked checkboxes, radios and switches, the active menu item, the selected tab and the slider track all use it. Its value is <code>#118bff</code>, the same in light and dark mode, and <code>primary-foreground</code> (white) is the text color that sits on top of it.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Use</th>
+          <th>Class</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Solid fill</td>
+          <td><code>bg-primary</code> with <code>text-primary-foreground</code></td>
+      </tr>
+      <tr>
+          <td>Tint</td>
+          <td><code>bg-primary/10</code></td>
+      </tr>
+      <tr>
+          <td>Text and icons</td>
+          <td><code>text-primary</code></td>
+      </tr>
+      <tr>
+          <td>Borders, rings and outlines</td>
+          <td><code>border-primary</code>, <code>ring-primary</code>, <code>outline-primary</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><code>primary</code> and <code>sky-500</code> are close but not equal. Use <code>primary</code> for anything a person can click or select, and <code>sky-500</code> for display: badges, chart series and progress bars.</p>
+<p><strong><code>destructive</code></strong> is <code>red-400</code> under another name. The shadcn components use it for invalid fields and for destructive items in a dropdown menu, so a form error and a red badge share one red.</p>
+<p>Links use a third theme color, <code>link</code>, through <code>text-link</code>. It is <code>#1e91ff</code> in light mode and <code>#007ef7</code> in dark mode.</p>
+<h2 id="status">Status</h2>
+<p>Status comes from components, so you seldom write a status color by hand. The Badge component has a variant for each status, and the Trend component turns green or red on its own.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap items-center gap-3&#34;&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;positive&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 [a&amp;amp;]:hover:bg-emerald-500/25&#34;&gt;Paid&lt;/span&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;caution&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-amber-500/10 text-amber-600 dark:text-amber-500 [a&amp;amp;]:hover:bg-amber-500/25&#34;&gt;Pending&lt;/span&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;destructive&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-red-400/10 text-red-500 focus-visible:ring-destructive/20 dark:text-red-400 dark:focus-visible:ring-destructive/40 [a&amp;amp;]:hover:bg-red-500/25&#34;&gt;Failed&lt;/span&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;default&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-sky-500/10 text-sky-600 dark:text-sky-500 [a&amp;amp;]:hover:bg-sky-500/20&#34;&gt;Trial&lt;/span&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-emerald-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-up lucide-arrow-up-circle&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;m16 12-4-4-4 4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 16V8&#34;&gt;&lt;/path&gt;&lt;/svg&gt;24.99%&lt;/div&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-red-400&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-down lucide-arrow-down-circle&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;M12 8v8&#34;&gt;&lt;/path&gt;&lt;path d=&#34;m8 12 4 4 4-4&#34;&gt;&lt;/path&gt;&lt;/svg&gt;9.39%&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-status&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Trend <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/trend&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Badge <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/badge&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> StatusColors() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap items-center gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;positive&#34;</span><span style="color:#eceff4">&gt;</span>Paid<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;caution&#34;</span><span style="color:#eceff4">&gt;</span>Pending<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;destructive&#34;</span><span style="color:#eceff4">&gt;</span>Failed<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>Trial<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">24.99</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">up</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">9.39</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Status</th>
+          <th>Badge variant</th>
+          <th>Color</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Good: paid, active, completed, on track</td>
+          <td><code>positive</code></td>
+          <td>Emerald</td>
+      </tr>
+      <tr>
+          <td>Waiting: pending, delayed, past due</td>
+          <td><code>caution</code></td>
+          <td>Amber</td>
+      </tr>
+      <tr>
+          <td>Bad: failed, canceled, at risk</td>
+          <td><code>destructive</code></td>
+          <td>Red</td>
+      </tr>
+      <tr>
+          <td>Neutral or informational: trial, planned</td>
+          <td><code>default</code></td>
+          <td>Sky</td>
+      </tr>
+  </tbody>
+</table>
+<p>When a table column holds a status, map each value to a variant once, at the top of the file. The Recent Orders card on the E-commerce dashboard does it this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">type</span> BadgeVariant <span style="color:#81a1c1">=</span> ComponentProps<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">typeof</span> <span style="color:#8fbcbb">Badge</span><span style="color:#eceff4">&gt;[</span><span style="color:#a3be8c">&#34;variant&#34;</span><span style="color:#eceff4">];</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> STATUS_VARIANT: <span style="color:#81a1c1">Record</span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RecentOrder</span><span style="color:#bf616a">[</span><span style="color:#a3be8c">&#34;status&#34;</span><span style="color:#bf616a">]</span><span style="color:#eceff4">,</span> <span style="color:#8fbcbb">BadgeVariant</span><span style="color:#eceff4">&gt;</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	Paid<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;positive&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Failed<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;destructive&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Pending<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;caution&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>STATUS_VARIANT<span style="color:#eceff4">[</span>item<span style="color:#eceff4">.</span>status<span style="color:#eceff4">]}&gt;{</span>item<span style="color:#eceff4">.</span>status<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>Trend</code> shows a change with an arrow. It is green when <code>up</code> is true, the default, and red when it is false. Pass <code>positive={false}</code> for a metric where a rise is bad news, such as a bounce rate: the arrow points up and the color turns red.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">24.99</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">up</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">9.39</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">positive</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">8.07</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h2 id="common-patterns">Common patterns</h2>
+<h3 id="icon-tiles">Icon tiles</h3>
+<p>The icon at the start of a card title sits on a tinted tile: the color at <code>/15</code> for the tile and the full color for the icon. <code>avatar-mask</code> gives the tile its rounded four-lobed shape.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap gap-3&#34;&gt;&lt;span class=&#34;grid avatar-mask size-8 place-items-center bg-sky-500/15 text-sky-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chart-column lucide-bar-chart-3&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M3 3v16a2 2 0 0 0 2 2h16&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M18 17V9&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M13 17V5&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M8 17v-3&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 place-items-center bg-emerald-500/15 text-emerald-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-pointer&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M22 14a8 8 0 0 1-8 8&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 place-items-center bg-amber-400/15 text-amber-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-shopping-bag&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M16 10a4 4 0 0 1-8 0&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M3.103 6.034h17.794&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 place-items-center bg-teal-500/15 text-teal-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-users&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M16 3.128a4 4 0 0 1 0 7.744&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M22 21v-2a4 4 0 0 0-3-3.87&#34;&gt;&lt;/path&gt;&lt;circle cx=&#34;9&#34; cy=&#34;7&#34; r=&#34;4&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 place-items-center bg-purple-400/15 text-purple-400&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-handshake&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m11 17 2 2a1 1 0 1 0 3-3&#34;&gt;&lt;/path&gt;&lt;path d=&#34;m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;m21 3 1 11h-2&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M3 4h8&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-icon-tiles&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ChartColumn<span style="color:#eceff4">,</span> Handshake<span style="color:#eceff4">,</span> Pointer<span style="color:#eceff4">,</span> ShoppingBag<span style="color:#eceff4">,</span> Users <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> IconTiles() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid avatar-mask size-8 place-items-center bg-sky-500/15 text-sky-500&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ChartColumn</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid avatar-mask size-8 place-items-center bg-emerald-500/15 text-emerald-500&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Pointer</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid avatar-mask size-8 place-items-center bg-amber-400/15 text-amber-500&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ShoppingBag</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid avatar-mask size-8 place-items-center bg-teal-500/15 text-teal-500&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Users</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid avatar-mask size-8 place-items-center bg-purple-400/15 text-purple-400&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Handshake</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<h3 id="legend-dots-and-bars-that-follow-the-text-color">Legend dots and bars that follow the text color</h3>
+<p>A data file often stores one text class per item, such as <code>color: &quot;text-cyan-500&quot;</code>. The dot then takes <code>bg-current</code>, which paints it in the current text color. One class in the data file colors the dot, the label and anything else that uses <code>currentColor</code>.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-col gap-2&#34;&gt;&lt;div class=&#34;flex items-center gap-3&#34;&gt;&lt;i class=&#34;size-2.5 shrink-0 rounded-full bg-current text-cyan-500&#34;&gt;&lt;/i&gt;&lt;span class=&#34;flex-1 text-emphasis-foreground&#34;&gt;Starter&lt;/span&gt;&lt;span class=&#34;text-muted-foreground&#34;&gt;1420&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;flex items-center gap-3&#34;&gt;&lt;i class=&#34;size-2.5 shrink-0 rounded-full bg-current text-sky-500&#34;&gt;&lt;/i&gt;&lt;span class=&#34;flex-1 text-emphasis-foreground&#34;&gt;Pro&lt;/span&gt;&lt;span class=&#34;text-muted-foreground&#34;&gt;1126&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;flex items-center gap-3&#34;&gt;&lt;i class=&#34;size-2.5 shrink-0 rounded-full bg-current text-purple-400&#34;&gt;&lt;/i&gt;&lt;span class=&#34;flex-1 text-emphasis-foreground&#34;&gt;Business&lt;/span&gt;&lt;span class=&#34;text-muted-foreground&#34;&gt;548&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;flex items-center gap-3&#34;&gt;&lt;i class=&#34;size-2.5 shrink-0 rounded-full bg-current text-amber-500&#34;&gt;&lt;/i&gt;&lt;span class=&#34;flex-1 text-emphasis-foreground&#34;&gt;Enterprise&lt;/span&gt;&lt;span class=&#34;text-muted-foreground&#34;&gt;154&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-legend&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> cn <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/lib/utils&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> PLANS <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Starter&#34;</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">1420</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-cyan-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Pro&#34;</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">1126</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-sky-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Business&#34;</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">548</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-purple-400&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Enterprise&#34;</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">154</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-amber-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">];</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> LegendDots() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-col gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span>PLANS<span style="color:#eceff4">.</span>map<span style="color:#eceff4">((</span>item<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">key</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>item<span style="color:#eceff4">.</span>plan<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex items-center gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">i</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>cn<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;size-2.5 shrink-0 rounded-full bg-current&#34;</span><span style="color:#eceff4">,</span> item<span style="color:#eceff4">.</span>color<span style="color:#eceff4">)}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex-1 text-emphasis-foreground&#34;</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>plan<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-muted-foreground&#34;</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>subscribers<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">))}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>Progress bars work the same way. The bar takes its color from the text color, so a <code>text-*</code> class on the Progress component colors it. With no class it is sky.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-col gap-4&#34;&gt;&lt;div aria-valuemax=&#34;100&#34; aria-valuemin=&#34;0&#34; aria-valuenow=&#34;72&#34; aria-valuetext=&#34;72%&#34; role=&#34;progressbar&#34; data-state=&#34;loading&#34; data-value=&#34;72&#34; data-max=&#34;100&#34; data-slot=&#34;progress&#34; class=&#34;flex h-1 w-full gap-0.75 text-sky-500 after:flex-1 after:rounded-lg after:bg-secondary after:content-[&amp;#x27;&amp;#x27;]&#34; aria-label=&#34;Default&#34;&gt;&lt;div data-state=&#34;loading&#34; data-value=&#34;72&#34; data-max=&#34;100&#34; data-slot=&#34;progress-indicator&#34; class=&#34;h-full rounded-lg bg-current transition-[width]&#34; style=&#34;width:72%&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div aria-valuemax=&#34;100&#34; aria-valuemin=&#34;0&#34; aria-valuenow=&#34;58&#34; aria-valuetext=&#34;58%&#34; role=&#34;progressbar&#34; data-state=&#34;loading&#34; data-value=&#34;58&#34; data-max=&#34;100&#34; data-slot=&#34;progress&#34; class=&#34;flex h-1 w-full gap-0.75 after:flex-1 after:rounded-lg after:bg-secondary after:content-[&amp;#x27;&amp;#x27;] text-emerald-500&#34; aria-label=&#34;Completed&#34;&gt;&lt;div data-state=&#34;loading&#34; data-value=&#34;58&#34; data-max=&#34;100&#34; data-slot=&#34;progress-indicator&#34; class=&#34;h-full rounded-lg bg-current transition-[width]&#34; style=&#34;width:58%&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div aria-valuemax=&#34;100&#34; aria-valuemin=&#34;0&#34; aria-valuenow=&#34;34&#34; aria-valuetext=&#34;34%&#34; role=&#34;progressbar&#34; data-state=&#34;loading&#34; data-value=&#34;34&#34; data-max=&#34;100&#34; data-slot=&#34;progress&#34; class=&#34;flex h-1 w-full gap-0.75 after:flex-1 after:rounded-lg after:bg-secondary after:content-[&amp;#x27;&amp;#x27;] text-red-400&#34; aria-label=&#34;Overdue&#34;&gt;&lt;div data-state=&#34;loading&#34; data-value=&#34;34&#34; data-max=&#34;100&#34; data-slot=&#34;progress-indicator&#34; class=&#34;h-full rounded-lg bg-current transition-[width]&#34; style=&#34;width:34%&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-progress&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Progress <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/progress&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> ProgressColors() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-col gap-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Progress</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#b48ead">72</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Default&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Progress</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#b48ead">58</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Completed&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-emerald-500&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Progress</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#b48ead">34</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Overdue&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-red-400&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<h3 id="text-on-a-solid-color">Text on a solid color</h3>
+<p>White text works on a solid palette color in light mode and black text works in dark mode, so these elements carry <code>text-white dark:text-black</code>. The Avatar component does this for its initials, and the badges on the Billing page do it too.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap gap-3&#34;&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-sky-500&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-emerald-500&#34;&gt;M&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-amber-400&#34;&gt;J&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-red-400&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-purple-400&#34;&gt;K&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;colors-solid&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Avatar <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/avatar&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> SolidColors() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;A&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-sky-500&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;M&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-emerald-500&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;J&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-amber-400&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;R&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-red-400&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;K&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-purple-400&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<h2 id="charts-and-maps">Charts and maps</h2>
+<p>Chart.js draws on a canvas, and a canvas cannot read a Tailwind class. Charts get their colors from <code>CHART_COLORS</code> in <code>src/components/charts/use-chart-theme.ts</code>. Each key takes the name of a palette color and holds the same shade as that color&rsquo;s background class, so <code>CHART_COLORS.amber</code> matches <code>bg-amber-400</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> CHART_COLORS <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	sky: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-sky-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	indigo: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-indigo-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	purple: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-purple-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	pink: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-pink-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	red: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-red-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	amber: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-amber-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	lime: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-lime-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	emerald: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-emerald-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	teal: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-teal-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	cyan: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-cyan-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span></code></pre></div><p><code>paletteColor()</code> reads a Tailwind color from the stylesheet and returns it as <code>rgb(r g b)</code>, the format Chart.js understands. Use it for a shade that <code>CHART_COLORS</code> does not hold. The map on the Email Marketing dashboard reads a darker amber for its markers this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> MARKER <span style="color:#81a1c1">=</span> paletteColor<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-amber-600&#34;</span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>For a see-through version of a chart color, wrap it in <code>alpha()</code>. Area charts use it for the fade under the line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>backgroundColor<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span>context<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> areaGradient<span style="color:#eceff4">(</span>context<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.75</span><span style="color:#eceff4">,</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>emerald<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.25</span><span style="color:#eceff4">),</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>emerald<span style="color:#eceff4">,</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">)),</span>
+</span></span><span style="display:flex;"><span>borderColor: <span style="color:#81a1c1">CHART_COLORS.emerald</span><span style="color:#eceff4">,</span>
+</span></span></code></pre></div><p>Do not write a color into a chart as a hex code or an RGB value. Go through <code>CHART_COLORS</code>, <code>paletteColor()</code> and <code>alpha()</code>, so a chart always matches the classes around it. <a href="./chart-colors.html">Chart Colors</a> covers the rest of the chart theme.</p>
+<h2 id="light-and-dark-mode">Light and dark mode</h2>
+<p>Palette colors keep the same value in both modes. A few components darken their text by one shade in light mode, so the text reads on a pale tint, and switch back in dark mode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>positive<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-emerald-500/10 text-emerald-600 dark:text-emerald-500&#34;</span><span style="color:#eceff4">,</span>
+</span></span></code></pre></div><p>That line is the <code>positive</code> variant in <code>src/components/ui/badge.tsx</code>. Use <code>dark:</code> the same way wherever an element needs a different shade in dark mode. When a theme color already does the job, such as <code>text-foreground</code> or <code>bg-card</code>, use the theme color instead.</p>
+<h2 id="changing-colors">Changing colors</h2>
+<p><strong>To change the primary color</strong>, open <code>src/styles/index.css</code> and edit this line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#81a1c1">--color-primary</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">#</span><span style="color:#8fbcbb">118bff</span><span style="color:#81a1c1">;</span>
+</span></span></code></pre></div><p>Every button, focus outline, checked control and active menu item follows.</p>
+<p><strong>To swap a palette color</strong>, replace its classes across <code>src/</code> and update the matching key in <code>CHART_COLORS</code>. Moving amber to orange means:</p>
+<ol>
+<li>Replace <code>bg-amber-400</code> with <code>bg-orange-400</code> and <code>text-amber-500</code> with <code>text-orange-500</code>, along with the <code>border-</code>, <code>fill-</code> and <code>stroke-</code> classes.</li>
+<li>In <code>use-chart-theme.ts</code>, point the key at the new color: <code>amber: paletteColor(&quot;--color-orange-400&quot;)</code>. Rename the key to <code>orange</code> if you prefer, and update the places that use it.</li>
+</ol>
+<p><strong>To add a chart color</strong>, add a key to <code>CHART_COLORS</code> with the shade that matches its background class:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span>rose: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-rose-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span></code></pre></div><p>Every color in Tailwind&rsquo;s palette is available, because <code>src/styles/index.css</code> imports Tailwind with <code>theme(static)</code>. That option keeps the full set of color variables in the stylesheet, including shades no class uses yet, so <code>paletteColor()</code> can always read them.</p>
+<p><strong>To change a theme color</strong>, such as the page background or the card color, edit <code>src/styles/themes.css</code>. <a href="./theme-tokens.html">Theme Tokens</a> explains each one.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-palette">The palette</a>
+      <ul>
+        <li><a href="#other-utilities">Other utilities</a></li>
+        <li><a href="#opacity-steps">Opacity steps</a></li>
+      </ul>
+    </li>
+    <li><a href="#primary-and-destructive">Primary and destructive</a></li>
+    <li><a href="#status">Status</a></li>
+    <li><a href="#common-patterns">Common patterns</a>
+      <ul>
+        <li><a href="#icon-tiles">Icon tiles</a></li>
+        <li><a href="#legend-dots-and-bars-that-follow-the-text-color">Legend dots and bars that follow the text color</a></li>
+        <li><a href="#text-on-a-solid-color">Text on a solid color</a></li>
+      </ul>
+    </li>
+    <li><a href="#charts-and-maps">Charts and maps</a></li>
+    <li><a href="#light-and-dark-mode">Light and dark mode</a></li>
+    <li><a href="#changing-colors">Changing colors</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

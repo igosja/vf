@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Data Display |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Data Display
+The components on this page show content inside a card or on a page: tables, tabs, accordions, progress and loading states, and small navigation parts.
+Table
+Table from src/components/ui/table.tsx renders a plain HTML table with the template&rsquo;s spacing and line colors. Its parts map to HTML elements: TableHeader to &lt;thead&gt;, TableRow to &lt;tr&gt;, TableHead to &lt;th&gt;, TableCell to &lt;td&gt; and so on. The Tables page at /content/tables shows more examples.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="data-display">Data Display</h1>
+<p>The components on this page show content inside a card or on a page: tables, tabs, accordions, progress and loading states, and small navigation parts.</p>
+<h2 id="table">Table</h2>
+<p><code>Table</code> from <code>src/components/ui/table.tsx</code> renders a plain HTML table with the template&rsquo;s spacing and line colors. Its parts map to HTML elements: <code>TableHeader</code> to <code>&lt;thead&gt;</code>, <code>TableRow</code> to <code>&lt;tr&gt;</code>, <code>TableHead</code> to <code>&lt;th&gt;</code>, <code>TableCell</code> to <code>&lt;td&gt;</code> and so on. The Tables page at <code>/content/tables</code> shows more examples.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;rounded-2xl bg-card p-6&#34;&gt;&lt;div data-slot=&#34;table-container&#34; class=&#34;relative w-full overflow-x-auto&#34;&gt;&lt;table data-slot=&#34;table&#34; class=&#34;w-full caption-bottom text-sm&#34;&gt;&lt;thead data-slot=&#34;table-header&#34; class=&#34;[&amp;amp;_tr]:border-b&#34;&gt;&lt;tr data-slot=&#34;table-row&#34; class=&#34;border-b data-[state=selected]:bg-muted&#34;&gt;&lt;th data-slot=&#34;table-head&#34; class=&#34;h-10 px-2 text-left align-middle text-xs font-medium whitespace-nowrap text-muted-foreground&#34;&gt;Invoice&lt;/th&gt;&lt;th data-slot=&#34;table-head&#34; class=&#34;h-10 px-2 text-left align-middle text-xs font-medium whitespace-nowrap text-muted-foreground&#34;&gt;Date&lt;/th&gt;&lt;th data-slot=&#34;table-head&#34; class=&#34;h-10 px-2 text-left align-middle text-xs font-medium whitespace-nowrap text-muted-foreground&#34;&gt;Status&lt;/th&gt;&lt;th data-slot=&#34;table-head&#34; class=&#34;h-10 px-2 align-middle text-xs font-medium whitespace-nowrap text-muted-foreground text-right&#34;&gt;Amount&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody data-slot=&#34;table-body&#34; class=&#34;[&amp;amp;_tr:last-child]:border-0&#34;&gt;&lt;tr data-slot=&#34;table-row&#34; class=&#34;border-b data-[state=selected]:bg-muted&#34;&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-emphasis-foreground&#34;&gt;INV-2026-010&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;Oct 12, 2026&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;caution&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-amber-500/10 text-amber-600 dark:text-amber-500 [a&amp;amp;]:hover:bg-amber-500/25&#34;&gt;Pending&lt;/span&gt;&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-right&#34;&gt;$49.00&lt;/td&gt;&lt;/tr&gt;&lt;tr data-slot=&#34;table-row&#34; class=&#34;border-b data-[state=selected]:bg-muted&#34;&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-emphasis-foreground&#34;&gt;INV-2026-009&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;Sep 12, 2026&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;positive&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 [a&amp;amp;]:hover:bg-emerald-500/25&#34;&gt;Paid&lt;/span&gt;&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-right&#34;&gt;$49.00&lt;/td&gt;&lt;/tr&gt;&lt;tr data-slot=&#34;table-row&#34; class=&#34;border-b data-[state=selected]:bg-muted&#34;&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-emphasis-foreground&#34;&gt;INV-2026-007&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;Aug 12, 2026&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap&#34;&gt;&lt;span data-slot=&#34;badge&#34; data-variant=&#34;destructive&#34; class=&#34;inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-1.5 text-xs leading-none font-normal whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&amp;amp;&amp;gt;svg]:pointer-events-none [&amp;amp;&amp;gt;svg]:size-3.5 bg-red-400/10 text-red-500 focus-visible:ring-destructive/20 dark:text-red-400 dark:focus-visible:ring-destructive/40 [a&amp;amp;]:hover:bg-red-500/25&#34;&gt;Failed&lt;/span&gt;&lt;/td&gt;&lt;td data-slot=&#34;table-cell&#34; class=&#34;p-2 align-middle whitespace-nowrap text-right&#34;&gt;$49.00&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;display-table&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Badge <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/badge&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Table<span style="color:#eceff4">,</span> TableBody<span style="color:#eceff4">,</span> TableCell<span style="color:#eceff4">,</span> TableHead<span style="color:#eceff4">,</span> TableHeader<span style="color:#eceff4">,</span> TableRow <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/table&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> INVOICES <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;INV-2026-010&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Oct 12, 2026&#34;</span><span style="color:#eceff4">,</span> amount<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;$49.00&#34;</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Pending&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;INV-2026-009&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Sep 12, 2026&#34;</span><span style="color:#eceff4">,</span> amount<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;$49.00&#34;</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Paid&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;INV-2026-007&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Aug 12, 2026&#34;</span><span style="color:#eceff4">,</span> amount<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;$49.00&#34;</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Failed&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">]</span> <span style="color:#81a1c1;font-weight:bold">as</span> <span style="color:#81a1c1;font-weight:bold">const</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> STATUS_VARIANT <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span> Paid<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;positive&#34;</span><span style="color:#eceff4">,</span> Pending<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;caution&#34;</span><span style="color:#eceff4">,</span> Failed<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;destructive&#34;</span> <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">as</span> <span style="color:#81a1c1;font-weight:bold">const</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> InvoiceTable() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;rounded-2xl bg-card p-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Table</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>Invoice<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span><span style="color:#81a1c1">Date</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>Status<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-right&#34;</span><span style="color:#eceff4">&gt;</span>Amount<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableBody</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">{</span>INVOICES<span style="color:#eceff4">.</span>map<span style="color:#eceff4">((</span>item<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableRow</span> <span style="color:#8fbcbb">key</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>item<span style="color:#eceff4">.</span>id<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-emphasis-foreground&#34;</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>id<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>date<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>STATUS_VARIANT<span style="color:#eceff4">[</span>item<span style="color:#eceff4">.</span>status<span style="color:#eceff4">]}&gt;{</span>item<span style="color:#eceff4">.</span>status<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-right&#34;</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>amount<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">))}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableBody</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Table</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>The table scrolls sideways on its own when its columns do not fit, so a wide table works on a phone. To hide less important columns on small screens instead, add <code>hidden md:table-cell</code> to the cells of that column, in both the header and the rows.</p>
+<p>For sorting, filtering and paging across many rows, add <a href="https://tanstack.com/table">TanStack Table</a> and render its rows with these components. shadcn/ui&rsquo;s <a href="https://ui.shadcn.com/docs/components/data-table">Data Table guide</a> shows how.</p>
+<h2 id="tabs-and-accordion">Tabs and accordion</h2>
+<p><strong>Tabs</strong> switch between panels in the same place. <strong>Accordion</strong> stacks sections that open and close. Both work with the keyboard.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;grid gap-8&#34;&gt;&lt;div dir=&#34;ltr&#34; data-orientation=&#34;horizontal&#34; data-slot=&#34;tabs&#34; class=&#34;flex flex-col&#34;&gt;&lt;div role=&#34;tablist&#34; aria-orientation=&#34;horizontal&#34; data-slot=&#34;tabs-list&#34; class=&#34;no-scrollbar flex gap-px overflow-x-auto font-medium&#34; tabindex=&#34;-1&#34; data-orientation=&#34;horizontal&#34; style=&#34;outline:none&#34;&gt;&lt;button type=&#34;button&#34; role=&#34;tab&#34; aria-selected=&#34;true&#34; aria-controls=&#34;radix-_R_1_-content-overview&#34; data-state=&#34;active&#34; id=&#34;radix-_R_1_-trigger-overview&#34; data-slot=&#34;tabs-trigger&#34; class=&#34;flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 whitespace-nowrap text-emphasis-foreground outline-primary transition-colors duration-300 hover:bg-accent focus-visible:outline-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary&#34; tabindex=&#34;-1&#34; data-orientation=&#34;horizontal&#34; data-radix-collection-item=&#34;&#34;&gt;Overview&lt;/button&gt;&lt;button type=&#34;button&#34; role=&#34;tab&#34; aria-selected=&#34;false&#34; aria-controls=&#34;radix-_R_1_-content-analytics&#34; data-state=&#34;inactive&#34; id=&#34;radix-_R_1_-trigger-analytics&#34; data-slot=&#34;tabs-trigger&#34; class=&#34;flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 whitespace-nowrap text-emphasis-foreground outline-primary transition-colors duration-300 hover:bg-accent focus-visible:outline-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary&#34; tabindex=&#34;-1&#34; data-orientation=&#34;horizontal&#34; data-radix-collection-item=&#34;&#34;&gt;Analytics&lt;/button&gt;&lt;button type=&#34;button&#34; role=&#34;tab&#34; aria-selected=&#34;false&#34; aria-controls=&#34;radix-_R_1_-content-reports&#34; data-state=&#34;inactive&#34; id=&#34;radix-_R_1_-trigger-reports&#34; data-slot=&#34;tabs-trigger&#34; class=&#34;flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 whitespace-nowrap text-emphasis-foreground outline-primary transition-colors duration-300 hover:bg-accent focus-visible:outline-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary&#34; tabindex=&#34;-1&#34; data-orientation=&#34;horizontal&#34; data-radix-collection-item=&#34;&#34;&gt;Reports&lt;/button&gt;&lt;/div&gt;&lt;div data-state=&#34;active&#34; data-orientation=&#34;horizontal&#34; role=&#34;tabpanel&#34; aria-labelledby=&#34;radix-_R_1_-trigger-overview&#34; id=&#34;radix-_R_1_-content-overview&#34; tabindex=&#34;0&#34; data-slot=&#34;tabs-content&#34; class=&#34;outline-none pt-3&#34; style=&#34;animation-duration:0s&#34;&gt;Your store had 2,340 visitors this week.&lt;/div&gt;&lt;div data-state=&#34;inactive&#34; data-orientation=&#34;horizontal&#34; role=&#34;tabpanel&#34; aria-labelledby=&#34;radix-_R_1_-trigger-analytics&#34; hidden=&#34;&#34; id=&#34;radix-_R_1_-content-analytics&#34; tabindex=&#34;0&#34; data-slot=&#34;tabs-content&#34; class=&#34;outline-none pt-3&#34;&gt;&lt;/div&gt;&lt;div data-state=&#34;inactive&#34; data-orientation=&#34;horizontal&#34; role=&#34;tabpanel&#34; aria-labelledby=&#34;radix-_R_1_-trigger-reports&#34; hidden=&#34;&#34; id=&#34;radix-_R_1_-content-reports&#34; tabindex=&#34;0&#34; data-slot=&#34;tabs-content&#34; class=&#34;outline-none pt-3&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div data-slot=&#34;accordion&#34; data-orientation=&#34;vertical&#34;&gt;&lt;div data-state=&#34;open&#34; data-orientation=&#34;vertical&#34; data-slot=&#34;accordion-item&#34; class=&#34;border-b last:border-b-0&#34;&gt;&lt;h3 data-orientation=&#34;vertical&#34; data-state=&#34;open&#34; class=&#34;flex&#34;&gt;&lt;button type=&#34;button&#34; aria-controls=&#34;radix-_R_m_&#34; aria-expanded=&#34;true&#34; data-state=&#34;open&#34; data-orientation=&#34;vertical&#34; id=&#34;radix-_R_6_&#34; data-slot=&#34;accordion-trigger&#34; class=&#34;flex flex-1 items-center justify-between gap-4 py-4 text-left font-medium text-emphasis-foreground outline-none focus-visible:text-primary disabled:pointer-events-none disabled:opacity-50 [&amp;amp;[data-state=open]&amp;gt;svg]:rotate-180&#34; data-radix-collection-item=&#34;&#34;&gt;How long does shipping take?&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-down size-4 text-muted-foreground transition-transform duration-200&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m6 9 6 6 6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/h3&gt;&lt;div data-state=&#34;open&#34; id=&#34;radix-_R_m_&#34; role=&#34;region&#34; aria-labelledby=&#34;radix-_R_6_&#34; data-orientation=&#34;vertical&#34; data-slot=&#34;accordion-content&#34; class=&#34;overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down&#34; style=&#34;--radix-accordion-content-height:var(--radix-collapsible-content-height);--radix-accordion-content-width:var(--radix-collapsible-content-width)&#34;&gt;&lt;div class=&#34;pb-4&#34;&gt;Orders ship within two business days and arrive in three to five.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div data-state=&#34;closed&#34; data-orientation=&#34;vertical&#34; data-slot=&#34;accordion-item&#34; class=&#34;border-b last:border-b-0&#34;&gt;&lt;h3 data-orientation=&#34;vertical&#34; data-state=&#34;closed&#34; class=&#34;flex&#34;&gt;&lt;button type=&#34;button&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34; data-orientation=&#34;vertical&#34; id=&#34;radix-_R_a_&#34; data-slot=&#34;accordion-trigger&#34; class=&#34;flex flex-1 items-center justify-between gap-4 py-4 text-left font-medium text-emphasis-foreground outline-none focus-visible:text-primary disabled:pointer-events-none disabled:opacity-50 [&amp;amp;[data-state=open]&amp;gt;svg]:rotate-180&#34; data-radix-collection-item=&#34;&#34;&gt;Can I return an item?&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-down size-4 text-muted-foreground transition-transform duration-200&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m6 9 6 6 6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/h3&gt;&lt;div data-state=&#34;closed&#34; id=&#34;radix-_R_q_&#34; hidden=&#34;&#34; role=&#34;region&#34; aria-labelledby=&#34;radix-_R_a_&#34; data-orientation=&#34;vertical&#34; data-slot=&#34;accordion-content&#34; class=&#34;overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down&#34; style=&#34;--radix-accordion-content-height:var(--radix-collapsible-content-height);--radix-accordion-content-width:var(--radix-collapsible-content-width)&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;display-tabs-accordion&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Accordion<span style="color:#eceff4">,</span> AccordionContent<span style="color:#eceff4">,</span> AccordionItem<span style="color:#eceff4">,</span> AccordionTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/accordion&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Tabs<span style="color:#eceff4">,</span> TabsContent<span style="color:#eceff4">,</span> TabsList<span style="color:#eceff4">,</span> TabsTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/tabs&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> TabsAndAccordion() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid gap-8&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Tabs</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;overview&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsList</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsTrigger</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;overview&#34;</span><span style="color:#eceff4">&gt;</span>Overview<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsTrigger</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;analytics&#34;</span><span style="color:#eceff4">&gt;</span>Analytics<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsTrigger</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;reports&#34;</span><span style="color:#eceff4">&gt;</span>Reports<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsList</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsContent</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;overview&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;pt-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					Your store had <span style="color:#b48ead">2</span><span style="color:#eceff4">,</span><span style="color:#b48ead">340</span> visitors <span style="color:#81a1c1;font-weight:bold">this</span> week<span style="color:#eceff4">.</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsContent</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;analytics&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;pt-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					Visitors stayed <span style="color:#b48ead">3</span> minutes and <span style="color:#b48ead">12</span> seconds on average<span style="color:#eceff4">.</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TabsContent</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;reports&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;pt-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					Three reports are ready to download<span style="color:#eceff4">.</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TabsContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Tabs</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Accordion</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;single&#34;</span> <span style="color:#8fbcbb">collapsible</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;shipping&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;shipping&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionTrigger</span><span style="color:#eceff4">&gt;</span>How long does shipping take<span style="color:#81a1c1">?</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">AccordionTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionContent</span><span style="color:#eceff4">&gt;</span>Orders ship within two business days and arrive <span style="color:#81a1c1;font-weight:bold">in</span> three to five<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">AccordionContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">AccordionItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;returns&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionTrigger</span><span style="color:#eceff4">&gt;</span>Can I <span style="color:#81a1c1;font-weight:bold">return</span> an item<span style="color:#81a1c1">?</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">AccordionTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">AccordionContent</span><span style="color:#eceff4">&gt;</span>Return <span style="color:#81a1c1">any</span> item within <span style="color:#b48ead">30</span> days <span style="color:#81a1c1;font-weight:bold">for</span> a full refund<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">AccordionContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">AccordionItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Accordion</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<ul>
+<li><code>defaultValue</code> sets which tab or section starts open. Use <code>value</code> and <code>onValueChange</code> to control it from your own state.</li>
+<li><code>type=&quot;single&quot;</code> lets one accordion section open at a time, and <code>collapsible</code> lets it close again. <code>type=&quot;multiple&quot;</code> lets several stay open.</li>
+<li><code>Collapsible</code> from <code>src/components/ui/collapsible.tsx</code> is a single open-and-close section without the accordion&rsquo;s styles. The sidebar groups use the same Radix primitive.</li>
+</ul>
+<p>The demo pages are at <code>/components/tabs</code>, <code>/components/accordion</code> and <code>/components/collapsible</code>.</p>
+<h2 id="progress-skeleton-and-spinner">Progress, skeleton and spinner</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;grid gap-6&#34;&gt;&lt;div aria-valuemax=&#34;100&#34; aria-valuemin=&#34;0&#34; aria-valuenow=&#34;64&#34; aria-valuetext=&#34;64%&#34; role=&#34;progressbar&#34; data-state=&#34;loading&#34; data-value=&#34;64&#34; data-max=&#34;100&#34; data-slot=&#34;progress&#34; class=&#34;flex h-1 w-full gap-0.75 text-sky-500 after:flex-1 after:rounded-lg after:bg-secondary after:content-[&amp;#x27;&amp;#x27;]&#34; aria-label=&#34;Upload progress&#34;&gt;&lt;div data-state=&#34;loading&#34; data-value=&#34;64&#34; data-max=&#34;100&#34; data-slot=&#34;progress-indicator&#34; class=&#34;h-full rounded-lg bg-current transition-[width]&#34; style=&#34;width:64%&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;flex items-center gap-4&#34;&gt;&lt;div data-slot=&#34;skeleton&#34; class=&#34;animate-pulse bg-secondary size-12 rounded-full&#34;&gt;&lt;/div&gt;&lt;div class=&#34;grid flex-1 gap-2&#34;&gt;&lt;div data-slot=&#34;skeleton&#34; class=&#34;animate-pulse rounded-lg bg-secondary h-4 w-3/5&#34;&gt;&lt;/div&gt;&lt;div data-slot=&#34;skeleton&#34; class=&#34;animate-pulse rounded-lg bg-secondary h-4 w-2/5&#34;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;flex items-center gap-2 text-muted-foreground&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-loader-circle lucide-loader-2 size-4 animate-spin&#34; role=&#34;status&#34; aria-label=&#34;Loading&#34;&gt;&lt;path d=&#34;M21 12a9 9 0 1 1-6.219-8.56&#34;&gt;&lt;/path&gt;&lt;/svg&gt;Loading orders&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;display-feedback&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Progress <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/progress&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Skeleton <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/skeleton&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Spinner <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/spinner&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> LoadingStates() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid gap-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Progress</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#b48ead">64</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Upload progress&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex items-center gap-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Skeleton</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;size-12 rounded-full&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid flex-1 gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Skeleton</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;h-4 w-3/5&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Skeleton</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;h-4 w-2/5&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex items-center gap-2 text-muted-foreground&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Spinner</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				Loading orders
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Use it for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Progress</code></td>
+          <td>Progress you can measure, such as an upload or a goal. Takes <code>value</code> from 0 to 100. A <code>text-*</code> class colors it, as <a href="./colors.html">Colors</a> shows</td>
+      </tr>
+      <tr>
+          <td><code>Skeleton</code></td>
+          <td>Placeholders in the shape of content that is still loading. Size each one with classes</td>
+      </tr>
+      <tr>
+          <td><code>Spinner</code></td>
+          <td>Work you cannot measure. It also fits inside a button, as <a href="./button.html">Button</a> shows</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="breadcrumb-pagination-and-keyboard-keys">Breadcrumb, pagination and keyboard keys</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;grid gap-6&#34;&gt;&lt;nav aria-label=&#34;breadcrumb&#34; data-slot=&#34;breadcrumb&#34;&gt;&lt;ol data-slot=&#34;breadcrumb-list&#34; class=&#34;flex flex-wrap items-center gap-2 text-sm break-words&#34;&gt;&lt;li data-slot=&#34;breadcrumb-item&#34; class=&#34;inline-flex items-center gap-1.5&#34;&gt;&lt;a data-slot=&#34;breadcrumb-link&#34; class=&#34;text-foreground transition-colors hover:text-emphasis-foreground&#34; href=&#34;#&#34;&gt;Home&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;breadcrumb-separator&#34; role=&#34;presentation&#34; aria-hidden=&#34;true&#34; class=&#34;text-muted-foreground [&amp;amp;&amp;gt;svg]:size-3&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-right&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m9 18 6-6-6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/li&gt;&lt;li data-slot=&#34;breadcrumb-item&#34; class=&#34;inline-flex items-center gap-1.5&#34;&gt;&lt;a data-slot=&#34;breadcrumb-link&#34; class=&#34;text-foreground transition-colors hover:text-emphasis-foreground&#34; href=&#34;#&#34;&gt;Components&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;breadcrumb-separator&#34; role=&#34;presentation&#34; aria-hidden=&#34;true&#34; class=&#34;text-muted-foreground [&amp;amp;&amp;gt;svg]:size-3&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-right&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m9 18 6-6-6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/li&gt;&lt;li data-slot=&#34;breadcrumb-item&#34; class=&#34;inline-flex items-center gap-1.5&#34;&gt;&lt;span data-slot=&#34;breadcrumb-page&#34; role=&#34;link&#34; aria-disabled=&#34;true&#34; aria-current=&#34;page&#34; class=&#34;text-muted-foreground&#34;&gt;Breadcrumb&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/nav&gt;&lt;nav role=&#34;navigation&#34; aria-label=&#34;pagination&#34; data-slot=&#34;pagination&#34; class=&#34;flex justify-start&#34;&gt;&lt;ul data-slot=&#34;pagination-content&#34; class=&#34;flex flex-row items-center gap-1&#34;&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;a data-slot=&#34;pagination-link&#34; class=&#34;inline-flex shrink-0 items-center justify-center rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent hover:bg-accent h-10 text-emphasis-foreground gap-1 px-2.5 sm:pl-2.5&#34; aria-label=&#34;Go to previous page&#34; href=&#34;#&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-left size-4&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m15 18-6-6 6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span class=&#34;hidden sm:block&#34;&gt;Previous&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;a data-slot=&#34;pagination-link&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent hover:bg-accent size-10 text-emphasis-foreground&#34; href=&#34;#&#34;&gt;1&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;a aria-current=&#34;page&#34; data-slot=&#34;pagination-link&#34; data-active=&#34;true&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-primary bg-primary text-primary-foreground hover:brightness-110 size-10&#34; href=&#34;#&#34;&gt;2&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;a data-slot=&#34;pagination-link&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent hover:bg-accent size-10 text-emphasis-foreground&#34; href=&#34;#&#34;&gt;3&lt;/a&gt;&lt;/li&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;span aria-hidden=&#34;true&#34; data-slot=&#34;pagination-ellipsis&#34; class=&#34;flex size-10 items-center justify-center&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-ellipsis lucide-more-horizontal size-4&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;circle cx=&#34;19&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;circle cx=&#34;5&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;&lt;span class=&#34;sr-only&#34;&gt;More pages&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li data-slot=&#34;pagination-item&#34;&gt;&lt;a data-slot=&#34;pagination-link&#34; class=&#34;inline-flex shrink-0 items-center justify-center rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent hover:bg-accent h-10 text-emphasis-foreground gap-1 px-2.5 sm:pr-2.5&#34; aria-label=&#34;Go to next page&#34; href=&#34;#&#34;&gt;&lt;span class=&#34;hidden sm:block&#34;&gt;Next&lt;/span&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-chevron-right size-4&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m9 18 6-6-6-6&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;&lt;kbd data-slot=&#34;kbd-group&#34; class=&#34;inline-flex items-center gap-1&#34;&gt;&lt;kbd data-slot=&#34;kbd&#34; class=&#34;pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none [&amp;amp;_svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-3 [[data-slot=tooltip-content]_&amp;amp;]:bg-background/20 [[data-slot=tooltip-content]_&amp;amp;]:text-background dark:[[data-slot=tooltip-content]_&amp;amp;]:bg-background/10&#34;&gt;⌘&lt;/kbd&gt;&lt;kbd data-slot=&#34;kbd&#34; class=&#34;pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none [&amp;amp;_svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-3 [[data-slot=tooltip-content]_&amp;amp;]:bg-background/20 [[data-slot=tooltip-content]_&amp;amp;]:text-background dark:[[data-slot=tooltip-content]_&amp;amp;]:bg-background/10&#34;&gt;K&lt;/kbd&gt;&lt;/kbd&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;display-navigation&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Breadcrumb<span style="color:#eceff4">,</span> BreadcrumbItem<span style="color:#eceff4">,</span> BreadcrumbLink<span style="color:#eceff4">,</span> BreadcrumbList<span style="color:#eceff4">,</span> BreadcrumbPage<span style="color:#eceff4">,</span> BreadcrumbSeparator <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/breadcrumb&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Kbd<span style="color:#eceff4">,</span> KbdGroup <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/kbd&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Pagination<span style="color:#eceff4">,</span> PaginationContent<span style="color:#eceff4">,</span> PaginationEllipsis<span style="color:#eceff4">,</span> PaginationItem<span style="color:#eceff4">,</span> PaginationLink<span style="color:#eceff4">,</span> PaginationNext<span style="color:#eceff4">,</span> PaginationPrevious <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/pagination&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> NavigationParts() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid gap-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Breadcrumb</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbList</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbLink</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span><span style="color:#eceff4">&gt;</span>Home<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbLink</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbSeparator</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbLink</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span><span style="color:#eceff4">&gt;</span>Components<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbLink</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbSeparator</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BreadcrumbPage</span><span style="color:#eceff4">&gt;</span>Breadcrumb<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbPage</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">BreadcrumbList</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Breadcrumb</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Pagination</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;justify-start&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationPrevious</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationLink</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">1</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationLink</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationLink</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span> <span style="color:#8fbcbb">isActive</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#b48ead">2</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationLink</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationLink</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">3</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationLink</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationEllipsis</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PaginationNext</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;#&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PaginationContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Pagination</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">KbdGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span><span style="color:#bf616a">⌘</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span>K<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">KbdGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<ul>
+<li><code>Breadcrumb</code> shows where a page sits. The content header has its own built-in trail, which <a href="./content-header.html">Content Header</a> covers. Use this component for a trail inside a page.</li>
+<li><code>Pagination</code> renders page links. Mark the current page with <code>isActive</code>, and turn a link off with <code>disabled</code>. The links are plain <code>&lt;a&gt;</code> elements: give each one an <code>href</code> with the page in the address, such as <code>?page=2</code>, or an <code>onClick</code> that changes the page in your own state.</li>
+<li><code>Kbd</code> shows a key, and <code>KbdGroup</code> shows a key combination.</li>
+</ul>
+<h2 id="item">Item</h2>
+<p><code>Item</code> from <code>src/components/ui/item.tsx</code> lays out a row with media, a title, a description and actions, the shape of most list rows. It takes <code>variant</code> (<code>default</code>, <code>outline</code>, <code>muted</code>) and <code>size</code> (<code>default</code>, <code>sm</code>, <code>xs</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Item</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ItemMedia</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">BadgeCheck</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ItemMedia</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ItemContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ItemTitle</span><span style="color:#eceff4">&gt;</span>Your profile has been verified<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">ItemTitle</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ItemDescription</span><span style="color:#eceff4">&gt;</span>Verified profiles show a badge next to the name<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">ItemDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ItemContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ItemActions</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sm&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			Review
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ItemActions</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Item</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>ItemMedia</code> with <code>variant=&quot;icon&quot;</code> gives the icon a tile in the avatar shape, and <code>variant=&quot;image&quot;</code> frames a picture. Its demo page is at <code>/components/item</code>.</p>
+<h2 id="carousel">Carousel</h2>
+<p><code>Carousel</code> from <code>src/components/ui/carousel.tsx</code> slides through items with arrows, swipe and the arrow keys. It runs on <a href="https://www.embla-carousel.com">Embla Carousel</a>. The demo page at <code>/components/carousel</code> shows sizes, spacing and a vertical carousel, and the photo viewer in the Photos app builds on it.</p>
+<h2 id="scroll-area">Scroll area</h2>
+<p><code>ScrollArea</code> from <code>src/components/ui/scroll-area.tsx</code> scrolls its content with a thin custom scrollbar. <code>AppShell</code> uses it for the page itself. Give it a fixed height:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ScrollArea</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;h-72&#34;</span><span style="color:#eceff4">&gt;{</span><span style="color:#616e87;font-style:italic">/* long content */</span><span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">ScrollArea</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div></div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#table">Table</a></li>
+    <li><a href="#tabs-and-accordion">Tabs and accordion</a></li>
+    <li><a href="#progress-skeleton-and-spinner">Progress, skeleton and spinner</a></li>
+    <li><a href="#breadcrumb-pagination-and-keyboard-keys">Breadcrumb, pagination and keyboard keys</a></li>
+    <li><a href="#item">Item</a></li>
+    <li><a href="#carousel">Carousel</a></li>
+    <li><a href="#scroll-area">Scroll area</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

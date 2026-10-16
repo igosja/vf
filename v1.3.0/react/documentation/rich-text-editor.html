@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Rich Text Editor |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Rich Text Editor
+RichTextEditor from src/components/common/rich-text-editor.tsx is a text editor with bold, italic, underline, numbered and bulleted lists, links and images. It runs on Quill 2, with a toolbar of Lucide icons in place of Quill&rsquo;s own. The Messages app uses it for replies, and the Rich Text Editor page at /components/rich-text-editor shows it on its own.
+Type in the preview and try the toolbar.
+
+	
+		Light
+		Dark
+	
+	
+
+
+Using it
+import { RichTextEditor } from &#34;@/components/common/rich-text-editor&#34;;
+
+&lt;RichTextEditor className=&#34;rounded-sm border border-input&#34; placeholder=&#34;Write something...&#34; /&gt;
+
+  
+      
+          Prop
+          What it does
+      
+  
+  
+      
+          placeholder
+          The gray text shown while the editor is empty
+      
+      
+          className
+          Classes for the outer wrapper. The editor has no border of its own, so each page gives it the frame it needs
+      
+  
+
+The Messages app gives it a different frame: a tinted background that switches to the card color while you type:
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="rich-text-editor">Rich Text Editor</h1>
+<p><code>RichTextEditor</code> from <code>src/components/common/rich-text-editor.tsx</code> is a text editor with bold, italic, underline, numbered and bulleted lists, links and images. It runs on <a href="https://quilljs.com">Quill 2</a>, with a toolbar of Lucide icons in place of Quill&rsquo;s own. The Messages app uses it for replies, and the Rich Text Editor page at <code>/components/rich-text-editor</code> shows it on its own.</p>
+<p>Type in the preview and try the toolbar.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;rich-text-editor&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+
+<h2 id="using-it">Using it</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> RichTextEditor <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/rich-text-editor&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RichTextEditor</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;rounded-sm border border-input&#34;</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Write something...&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>Prop</th>
+          <th>What it does</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>placeholder</code></td>
+          <td>The gray text shown while the editor is empty</td>
+      </tr>
+      <tr>
+          <td><code>className</code></td>
+          <td>Classes for the outer wrapper. The editor has no border of its own, so each page gives it the frame it needs</td>
+      </tr>
+  </tbody>
+</table>
+<p>The Messages app gives it a different frame: a tinted background that switches to the card color while you type:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RichTextEditor</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;rounded-xl border-2 border-transparent bg-muted transition-colors focus-within:border-border focus-within:bg-card&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><h2 id="reading-the-editors-content">Reading the editor&rsquo;s content</h2>
+<p>The component shows the editor but does not pass its content anywhere yet. To use the text, add an <code>onChange</code> prop that hands it up. In <code>rich-text-editor.tsx</code>, accept the prop:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">function</span> RichTextEditor<span style="color:#eceff4">({</span>
+</span></span><span style="display:flex;"><span>	placeholder<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	className<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	onChange<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	placeholder?: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	className?: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	onChange<span style="color:#81a1c1">?:</span> <span style="color:#eceff4">(</span>html: <span style="color:#81a1c1">string</span><span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#81a1c1;font-weight:bold">void</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">})</span> <span style="color:#eceff4">{</span>
+</span></span></code></pre></div><p>Then listen for changes right after Quill starts, inside the <code>useEffect</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>quillRef<span style="color:#eceff4">.</span>current <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">new</span> Quill<span style="color:#eceff4">(</span>editorRef<span style="color:#eceff4">.</span>current<span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	modules<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> toolbar: <span style="color:#81a1c1">toolbarRef.current</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	placeholder<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	theme<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;snow&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>quillRef<span style="color:#eceff4">.</span>current<span style="color:#eceff4">.</span>on<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;text-change&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	onChange<span style="color:#81a1c1">?</span><span style="color:#eceff4">.(</span>quillRef<span style="color:#eceff4">.</span>current<span style="color:#81a1c1">!</span><span style="color:#eceff4">.</span>getSemanticHTML<span style="color:#eceff4">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p>Now the page receives the content as HTML each time it changes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> <span style="color:#eceff4">[</span>body<span style="color:#eceff4">,</span> setBody<span style="color:#eceff4">]</span> <span style="color:#81a1c1">=</span> useState<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RichTextEditor</span> <span style="color:#8fbcbb">onChange</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>setBody<span style="color:#eceff4">}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p><code>getSemanticHTML()</code> returns clean HTML for saving or sending. To keep the content in Quill&rsquo;s own format, which keeps every detail of the formatting, use <code>getContents()</code> instead. The <a href="https://quilljs.com/docs/api">Quill API docs</a> cover both.</p>
+<p>If you show the saved HTML on a page later, pass it through a sanitizer such as <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> before rendering it with <code>dangerouslySetInnerHTML</code>. Text from an editor can contain markup that a visitor typed.</p>
+<h2 id="changing-the-toolbar">Changing the toolbar</h2>
+<p>The toolbar is plain HTML inside the component. Each button&rsquo;s class names the Quill format it applies: <code>ql-bold</code>, <code>ql-italic</code>, <code>ql-list</code> with <code>value=&quot;ordered&quot;</code>, and so on. To add a format, add a button with its class and an icon:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">button</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;button&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ql-strike&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Strikethrough&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Strikethrough</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">button</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>Then remove Quill&rsquo;s own icon for that format, so it leaves yours in place. Add the format&rsquo;s name to the list in the <code>useEffect</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">for</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">const</span> name <span style="color:#81a1c1;font-weight:bold">of</span> <span style="color:#eceff4">[</span><span style="color:#a3be8c">&#34;bold&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;italic&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;underline&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;list&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;link&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;image&#34;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;strike&#34;</span><span style="color:#eceff4">])</span> <span style="color:#81a1c1;font-weight:bold">delete</span> icons<span style="color:#eceff4">[</span>name<span style="color:#eceff4">];</span>
+</span></span></code></pre></div><p>The <a href="https://quilljs.com/docs/formats">Quill formats page</a> lists every format and its class.</p>
+<h2 id="styling">Styling</h2>
+<p><code>src/styles/quill.css</code> imports Quill&rsquo;s Snow theme and restyles it to match the template: the toolbar buttons, the editor text and the link tooltip. The component imports this file itself, so the styles only load on pages that use the editor.</p>
+<h2 id="why-it-mounts-in-an-effect">Why it mounts in an effect</h2>
+<p>Quill takes over the element it is given, so the component creates the editor in a <code>useEffect</code>, once the element exists. The <code>quillRef.current</code> check stops it from creating a second editor when React runs the effect twice in development mode.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#using-it">Using it</a></li>
+    <li><a href="#reading-the-editors-content">Reading the editor&rsquo;s content</a></li>
+    <li><a href="#changing-the-toolbar">Changing the toolbar</a></li>
+    <li><a href="#styling">Styling</a></li>
+    <li><a href="#why-it-mounts-in-an-effect">Why it mounts in an effect</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

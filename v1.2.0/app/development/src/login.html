@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  {{> _head title="Login" }}
+
+  <body class="hstack p-5 h-screen">
+    <div class="card mw-400 w-100 m-auto p-8">
+      <h2 class="fs-4">Welcome to Materia!</h2>
+      <div class="text-body-secondary mb-6">Please sign in to continue to the system</div>
+
+      <form class="mb-5">
+        <div class="form-icon mb-3">
+          <i class="ph ph-user-circle"></i>
+          <input type="text" class="form-control rounded-pill" placeholder="Username" />
+        </div>
+        <div class="form-icon mb-8">
+          <i class="ph ph-keyhole"></i>
+          <input type="password" class="form-control rounded-pill" placeholder="Password" />
+        </div>
+
+        <button type="button" class="btn btn-primary w-100 text-uppercase">Sign In</button>
+      </form>
+
+      <div class="text-center fs-7">
+        <a href="register.html" class="link-secondary mb-1 d-block">Register for a new account</a>
+        <a href="forgot-password.html" class="link-secondary d-block">Forgot password?</a>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

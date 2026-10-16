@@ -1,0 +1,8 @@
+[data-scrollbar] {
+    .os-theme-dark {
+        --os-handle-bg: var(--bs-scrollbar-bg);
+        --os-handle-bg-hover: #0000008c;
+        --os-handle-bg-active: #000000a8;
+        --os-handle-perpendicular-size: 80%
+    }
+}

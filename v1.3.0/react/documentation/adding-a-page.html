@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Adding a Page |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Adding a Page
+This guide adds an Orders page at /orders, with a table of orders, a link in the sidebar menu and a title in the header. Each step lists the file to change. Keep npm run dev running and you will see each step in the browser as you save.
+1. Add the data
+Create src/data/orders.ts with a type and some rows. Later you can load the same shape from your server, as Working with Data shows.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="adding-a-page">Adding a Page</h1>
+<p>This guide adds an Orders page at <code>/orders</code>, with a table of orders, a link in the sidebar menu and a title in the header. Each step lists the file to change. Keep <code>npm run dev</code> running and you will see each step in the browser as you save.</p>
+<h2 id="1-add-the-data">1. Add the data</h2>
+<p>Create <code>src/data/orders.ts</code> with a type and some rows. Later you can load the same shape from your server, as <a href="./working-with-data.html">Working with Data</a> shows.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">type</span> Order <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	id: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	customer: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	date: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	total: <span style="color:#81a1c1">number</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Paid&#34;</span> <span style="color:#81a1c1">|</span> <span style="color:#a3be8c">&#34;Pending&#34;</span> <span style="color:#81a1c1">|</span> <span style="color:#a3be8c">&#34;Failed&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> ORDERS: <span style="color:#81a1c1">Order</span><span style="color:#eceff4">[]</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;#96474&#34;</span><span style="color:#eceff4">,</span> customer<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Harper Collins&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Oct 12, 2026&#34;</span><span style="color:#eceff4">,</span> total: <span style="color:#81a1c1">29.69</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Paid&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;#96475&#34;</span><span style="color:#eceff4">,</span> customer<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Liam Turner&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Oct 12, 2026&#34;</span><span style="color:#eceff4">,</span> total: <span style="color:#81a1c1">59.38</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Failed&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> id<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;#96476&#34;</span><span style="color:#eceff4">,</span> customer<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Sofia Martinez&#34;</span><span style="color:#eceff4">,</span> date<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Oct 11, 2026&#34;</span><span style="color:#eceff4">,</span> total: <span style="color:#81a1c1">29.69</span><span style="color:#eceff4">,</span> status<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Pending&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">];</span>
+</span></span></code></pre></div><h2 id="2-create-the-page">2. Create the page</h2>
+<p>Create <code>src/pages/orders/page.tsx</code>. The page exports its component as the default export:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Download <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#81a1c1;font-weight:bold">type</span> <span style="color:#eceff4">{</span> ComponentProps <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> IconButton <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/icon-button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ContentHeader <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/layout/content-header&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Badge <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/badge&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Card <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/card&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Table<span style="color:#eceff4">,</span> TableBody<span style="color:#eceff4">,</span> TableCell<span style="color:#eceff4">,</span> TableHead<span style="color:#eceff4">,</span> TableHeader<span style="color:#eceff4">,</span> TableRow <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/table&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ORDERS<span style="color:#eceff4">,</span> <span style="color:#81a1c1;font-weight:bold">type</span> Order <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/data/orders&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> STATUS_VARIANT: <span style="color:#81a1c1">Record</span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Order</span><span style="color:#bf616a">[</span><span style="color:#a3be8c">&#34;status&#34;</span><span style="color:#bf616a">]</span><span style="color:#eceff4">,</span> <span style="color:#8fbcbb">ComponentProps</span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">typeof</span> <span style="color:#8fbcbb">Badge</span><span style="color:#eceff4">&gt;</span><span style="color:#bf616a">[</span><span style="color:#a3be8c">&#34;variant&#34;</span><span style="color:#bf616a">]</span><span style="color:#eceff4">&gt;</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	Paid<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;positive&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Pending<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;caution&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Failed<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;destructive&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> usd <span style="color:#81a1c1">=</span> <span style="color:#eceff4">(</span>amount: <span style="color:#81a1c1">number</span><span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> amount<span style="color:#eceff4">.</span>toLocaleString<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;en-US&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span> style<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;currency&#34;</span><span style="color:#eceff4">,</span> currency<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;USD&#34;</span> <span style="color:#eceff4">});</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> Orders() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;mx-auto w-full max-w-400 pb-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ContentHeader</span> <span style="color:#8fbcbb">title</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Orders&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ml-auto&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Download</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Export<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ContentHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Card</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Table</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>Order<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>Customer<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;hidden sm:table-cell&#34;</span><span style="color:#eceff4">&gt;</span><span style="color:#81a1c1">Date</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>Status<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableHead</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-right&#34;</span><span style="color:#eceff4">&gt;</span>Total<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableBody</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">{</span>ORDERS<span style="color:#eceff4">.</span>map<span style="color:#eceff4">((</span>order<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableRow</span> <span style="color:#8fbcbb">key</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>order<span style="color:#eceff4">.</span>id<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-emphasis-foreground&#34;</span><span style="color:#eceff4">&gt;{</span>order<span style="color:#eceff4">.</span>id<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;{</span>order<span style="color:#eceff4">.</span>customer<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;hidden sm:table-cell&#34;</span><span style="color:#eceff4">&gt;{</span>order<span style="color:#eceff4">.</span>date<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>									<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Badge</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>STATUS_VARIANT<span style="color:#eceff4">[</span>order<span style="color:#eceff4">.</span>status<span style="color:#eceff4">]}&gt;{</span>order<span style="color:#eceff4">.</span>status<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">Badge</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TableCell</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-right&#34;</span><span style="color:#eceff4">&gt;{</span>usd<span style="color:#eceff4">(</span>order<span style="color:#eceff4">.</span>total<span style="color:#eceff4">)}&lt;/</span><span style="color:#81a1c1">TableCell</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableRow</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">))}</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TableBody</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Table</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Card</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><p>The wrapper, <code>mx-auto w-full max-w-400 pb-4</code>, is the one the dashboards use. <a href="./layout.html">Layout Overview</a> lists the other page widths.</p>
+<h2 id="3-add-the-route">3. Add the route</h2>
+<p>Open <code>src/routes.tsx</code> and add an entry inside the <code>children</code> of the first route, the one with <code>Component: AppShell</code>. Put it anywhere before the <code>path: &quot;*&quot;</code> entry:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;orders&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	lazy: <span style="color:#81a1c1">async</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> Component<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">await</span> <span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;@/pages/orders/page&#34;</span><span style="color:#eceff4">)).</span><span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#eceff4">}),</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>Open <code>http://localhost:5173/orders</code>. The page shows inside the frame, with the sidebar and the nav bar.</p>
+<p>For a page without the frame, such as a second sign-in page, add the route to the <code>children</code> of the <code>BlankShell</code> route instead. Its address then starts with <code>/pages/</code>.</p>
+<h2 id="4-add-it-to-the-menu">4. Add it to the menu</h2>
+<p>Open <code>src/data/navigation.ts</code>. Import an icon at the top, then add a link to a section:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Receipt <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Dashboards&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">LayoutGrid</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	items<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;E-Commerce&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">ShoppingBag</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Orders&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/orders&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">Receipt</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span>	<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>The link appears in the sidebar flyout and in the drawer, and it highlights while the Orders page is open. <a href="./sidebar-menu.html">Sidebar Menu</a> explains groups and new sections.</p>
+<h2 id="5-check-the-types">5. Check the types</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm run typecheck
+</span></span></code></pre></div><p>It should finish with no output. If it reports an error, the message names the file and the line.</p>
+<h2 id="splitting-a-growing-page">Splitting a growing page</h2>
+<p>When a page passes one screen of code, split it into files in the same folder:</p>
+<pre tabindex="0"><code>src/pages/orders/
+├── page.tsx            the layout: header and grid
+├── orders-table.tsx    exports OrdersTable
+└── order-dialog.tsx    exports OrderDialog
+</code></pre><p><code>page.tsx</code> imports the parts with relative paths:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> OrderDialog <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;./order-dialog&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> OrdersTable <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;./orders-table&#34;</span><span style="color:#eceff4">;</span>
+</span></span></code></pre></div><p>Keep the default export on <code>page.tsx</code> only. The other files use named exports, which keeps the imports easy to search for.</p>
+<h2 id="starting-from-an-existing-page">Starting from an existing page</h2>
+<p>The fastest way to a new page is often to copy the closest one. To build an app page with a folder sidebar, copy <code>src/pages/apps/todo-lists/</code>. For a dashboard, copy one of the folders in <code>src/pages/dashboards/</code> and keep the cards you need. Rename the folder, rename the default export, and add the route and the menu link as above.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-add-the-data">1. Add the data</a></li>
+    <li><a href="#2-create-the-page">2. Create the page</a></li>
+    <li><a href="#3-add-the-route">3. Add the route</a></li>
+    <li><a href="#4-add-it-to-the-menu">4. Add it to the menu</a></li>
+    <li><a href="#5-check-the-types">5. Check the types</a></li>
+    <li><a href="#splitting-a-growing-page">Splitting a growing page</a></li>
+    <li><a href="#starting-from-an-existing-page">Starting from an existing page</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

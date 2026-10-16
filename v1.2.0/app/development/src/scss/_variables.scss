@@ -1,0 +1,41 @@
+//-------------------------------------
+// Custom theme specific variables
+//-------------------------------------
+// Dark shade
+$dark-50: #1e2f39;
+$dark-100: #223642;
+$dark-200: #253b48;
+$dark-300: #294150;
+$dark-400: #2c4859;
+$dark-500: #325164;
+$dark-600: #36596f;
+$dark-700: #3e647c;
+$dark-800: #45718d;
+$dark-900: #345b72;
+
+// Dynamic theme shades
+$theme-50: var(--bs-theme-50);
+$theme-100: var(--bs-theme-100);
+$theme-200: var(--bs-theme-200);
+$theme-300: var(--bs-theme-300);
+$theme-400: var(--bs-theme-400);
+$theme-500: var(--bs-theme-500);
+$theme-600: var(--bs-theme-600);
+$theme-700: var(--bs-theme-700);
+$theme-800: var(--bs-theme-800);
+$theme-900: var(--bs-theme-900);
+
+// Font family
+$font-family-icon-light: "Phosphor";
+
+// Header
+$header-height: 4rem;
+
+// Sidebar
+$sidebar-width: 6rem;
+$sidebar-mobile-width: 18rem;
+
+// Navbar (Right sidebar)
+$navbar-z-index: 10;
+$navbar-width: 4.5rem;
+$navbar-mobile-height: 3.5rem;

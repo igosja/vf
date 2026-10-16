@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Dependencies |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Dependencies
+This page lists every package in package.json, what it does, and where the template uses it. Use it to decide what you can remove and to plan updates.
+Packages the app ships with
+These are the dependencies. Their code ends up in the built site.
+
+  
+      
+          Package
+          Used for
+          Used in
+      
+  
+  
+      
+          react, react-dom
+          Rendering the interface
+          Everywhere
+      
+      
+          react-router
+          Page addresses and navigation
+          src/routes.tsx, src/main.tsx, links across the pages
+      
+      
+          radix-ui
+          Behavior and accessibility under the shadcn/ui components: focus, keyboard support, menus, dialogs
+          25 files in src/components/ui
+      
+      
+          class-variance-authority
+          The variant and size props on components such as Button and Badge
+          src/components/ui
+      
+      
+          clsx, tailwind-merge
+          The cn() helper that joins class names and settles conflicts
+          src/lib/utils.ts
+      
+      
+          tw-animate-css
+          The open and close animations of dialogs, sheets, menus and popovers
+          src/styles/index.css
+      
+      
+          lucide-react
+          Icons
+          Across the template
+      
+      
+          chart.js
+          Drawing the charts
+          src/components/charts/use-chart-theme.ts
+      
+      
+          react-chartjs-2
+          The React components for Chart.js: &lt;Line&gt;, &lt;Bar&gt;, &lt;Doughnut&gt; and the rest
+          The dashboards and the Charts page
+      
+      
+          chartjs-adapter-date-fns
+          Dates on chart axes
+          src/components/charts/use-chart-theme.ts
+      
+      
+          date-fns
+          Date math and formatting
+          The date pickers and the charts with a date axis
+      
+      
+          react-day-picker
+          The calendar grid inside the date pickers
+          src/components/ui/calendar.tsx, DateRangePicker
+      
+      
+          jsvectormap
+          The world map and the other maps
+          src/components/charts/vector-map.tsx, the Maps page
+      
+      
+          @fullcalendar/core, @fullcalendar/react, @fullcalendar/daygrid, @fullcalendar/timegrid
+          The Calendar app. The React component and both view plugins need core
+          src/pages/apps/calendar/page.tsx
+      
+      
+          quill
+          The rich text editor
+          RichTextEditor, used by the Messages app and the Rich Text Editor page
+      
+      
+          react-hook-form, @hookform/resolvers, zod
+          Form state and validation
+          src/pages/forms/validation/page.tsx
+      
+      
+          sonner
+          Toast notifications
+          src/components/ui/sonner.tsx and the pages that show a toast
+      
+      
+          cmdk
+          The searchable list inside the Combobox
+          src/components/ui/command.tsx
+      
+      
+          embla-carousel-react
+          The Carousel component, which the photo lightbox also uses
+          src/components/ui/carousel.tsx
+      
+      
+          input-otp
+          The one-time code field
+          src/components/ui/input-otp.tsx
+      
+  
+
+Development tools
+These are the devDependencies. They build and check the code and never reach the browser.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="dependencies">Dependencies</h1>
+<p>This page lists every package in <code>package.json</code>, what it does, and where the template uses it. Use it to decide what you can remove and to plan updates.</p>
+<h2 id="packages-the-app-ships-with">Packages the app ships with</h2>
+<p>These are the <code>dependencies</code>. Their code ends up in the built site.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Package</th>
+          <th>Used for</th>
+          <th>Used in</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>react</code>, <code>react-dom</code></td>
+          <td>Rendering the interface</td>
+          <td>Everywhere</td>
+      </tr>
+      <tr>
+          <td><code>react-router</code></td>
+          <td>Page addresses and navigation</td>
+          <td><code>src/routes.tsx</code>, <code>src/main.tsx</code>, links across the pages</td>
+      </tr>
+      <tr>
+          <td><code>radix-ui</code></td>
+          <td>Behavior and accessibility under the shadcn/ui components: focus, keyboard support, menus, dialogs</td>
+          <td>25 files in <code>src/components/ui</code></td>
+      </tr>
+      <tr>
+          <td><code>class-variance-authority</code></td>
+          <td>The <code>variant</code> and <code>size</code> props on components such as Button and Badge</td>
+          <td><code>src/components/ui</code></td>
+      </tr>
+      <tr>
+          <td><code>clsx</code>, <code>tailwind-merge</code></td>
+          <td>The <code>cn()</code> helper that joins class names and settles conflicts</td>
+          <td><code>src/lib/utils.ts</code></td>
+      </tr>
+      <tr>
+          <td><code>tw-animate-css</code></td>
+          <td>The open and close animations of dialogs, sheets, menus and popovers</td>
+          <td><code>src/styles/index.css</code></td>
+      </tr>
+      <tr>
+          <td><code>lucide-react</code></td>
+          <td>Icons</td>
+          <td>Across the template</td>
+      </tr>
+      <tr>
+          <td><code>chart.js</code></td>
+          <td>Drawing the charts</td>
+          <td><code>src/components/charts/use-chart-theme.ts</code></td>
+      </tr>
+      <tr>
+          <td><code>react-chartjs-2</code></td>
+          <td>The React components for Chart.js: <code>&lt;Line&gt;</code>, <code>&lt;Bar&gt;</code>, <code>&lt;Doughnut&gt;</code> and the rest</td>
+          <td>The dashboards and the Charts page</td>
+      </tr>
+      <tr>
+          <td><code>chartjs-adapter-date-fns</code></td>
+          <td>Dates on chart axes</td>
+          <td><code>src/components/charts/use-chart-theme.ts</code></td>
+      </tr>
+      <tr>
+          <td><code>date-fns</code></td>
+          <td>Date math and formatting</td>
+          <td>The date pickers and the charts with a date axis</td>
+      </tr>
+      <tr>
+          <td><code>react-day-picker</code></td>
+          <td>The calendar grid inside the date pickers</td>
+          <td><code>src/components/ui/calendar.tsx</code>, <code>DateRangePicker</code></td>
+      </tr>
+      <tr>
+          <td><code>jsvectormap</code></td>
+          <td>The world map and the other maps</td>
+          <td><code>src/components/charts/vector-map.tsx</code>, the Maps page</td>
+      </tr>
+      <tr>
+          <td><code>@fullcalendar/core</code>, <code>@fullcalendar/react</code>, <code>@fullcalendar/daygrid</code>, <code>@fullcalendar/timegrid</code></td>
+          <td>The Calendar app. The React component and both view plugins need <code>core</code></td>
+          <td><code>src/pages/apps/calendar/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td><code>quill</code></td>
+          <td>The rich text editor</td>
+          <td><code>RichTextEditor</code>, used by the Messages app and the Rich Text Editor page</td>
+      </tr>
+      <tr>
+          <td><code>react-hook-form</code>, <code>@hookform/resolvers</code>, <code>zod</code></td>
+          <td>Form state and validation</td>
+          <td><code>src/pages/forms/validation/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td><code>sonner</code></td>
+          <td>Toast notifications</td>
+          <td><code>src/components/ui/sonner.tsx</code> and the pages that show a toast</td>
+      </tr>
+      <tr>
+          <td><code>cmdk</code></td>
+          <td>The searchable list inside the Combobox</td>
+          <td><code>src/components/ui/command.tsx</code></td>
+      </tr>
+      <tr>
+          <td><code>embla-carousel-react</code></td>
+          <td>The Carousel component, which the photo lightbox also uses</td>
+          <td><code>src/components/ui/carousel.tsx</code></td>
+      </tr>
+      <tr>
+          <td><code>input-otp</code></td>
+          <td>The one-time code field</td>
+          <td><code>src/components/ui/input-otp.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="development-tools">Development tools</h2>
+<p>These are the <code>devDependencies</code>. They build and check the code and never reach the browser.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Package</th>
+          <th>Used for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>vite</code></td>
+          <td>The development server and the production build</td>
+      </tr>
+      <tr>
+          <td><code>@vitejs/plugin-react</code></td>
+          <td>JSX and fast refresh in Vite</td>
+      </tr>
+      <tr>
+          <td><code>tailwindcss</code>, <code>@tailwindcss/vite</code></td>
+          <td>Tailwind CSS and its Vite plugin</td>
+      </tr>
+      <tr>
+          <td><code>typescript</code></td>
+          <td>Type checking through <code>npm run typecheck</code> and <code>npm run build</code></td>
+      </tr>
+      <tr>
+          <td><code>@types/react</code>, <code>@types/react-dom</code>, <code>@types/node</code></td>
+          <td>Type definitions</td>
+      </tr>
+      <tr>
+          <td><code>prettier</code>, <code>prettier-plugin-tailwindcss</code></td>
+          <td>Code formatting, including the order of Tailwind classes</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="updating-packages">Updating packages</h2>
+<p>See which packages have newer versions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm outdated
+</span></span></code></pre></div><p>The <code>Wanted</code> column shows the newest version that <code>package.json</code> allows. The <code>^</code> in front of each version allows minor and patch updates, which should not break anything. Install them with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm update
+</span></span></code></pre></div><p>The <code>Latest</code> column can show a new major version, such as React Router 9 after 8. A major version can change how the package works. Read the package&rsquo;s upgrade guide, install it on its own, and test the pages that use it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install react-router@latest
+</span></span><span style="display:flex;"><span>npm run build
+</span></span><span style="display:flex;"><span>npm run dev
+</span></span></code></pre></div><p>Update one major version at a time, so you know which package caused a problem.</p>
+<p>After any update, run <code>npm run build</code> and click through the pages that use the package, using the &ldquo;Used in&rdquo; column above.</p>
+<h2 id="shadcnui-components">shadcn/ui components</h2>
+<p>The files in <code>src/components/ui</code> are copies of shadcn/ui components that the template has restyled. They are not an npm package, so <code>npm update</code> does not touch them. This is how shadcn/ui works: the code belongs to you.</p>
+<p>To add a component the template does not include, use the shadcn command line tool. <code>components.json</code> already points it at the right folders:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx shadcn@latest add hover-card
+</span></span></code></pre></div><p>Do not run <code>add</code> for a component that already exists in <code>src/components/ui</code>. The tool would replace the restyled file with the plain shadcn version and undo the Materia design. <a href="./components-overview.html">Components Overview</a> explains the changes the template made.</p>
+<h2 id="removing-packages">Removing packages</h2>
+<p>To remove a feature and its package, delete the files that use it first, then uninstall the package. Removing the Calendar app looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm uninstall @fullcalendar/core @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid
+</span></span></code></pre></div><p><a href="./removing-features.html">Removing Features</a> lists the files to delete for each feature.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#packages-the-app-ships-with">Packages the app ships with</a></li>
+    <li><a href="#development-tools">Development tools</a></li>
+    <li><a href="#updating-packages">Updating packages</a></li>
+    <li><a href="#shadcnui-components">shadcn/ui components</a></li>
+    <li><a href="#removing-packages">Removing packages</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

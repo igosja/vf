@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Sidebar Menu |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Sidebar Menu
+The sidebar menu comes from one data file, src/data/navigation.ts. To add, rename, move or remove a link, edit that file. The sidebar component reads it and draws the menu, so you do not touch the component itself.
+How the menu looks
+The menu has five sections: Dashboards, Applications, Pages, Content and Components.
+
+On wide screens (1280px and up), a rail down the left edge shows one icon per section. Pointing at an icon, or moving to it with the keyboard, opens that section&rsquo;s links in a panel that slides out from behind the rail. The section that holds the current page stays highlighted.
+On smaller screens, the rail is hidden. The menu button in the content header, or in the bottom bar on phones, opens a drawer with every section listed one under the other.
+
+Both read the same data, so a change to navigation.ts shows up in both.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="sidebar-menu">Sidebar Menu</h1>
+<p>The sidebar menu comes from one data file, <code>src/data/navigation.ts</code>. To add, rename, move or remove a link, edit that file. The sidebar component reads it and draws the menu, so you do not touch the component itself.</p>
+<h2 id="how-the-menu-looks">How the menu looks</h2>
+<p>The menu has five sections: Dashboards, Applications, Pages, Content and Components.</p>
+<ul>
+<li><strong>On wide screens (1280px and up)</strong>, a rail down the left edge shows one icon per section. Pointing at an icon, or moving to it with the keyboard, opens that section&rsquo;s links in a panel that slides out from behind the rail. The section that holds the current page stays highlighted.</li>
+<li><strong>On smaller screens</strong>, the rail is hidden. The menu button in the content header, or in the bottom bar on phones, opens a drawer with every section listed one under the other.</li>
+</ul>
+<p>Both read the same data, so a change to <code>navigation.ts</code> shows up in both.</p>
+<h2 id="the-data">The data</h2>
+<p><code>navigation.ts</code> exports <code>NAVIGATION</code>, a list of sections:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">type</span> NavSection <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">LucideIcon</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	items: <span style="color:#81a1c1">NavItem</span><span style="color:#eceff4">[];</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span></code></pre></div><p>Each section holds items. An item is either a link or a group:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">type</span> NavLink <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	to: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">LucideIcon</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">/** A link with children opens in place instead of navigating. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">type</span> NavGroup <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">LucideIcon</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	children<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> label: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span> to: <span style="color:#81a1c1">string</span> <span style="color:#eceff4">}[];</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span></code></pre></div><p>A <strong>link</strong> goes straight to a page. A <strong>group</strong> has no page of its own: clicking it opens a list of child links underneath it, as the User and UI Elements groups do.</p>
+<p>Here is the Dashboards section, which has six links:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Dashboards&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">LayoutGrid</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	items<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;E-Commerce&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">ShoppingBag</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Analytics&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/dashboards/analytics&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">Earth</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Project Management&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/dashboards/project-management&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">SquareKanban</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;CRM&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/dashboards/crm&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">BookUser</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Email Marketing&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/dashboards/email-marketing&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">Inbox</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;SaaS&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/dashboards/saas&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">AppWindow</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>And a group from the Applications section:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;User&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">CircleUser</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	children<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Profile&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/user/profile&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Timeline&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/user/timeline&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Photos&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/user/photos&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Connections&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/user/connections&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Preferences&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/user/preferences&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><h2 id="add-a-link">Add a link</h2>
+<ol>
+<li>Create the page and add its route. <a href="./adding-a-page.html">Adding a Page</a> covers both.</li>
+<li>Import an icon at the top of <code>navigation.ts</code>. Pick one on the Icons page at <code>/content/icons</code>:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Receipt <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span></code></pre></div><ol start="3">
+<li>Add the link to a section, in the position you want it to appear:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Orders&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/orders&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">Receipt</span> <span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>The <code>to</code> value must match the <code>path</code> of the route in <code>src/routes.tsx</code>, with a leading slash.</p>
+<h2 id="add-a-group">Add a group</h2>
+<p>Give the item <code>children</code> in place of <code>to</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Reports&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">FileChartColumn</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	children<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Sales&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/reports/sales&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Customers&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/reports/customers&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>A group opens on its own when one of its children is the current page.</p>
+<h2 id="add-a-section">Add a section</h2>
+<p>Add an object to <code>NAVIGATION</code>. Each section needs a short label, because the label sits under its icon in the rail:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Reports&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	icon: <span style="color:#81a1c1">ChartColumnBig</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	items<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Sales&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/reports/sales&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">CircleDollarSign</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Customers&#34;</span><span style="color:#eceff4">,</span> to<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/reports/customers&#34;</span><span style="color:#eceff4">,</span> icon: <span style="color:#81a1c1">Users</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>The rail fits about seven sections on a screen of average height. Group related links together before you add an eighth.</p>
+<h2 id="remove-or-reorder">Remove or reorder</h2>
+<p>Delete an item, or move it within the list. The menu follows the order of the array. When you remove a page for good, also delete its route and its folder. <a href="./removing-features.html">Removing Features</a> explains the steps.</p>
+<h2 id="how-the-current-page-is-found">How the current page is found</h2>
+<p>The sidebar highlights the link whose <code>to</code> matches the address. A link also counts as current on the pages under it, so the AI Agent link stays highlighted on <code>/apps/ai-agent/chat</code>. <code>matchesPath</code> in <code>src/components/layout/sidebar/nav-list.tsx</code> handles this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> matchesPath <span style="color:#81a1c1">=</span> <span style="color:#eceff4">(</span>to: <span style="color:#81a1c1">string</span><span style="color:#eceff4">,</span> pathname: <span style="color:#81a1c1">string</span><span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">(</span>to <span style="color:#81a1c1">===</span> <span style="color:#a3be8c">&#34;/&#34;</span> <span style="color:#81a1c1">?</span> pathname <span style="color:#81a1c1">===</span> <span style="color:#a3be8c">&#34;/&#34;</span> <span style="color:#81a1c1">:</span> pathname <span style="color:#81a1c1">===</span> to <span style="color:#81a1c1">||</span> pathname<span style="color:#eceff4">.</span>startsWith<span style="color:#eceff4">(</span><span style="color:#a3be8c">`</span><span style="color:#a3be8c">${</span>to<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/`</span><span style="color:#eceff4">));</span>
+</span></span></code></pre></div><p>The home page link, <code>/</code>, only matches the home page. Without that exception it would match every address.</p>
+<h2 id="keyboard">Keyboard</h2>
+<p>The rail works with the keyboard. Tab to a section icon to open its links, use the up and down arrow keys to move between sections, press Enter, Space or the right arrow to move into the links, and press Escape to close the panel.</p>
+<h2 id="files">Files</h2>
+<table>
+  <thead>
+      <tr>
+          <th>File</th>
+          <th>What it does</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>src/data/navigation.ts</code></td>
+          <td>The sections, links and groups</td>
+      </tr>
+      <tr>
+          <td><code>src/components/layout/sidebar/sidebar.tsx</code></td>
+          <td>The rail, the flyout panel and the drawer</td>
+      </tr>
+      <tr>
+          <td><code>src/components/layout/sidebar/nav-list.tsx</code></td>
+          <td>The list of links inside the panel and the drawer, and the group that opens in place</td>
+      </tr>
+      <tr>
+          <td><code>src/providers/sidebar-provider.tsx</code></td>
+          <td>Whether the drawer is open, shared with the menu buttons</td>
+      </tr>
+  </tbody>
+</table>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-the-menu-looks">How the menu looks</a></li>
+    <li><a href="#the-data">The data</a></li>
+    <li><a href="#add-a-link">Add a link</a></li>
+    <li><a href="#add-a-group">Add a group</a></li>
+    <li><a href="#add-a-section">Add a section</a></li>
+    <li><a href="#remove-or-reorder">Remove or reorder</a></li>
+    <li><a href="#how-the-current-page-is-found">How the current page is found</a></li>
+    <li><a href="#keyboard">Keyboard</a></li>
+    <li><a href="#files">Files</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

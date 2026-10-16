@@ -1,0 +1,26 @@
+.header {
+  z-index: $navbar-z-index - 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: $header-height;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(0deg, transparent 0, rgb(var(--bs-body-bg-rgb)) 0.75rem);
+
+  .search-field {
+    max-width: 35rem;
+    width: 100%;
+  }
+
+  @include media-breakpoint-up(sm) {
+    padding-right: 0.5rem;
+  }
+}
+
+.header-title {
+  font-size: $font-size-lg;
+  margin: 0;
+  color: var(--bs-emphasis-color);
+  font-weight: $font-weight-medium;
+}

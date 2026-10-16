@@ -1,0 +1,112 @@
+#content {
+  --content-padding-right: 1rem;
+  --content-padding-left: 1rem;
+
+  will-change: padding;
+  transition: padding 300ms;
+  overflow-y: auto;
+  height: 100vh;
+  padding-right: var(--content-padding-right);
+  padding-left: var(--content-padding-left);
+
+  @include media-breakpoint-up(xl) {
+    --content-padding-left: #{$sidebar-width + 1.15rem};
+
+    &:has(#sidebar-secondary) {
+      --content-padding-left: #{$sidebar-width};
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    --content-padding-right: #{$navbar-width};
+
+    .simplebar-wrapper {
+      &:has(#sidebar-secondary) {
+        .simplebar-content:not(#sidebar-secondary .simplebar-content) {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    @include hide-scrollbar();
+    padding-bottom: $navbar-mobile-height;
+  }
+}
+
+.content-body {
+  height: fit-content;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+  min-width: 0;
+
+  &.content-body-centered {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.content-card {
+  border-radius: 1.2rem;
+  background-color: $card-bg;
+  padding: 1rem;
+}
+
+.content-header {
+  height: 3.25rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  transition:
+    transform 200ms,
+    opacity 200ms,
+    background-color 200ms;
+  z-index: 2;
+  isolation: isolate;
+  background-color: $white;
+  border-bottom: 1px solid $border-color;
+}
+
+// Switch blocks in mobile
+// e.g Contacts, Email etc.
+[data-la-block="list"] {
+  flex-shrink: 0;
+}
+
+[data-la-block="body"] {
+  flex-grow: 1;
+
+  @include media-breakpoint-up(md) {
+    padding-left: 0.6rem;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  [data-la-block] {
+    will-change: transform;
+    transition: transform 300ms;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  [data-la-block="body"] {
+    transform: translate3d(105%, 0, 0);
+  }
+
+  .content-body-toggled {
+    [data-la-block="list"] {
+      transform: translate3d(-100%, 0, 0);
+    }
+
+    [data-la-block="body"] {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

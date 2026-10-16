@@ -1,0 +1,84 @@
+.input-slider {
+	--input-slider-height: 16px;
+	--input-slider-handle-height: 40px;
+	--input-slider-bg: var(--bs-theme-200);
+
+	&.noUi-horizontal {
+		height: var(--input-slider-height);
+
+		.noUi-handle {
+			right: -0.5rem;
+			top: -11.5px;
+			height: var(--input-slider-handle-height);
+			width: 14px;
+			display: grid;
+			place-content: center;
+			cursor: pointer;
+
+			&.noUi-active {
+				.noUi-touch-area {
+					width: 2px;
+				}
+			}
+		}
+
+		.noUi-touch-area {
+			width: 4px;
+			height: var(--input-slider-handle-height);
+			border-radius: $border-radius;
+			background-color: $blue;
+			transition: width 100ms;
+		}		
+	}
+
+	.noUi-handle {
+		border: 0;
+		box-shadow: none;
+		background-color: $white;
+		transition: transform 200ms;
+
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+
+	.noUi-connects {
+		overflow: hidden;
+		border-radius: $border-radius;
+	}
+
+	.noUi-connect {
+		background-color: transparent;
+		
+
+		&:before {
+			content: "";
+			position: absolute;
+			height: var(--input-slider-height);
+			width: 100%;
+			left: 0;
+			top: 0;
+			background-color: $blue;
+			border-radius: $border-radius;
+		}
+	}
+
+	&.noUi-target {
+		border: 0;
+		box-shadow: none;
+		background-color: var(--input-slider-bg);
+		border-radius: $border-radius-lg;
+
+		&:after {
+			content: "";
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			right: 5px;
+			top: 5.5px;
+			background-color: $blue;
+		}
+	}
+}

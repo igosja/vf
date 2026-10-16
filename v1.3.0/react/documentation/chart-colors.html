@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Chart Colors |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Chart Colors
+Chart.js draws on a &lt;canvas&gt;. A canvas cannot read Tailwind classes or follow the .dark class, so charts need their colors handed to them as values. src/components/charts/use-chart-theme.ts does this. It exports five things:
+
+  
+      
+          Export
+          What it is
+      
+  
+  
+      
+          useChartTheme()
+          A hook with the axis, grid and tooltip settings for the current color mode
+      
+      
+          CHART_COLORS
+          The palette colors for series: sky, emerald, amber and the rest
+      
+      
+          alpha(color, amount)
+          A palette color at a given opacity, for fills and fades
+      
+      
+          paletteColor(name)
+          Reads any Tailwind color from the stylesheet as a value Chart.js understands
+      
+      
+          areaGradient(context, stop, start, end)
+          A vertical fade for the area under a line
+      
+  
+
+useChartTheme
+Call it once at the top of a chart card and spread its parts into the options:
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="chart-colors">Chart Colors</h1>
+<p>Chart.js draws on a <code>&lt;canvas&gt;</code>. A canvas cannot read Tailwind classes or follow the <code>.dark</code> class, so charts need their colors handed to them as values. <code>src/components/charts/use-chart-theme.ts</code> does this. It exports five things:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Export</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>useChartTheme()</code></td>
+          <td>A hook with the axis, grid and tooltip settings for the current color mode</td>
+      </tr>
+      <tr>
+          <td><code>CHART_COLORS</code></td>
+          <td>The palette colors for series: <code>sky</code>, <code>emerald</code>, <code>amber</code> and the rest</td>
+      </tr>
+      <tr>
+          <td><code>alpha(color, amount)</code></td>
+          <td>A palette color at a given opacity, for fills and fades</td>
+      </tr>
+      <tr>
+          <td><code>paletteColor(name)</code></td>
+          <td>Reads any Tailwind color from the stylesheet as a value Chart.js understands</td>
+      </tr>
+      <tr>
+          <td><code>areaGradient(context, stop, start, end)</code></td>
+          <td>A vertical fade for the area under a line</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="usecharttheme">useChartTheme</h2>
+<p>Call it once at the top of a chart card and spread its parts into the options:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> theme <span style="color:#81a1c1">=</span> useChartTheme<span style="color:#eceff4">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>options<span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>	scales<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		x<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span> ticks: <span style="color:#81a1c1">theme.ticks</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		y<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span> ticks: <span style="color:#81a1c1">theme.ticks</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	plugins<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> legend<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> tooltip: <span style="color:#81a1c1">theme.tooltip</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}}</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>Part</th>
+          <th>What it holds</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>theme.grid</code></td>
+          <td>Grid lines in the <code>muted</code> color, with the small tick marks turned off</td>
+      </tr>
+      <tr>
+          <td><code>theme.ticks(padding, align)</code></td>
+          <td>Axis labels in Figtree at 10 pixels, in the <code>muted-foreground</code> color. <code>padding</code> defaults to 8 and <code>align</code> to <code>&quot;inner&quot;</code>. Bar charts pass <code>theme.ticks(0, &quot;center&quot;)</code> to center each label under its bar</td>
+      </tr>
+      <tr>
+          <td><code>theme.tooltip</code></td>
+          <td>The tooltip box in the <code>tooltip</code> colors, with Figtree text and no color squares</td>
+      </tr>
+      <tr>
+          <td><code>theme.pieBorder</code></td>
+          <td>The card color, for the gaps between doughnut and pie slices</td>
+      </tr>
+      <tr>
+          <td><code>theme.mode</code></td>
+          <td><code>&quot;light&quot;</code> or <code>&quot;dark&quot;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>The hook reads these values from the theme tokens in <code>src/styles/themes.css</code>, and reads them again whenever the color mode changes. The charts then redraw in the new colors. Change a token, and the charts follow it.</p>
+<p>To change the tooltip&rsquo;s look for every chart, such as its corner radius or padding, edit the <code>tooltip</code> object inside the hook. For a single chart, spread it and override one setting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>tooltip<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> <span style="color:#eceff4">...</span>theme<span style="color:#eceff4">.</span>tooltip<span style="color:#eceff4">,</span> callbacks<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span>item<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#a3be8c">` $</span><span style="color:#a3be8c">${</span>item<span style="color:#eceff4">.</span>formattedValue<span style="color:#a3be8c">}</span><span style="color:#a3be8c">K`</span> <span style="color:#eceff4">}</span> <span style="color:#eceff4">},</span>
+</span></span></code></pre></div><h2 id="chart_colors">CHART_COLORS</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> CHART_COLORS <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	sky: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-sky-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	indigo: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-indigo-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	purple: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-purple-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	pink: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-pink-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	red: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-red-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	amber: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-amber-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	lime: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-lime-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	emerald: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-emerald-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	teal: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-teal-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	cyan: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-cyan-500&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span></code></pre></div><p>Each key holds the same shade as the palette&rsquo;s background class, so a chart series and its legend dot match: <code>CHART_COLORS.amber</code> with <code>bg-amber-400</code>. These colors stay the same in light and dark mode. <a href="./colors.html">Colors</a> explains which color means what.</p>
+<p>The template reads them once, when the page loads, because they never change while the page runs.</p>
+<h2 id="alpha">alpha</h2>
+<p><code>alpha</code> makes a palette color see-through:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>emerald<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.25</span><span style="color:#eceff4">);</span> <span style="color:#616e87;font-style:italic">// rgb(0 188 125 / 0.25)
+</span></span></span></code></pre></div><p>Use it for area fills, faded comparison bars and hover states. Never write a color into a chart as a hex code or RGB numbers. Go through <code>CHART_COLORS</code> and <code>alpha</code>, so changing a color in one place changes it everywhere.</p>
+<h2 id="palettecolor">paletteColor</h2>
+<p><code>CHART_COLORS</code> covers the colors the template uses. For any other Tailwind color, read it with <code>paletteColor</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> MARKER <span style="color:#81a1c1">=</span> paletteColor<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-amber-600&#34;</span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>The map on the Email Marketing dashboard reads a darker amber for its markers this way. Call <code>paletteColor</code> outside your component, at the top of the file, so it runs once.</p>
+<p>Tailwind writes its colors in the <code>oklch()</code> format, and Chart.js cannot read that format when it works out hover colors. <code>paletteColor</code> converts each color to <code>rgb()</code> by drawing it on a one-pixel canvas and reading the pixel back.</p>
+<p>Every Tailwind color is available to <code>paletteColor</code>, because <code>src/styles/index.css</code> imports Tailwind with <code>theme(static)</code>, which keeps the whole palette in the stylesheet.</p>
+<h2 id="areagradient">areaGradient</h2>
+<p>The filled line charts fade from the line color at the top to nothing at the bottom:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>backgroundColor<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span>context<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> areaGradient<span style="color:#eceff4">(</span>context<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.75</span><span style="color:#eceff4">,</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>emerald<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.25</span><span style="color:#eceff4">),</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>emerald<span style="color:#eceff4">,</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">)),</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>Argument</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>context</code></td>
+          <td>The context Chart.js passes to the function. It holds the chart&rsquo;s size</td>
+      </tr>
+      <tr>
+          <td><code>stop</code></td>
+          <td>Where the full color ends, from 0 at the bottom to 1 at the top. <code>0.75</code> keeps the top quarter at full strength</td>
+      </tr>
+      <tr>
+          <td><code>start</code></td>
+          <td>The color at the top</td>
+      </tr>
+      <tr>
+          <td><code>end</code></td>
+          <td>The color at the bottom</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>backgroundColor</code> takes a function here because the gradient needs the chart&rsquo;s size, which Chart.js only knows while it draws. Pair it with <code>fill: true</code> on the dataset.</p>
+<h2 id="changing-the-palette">Changing the palette</h2>
+<p>To change a series color across every chart, point its key at another Tailwind color:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span>amber: <span style="color:#81a1c1">paletteColor</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;--color-orange-400&#34;</span><span style="color:#eceff4">),</span>
+</span></span></code></pre></div><p>Then change the matching classes on the page, such as <code>bg-amber-400</code> on the legend dots, so the legend matches. <a href="./colors.html">Colors</a> walks through a full swap.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#usecharttheme">useChartTheme</a></li>
+    <li><a href="#chart_colors">CHART_COLORS</a></li>
+    <li><a href="#alpha">alpha</a></li>
+    <li><a href="#palettecolor">paletteColor</a></li>
+    <li><a href="#areagradient">areaGradient</a></li>
+    <li><a href="#changing-the-palette">Changing the palette</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

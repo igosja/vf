@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Forms |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Forms
+Materia builds forms from shadcn/ui&rsquo;s form components, restyled to its design. Validation runs on React Hook Form with a Zod schema.
+The template has five form pages to copy from:
+
+  
+      
+          Page
+          Address
+          What it shows
+      
+  
+  
+      
+          Form Elements
+          /forms/elements
+          Every input, select, checkbox, radio, switch and slider
+      
+      
+          Input Groups
+          /forms/input-groups
+          Icons, text and buttons inside a field, and joined button groups
+      
+      
+          Form Layouts
+          /forms/layouts
+          Forms in one and two columns, with fieldsets
+      
+      
+          Form Templates
+          /forms/templates
+          Complete forms: sign-up, payment, shipping, profile
+      
+      
+          Form Validation
+          /forms/validation
+          Five working forms with React Hook Form and Zod
+      
+  
+
+Fields
+Field from src/components/ui/field.tsx wraps one input with its label, its help text and its error. FieldGroup stacks fields with even spacing.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="forms">Forms</h1>
+<p>Materia builds forms from shadcn/ui&rsquo;s form components, restyled to its design. Validation runs on <a href="https://react-hook-form.com">React Hook Form</a> with a <a href="https://zod.dev">Zod</a> schema.</p>
+<p>The template has five form pages to copy from:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>What it shows</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Form Elements</td>
+          <td><code>/forms/elements</code></td>
+          <td>Every input, select, checkbox, radio, switch and slider</td>
+      </tr>
+      <tr>
+          <td>Input Groups</td>
+          <td><code>/forms/input-groups</code></td>
+          <td>Icons, text and buttons inside a field, and joined button groups</td>
+      </tr>
+      <tr>
+          <td>Form Layouts</td>
+          <td><code>/forms/layouts</code></td>
+          <td>Forms in one and two columns, with fieldsets</td>
+      </tr>
+      <tr>
+          <td>Form Templates</td>
+          <td><code>/forms/templates</code></td>
+          <td>Complete forms: sign-up, payment, shipping, profile</td>
+      </tr>
+      <tr>
+          <td>Form Validation</td>
+          <td><code>/forms/validation</code></td>
+          <td>Five working forms with React Hook Form and Zod</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<p><code>Field</code> from <code>src/components/ui/field.tsx</code> wraps one input with its label, its help text and its error. <code>FieldGroup</code> stacks fields with even spacing.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div data-slot=&#34;field-group&#34; class=&#34;group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 [&amp;amp;&amp;gt;[data-slot=field-group]]:gap-4 max-w-md&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;vertical&#34; class=&#34;group/field flex w-full gap-2 data-[invalid=true]:text-red-400 flex-col [&amp;amp;&amp;gt;*]:w-full [&amp;amp;&amp;gt;.sr-only]:w-auto&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;name&#34;&gt;Full name&lt;/label&gt;&lt;input data-slot=&#34;input&#34; class=&#34;h-10 w-full min-w-0 rounded-sm border border-input bg-transparent px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 file:mr-3.5 file:-ml-3.5 file:border-0 file:border-r file:border-solid file:border-input file:bg-transparent file:px-3.5 file:pt-px file:text-foreground focus:border-primary focus:ring-1 focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400&#34; id=&#34;name&#34; placeholder=&#34;Evil Rabbit&#34;/&gt;&lt;p data-slot=&#34;field-description&#34; class=&#34;text-xs font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance last:mt-0 nth-last-2:-mt-0.5 [[data-variant=legend]&#43;&amp;amp;]:-mt-1.5 [&amp;amp;&amp;gt;a]:underline [&amp;amp;&amp;gt;a]:underline-offset-4 [&amp;amp;&amp;gt;a:hover]:text-primary&#34;&gt;Shown on your profile and in emails.&lt;/p&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;vertical&#34; class=&#34;group/field flex w-full gap-2 data-[invalid=true]:text-red-400 flex-col [&amp;amp;&amp;gt;*]:w-full [&amp;amp;&amp;gt;.sr-only]:w-auto&#34; data-invalid=&#34;true&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;email&#34;&gt;Email&lt;/label&gt;&lt;input type=&#34;email&#34; data-slot=&#34;input&#34; class=&#34;h-10 w-full min-w-0 rounded-sm border border-input bg-transparent px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 file:mr-3.5 file:-ml-3.5 file:border-0 file:border-r file:border-solid file:border-input file:bg-transparent file:px-3.5 file:pt-px file:text-foreground focus:border-primary focus:ring-1 focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400&#34; id=&#34;email&#34; aria-invalid=&#34;true&#34; value=&#34;rabbit@&#34;/&gt;&lt;div role=&#34;alert&#34; data-slot=&#34;field-error&#34; class=&#34;text-xs font-normal text-red-400&#34;&gt;Enter a valid email address.&lt;/div&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;vertical&#34; class=&#34;group/field flex w-full gap-2 data-[invalid=true]:text-red-400 flex-col [&amp;amp;&amp;gt;*]:w-full [&amp;amp;&amp;gt;.sr-only]:w-auto&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;country&#34;&gt;Country&lt;/label&gt;&lt;div data-slot=&#34;native-select-wrapper&#34; class=&#34;relative w-full rounded-sm&#34;&gt;&lt;select data-slot=&#34;native-select&#34; data-size=&#34;default&#34; class=&#34;h-10 w-full min-w-0 appearance-none rounded-[inherit] border border-input bg-transparent py-2 pr-10 pl-3.5 text-sm text-foreground transition duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:text-muted-foreground disabled:opacity-50 data-[size=sm]:h-8 data-[size=sm]:py-1 data-[size=sm]:pl-3 focus:border-primary focus:ring-1 focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400&#34; id=&#34;country&#34;&gt;&lt;option data-slot=&#34;native-select-option&#34; value=&#34;us&#34;&gt;United States&lt;/option&gt;&lt;option data-slot=&#34;native-select-option&#34; value=&#34;ca&#34; selected=&#34;&#34;&gt;Canada&lt;/option&gt;&lt;option data-slot=&#34;native-select-option&#34; value=&#34;uk&#34;&gt;United Kingdom&lt;/option&gt;&lt;/select&gt;&lt;svg width=&#34;10&#34; height=&#34;5&#34; viewBox=&#34;0 0 10 5&#34; aria-hidden=&#34;true&#34; data-slot=&#34;native-select-icon&#34; class=&#34;pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 fill-muted-foreground&#34;&gt;&lt;path d=&#34;M5 5L0.669874 0.500001L9.33013 0.5L5 5Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;vertical&#34; class=&#34;group/field flex w-full gap-2 data-[invalid=true]:text-red-400 flex-col [&amp;amp;&amp;gt;*]:w-full [&amp;amp;&amp;gt;.sr-only]:w-auto&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;bio&#34;&gt;Bio&lt;/label&gt;&lt;textarea data-slot=&#34;textarea&#34; class=&#34;block field-sizing-content min-h-16 w-full resize-none rounded-sm border border-input bg-transparent px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 focus:border-primary focus:ring-1 focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400&#34; id=&#34;bio&#34; placeholder=&#34;Tell us a little about yourself&#34;&gt;&lt;/textarea&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;form-fields&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Field<span style="color:#eceff4">,</span> FieldDescription<span style="color:#eceff4">,</span> FieldError<span style="color:#eceff4">,</span> FieldGroup<span style="color:#eceff4">,</span> FieldLabel <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Input <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> NativeSelect<span style="color:#eceff4">,</span> NativeSelectOption <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/native-select&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Textarea <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/textarea&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> FormFields() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldGroup</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;max-w-md&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;name&#34;</span><span style="color:#eceff4">&gt;</span>Full name<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;name&#34;</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Evil Rabbit&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>Shown on your profile and <span style="color:#81a1c1;font-weight:bold">in</span> emails<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">data</span><span style="color:#bf616a">-</span><span style="color:#8fbcbb">invalid</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;email&#34;</span><span style="color:#eceff4">&gt;</span>Email<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;email&#34;</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;email&#34;</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;rabbit@&#34;</span> <span style="color:#8fbcbb">aria</span><span style="color:#bf616a">-</span><span style="color:#8fbcbb">invalid</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldError</span><span style="color:#eceff4">&gt;</span>Enter a valid email address<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">FieldError</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;country&#34;</span><span style="color:#eceff4">&gt;</span>Country<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">NativeSelect</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;country&#34;</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ca&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">NativeSelectOption</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;us&#34;</span><span style="color:#eceff4">&gt;</span>United States<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">NativeSelectOption</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">NativeSelectOption</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ca&#34;</span><span style="color:#eceff4">&gt;</span>Canada<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">NativeSelectOption</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">NativeSelectOption</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;uk&#34;</span><span style="color:#eceff4">&gt;</span>United Kingdom<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">NativeSelectOption</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">NativeSelect</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bio&#34;</span><span style="color:#eceff4">&gt;</span>Bio<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Textarea</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bio&#34;</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Tell us a little about yourself&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>FieldGroup</code></td>
+          <td>A column of fields with even gaps</td>
+      </tr>
+      <tr>
+          <td><code>Field</code></td>
+          <td>One field. <code>orientation=&quot;horizontal&quot;</code> puts the control beside its label</td>
+      </tr>
+      <tr>
+          <td><code>FieldLabel</code></td>
+          <td>The label. Point <code>htmlFor</code> at the input&rsquo;s <code>id</code></td>
+      </tr>
+      <tr>
+          <td><code>FieldDescription</code></td>
+          <td>Help text under the input</td>
+      </tr>
+      <tr>
+          <td><code>FieldError</code></td>
+          <td>The error message. Pass text as children, or React Hook Form errors through <code>errors</code></td>
+      </tr>
+      <tr>
+          <td><code>FieldContent</code></td>
+          <td>Groups a label and a description beside a checkbox or a switch</td>
+      </tr>
+      <tr>
+          <td><code>FieldTitle</code></td>
+          <td>A bold line inside a choice card</td>
+      </tr>
+      <tr>
+          <td><code>FieldSet</code>, <code>FieldLegend</code></td>
+          <td>A titled group of related fields</td>
+      </tr>
+      <tr>
+          <td><code>FieldSeparator</code></td>
+          <td>A line between groups of fields, with optional text such as &ldquo;Or&rdquo;</td>
+      </tr>
+  </tbody>
+</table>
+<p>To show a field as invalid, set <code>data-invalid</code> on the <code>Field</code> and <code>aria-invalid</code> on the input. The label turns red, the input gets a red border, and screen readers announce the field as invalid.</p>
+<h2 id="checkboxes-radios-switches-and-sliders">Checkboxes, radios, switches and sliders</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div data-slot=&#34;field-group&#34; class=&#34;group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 [&amp;amp;&amp;gt;[data-slot=field-group]]:gap-4 max-w-md&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;horizontal&#34; class=&#34;group/field flex w-full data-[invalid=true]:text-red-400 flex-row items-center gap-3.5 [&amp;amp;&amp;gt;[data-slot=field-label]]:flex-auto has-[&amp;gt;[data-slot=field-content]]:items-start has-[&amp;gt;[data-slot=field-content]]:[&amp;amp;&amp;gt;[role=checkbox],[role=radio]]:mt-px&#34;&gt;&lt;button type=&#34;button&#34; role=&#34;checkbox&#34; aria-checked=&#34;true&#34; data-state=&#34;checked&#34; value=&#34;on&#34; data-slot=&#34;checkbox&#34; class=&#34;peer relative grid size-4.5 shrink-0 place-content-center rounded-xs border-[1.5px] border-foreground transition-colors duration-300 before:absolute before:-inset-px before:scale-50 before:rounded-full before:ring-primary/15 before:transition before:duration-200 hover:before:scale-100 hover:before:ring-10 focus:border-emphasis-foreground focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary hover:focus-visible:before:ring-0 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-red-400 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-white&#34; id=&#34;terms&#34;&gt;&lt;span data-state=&#34;checked&#34; data-slot=&#34;checkbox-indicator&#34; class=&#34;grid place-content-center&#34; style=&#34;pointer-events:none&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-check size-3 stroke-3&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M20 6 9 17l-5-5&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;input type=&#34;checkbox&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34; style=&#34;position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)&#34; checked=&#34;&#34; value=&#34;on&#34;/&gt;&lt;div data-slot=&#34;field-content&#34; class=&#34;group/field-content flex flex-1 flex-col gap-1&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;terms&#34;&gt;Accept terms and conditions&lt;/label&gt;&lt;p data-slot=&#34;field-description&#34; class=&#34;text-xs font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance last:mt-0 nth-last-2:-mt-0.5 [[data-variant=legend]&#43;&amp;amp;]:-mt-1.5 [&amp;amp;&amp;gt;a]:underline [&amp;amp;&amp;gt;a]:underline-offset-4 [&amp;amp;&amp;gt;a:hover]:text-primary&#34;&gt;By clicking this checkbox, you agree to the terms and conditions.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div role=&#34;radiogroup&#34; aria-required=&#34;false&#34; dir=&#34;ltr&#34; data-slot=&#34;radio-group&#34; class=&#34;grid gap-3&#34; tabindex=&#34;-1&#34; style=&#34;outline:none&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;horizontal&#34; class=&#34;group/field flex w-full data-[invalid=true]:text-red-400 flex-row items-center gap-3.5 [&amp;amp;&amp;gt;[data-slot=field-label]]:flex-auto has-[&amp;gt;[data-slot=field-content]]:items-start has-[&amp;gt;[data-slot=field-content]]:[&amp;amp;&amp;gt;[role=checkbox],[role=radio]]:mt-px&#34;&gt;&lt;button type=&#34;button&#34; role=&#34;radio&#34; aria-checked=&#34;true&#34; data-state=&#34;checked&#34; value=&#34;monthly&#34; data-slot=&#34;radio-group-item&#34; class=&#34;peer aria-invalid:-400 relative grid size-4.5 shrink-0 place-content-center rounded-full border-[1.5px] border-foreground transition-colors duration-300 before:absolute before:-inset-px before:scale-50 before:rounded-full before:ring-primary/15 before:transition before:duration-200 hover:before:scale-100 hover:before:ring-10 focus:border-emphasis-foreground focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary hover:focus-visible:before:ring-0 disabled:pointer-events-none disabled:opacity-50 data-[state=checked]:border-primary&#34; id=&#34;monthly&#34; tabindex=&#34;-1&#34; data-radix-collection-item=&#34;&#34;&gt;&lt;span data-state=&#34;checked&#34; data-slot=&#34;radio-group-indicator&#34; class=&#34;size-2 rounded-full bg-primary&#34;&gt;&lt;/span&gt;&lt;/button&gt;&lt;input type=&#34;radio&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34; style=&#34;position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)&#34; checked=&#34;&#34; value=&#34;monthly&#34;/&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;monthly&#34;&gt;Monthly billing&lt;/label&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;horizontal&#34; class=&#34;group/field flex w-full data-[invalid=true]:text-red-400 flex-row items-center gap-3.5 [&amp;amp;&amp;gt;[data-slot=field-label]]:flex-auto has-[&amp;gt;[data-slot=field-content]]:items-start has-[&amp;gt;[data-slot=field-content]]:[&amp;amp;&amp;gt;[role=checkbox],[role=radio]]:mt-px&#34;&gt;&lt;button type=&#34;button&#34; role=&#34;radio&#34; aria-checked=&#34;false&#34; data-state=&#34;unchecked&#34; value=&#34;yearly&#34; data-slot=&#34;radio-group-item&#34; class=&#34;peer aria-invalid:-400 relative grid size-4.5 shrink-0 place-content-center rounded-full border-[1.5px] border-foreground transition-colors duration-300 before:absolute before:-inset-px before:scale-50 before:rounded-full before:ring-primary/15 before:transition before:duration-200 hover:before:scale-100 hover:before:ring-10 focus:border-emphasis-foreground focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary hover:focus-visible:before:ring-0 disabled:pointer-events-none disabled:opacity-50 data-[state=checked]:border-primary&#34; id=&#34;yearly&#34; tabindex=&#34;-1&#34; data-radix-collection-item=&#34;&#34;&gt;&lt;/button&gt;&lt;input type=&#34;radio&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34; style=&#34;position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)&#34; value=&#34;yearly&#34;/&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;yearly&#34;&gt;Yearly billing&lt;/label&gt;&lt;/div&gt;&lt;/div&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34; for=&#34;notifications&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;horizontal&#34; class=&#34;group/field flex w-full data-[invalid=true]:text-red-400 flex-row items-center gap-3.5 [&amp;amp;&amp;gt;[data-slot=field-label]]:flex-auto has-[&amp;gt;[data-slot=field-content]]:items-start has-[&amp;gt;[data-slot=field-content]]:[&amp;amp;&amp;gt;[role=checkbox],[role=radio]]:mt-px&#34;&gt;&lt;div data-slot=&#34;field-content&#34; class=&#34;group/field-content flex flex-1 flex-col gap-1&#34;&gt;&lt;div data-slot=&#34;field-label&#34; class=&#34;flex w-fit items-center gap-2 text-sm font-medium text-emphasis-foreground group-data-[disabled=true]/field:opacity-50&#34;&gt;Email notifications&lt;/div&gt;&lt;p data-slot=&#34;field-description&#34; class=&#34;text-xs font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance last:mt-0 nth-last-2:-mt-0.5 [[data-variant=legend]&#43;&amp;amp;]:-mt-1.5 [&amp;amp;&amp;gt;a]:underline [&amp;amp;&amp;gt;a]:underline-offset-4 [&amp;amp;&amp;gt;a:hover]:text-primary&#34;&gt;Get an email when someone mentions you.&lt;/p&gt;&lt;/div&gt;&lt;button type=&#34;button&#34; role=&#34;switch&#34; aria-checked=&#34;true&#34; data-state=&#34;checked&#34; value=&#34;on&#34; data-slot=&#34;switch&#34; class=&#34;peer group/switch relative inline-flex h-6 w-10 shrink-0 items-center rounded-full border-[1.5px] border-foreground px-1 transition-colors duration-300 focus:border-emphasis-foreground focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-red-400 data-[state=checked]:border-primary data-[state=checked]:bg-primary&#34; id=&#34;notifications&#34;&gt;&lt;span aria-hidden=&#34;true&#34; class=&#34;pointer-events-none absolute top-1/2 -left-0.5 size-6 -translate-y-1/2 scale-125 rounded-full bg-muted-foreground/20 opacity-0 transition duration-200 ease-spring group-hover/switch:opacity-100 group-data-[state=checked]/switch:translate-x-4&#34;&gt;&lt;/span&gt;&lt;span data-state=&#34;checked&#34; data-slot=&#34;switch-thumb&#34; class=&#34;pointer-events-none block size-3 rounded-full bg-foreground transition duration-200 ease-spring group-active/switch:scale-150 data-[state=checked]:translate-x-4 data-[state=checked]:scale-150 data-[state=checked]:bg-popover group-active/switch:data-[state=checked]:scale-170&#34;&gt;&lt;/span&gt;&lt;/button&gt;&lt;input type=&#34;checkbox&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34; style=&#34;position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)&#34; checked=&#34;&#34; value=&#34;on&#34;/&gt;&lt;/div&gt;&lt;/label&gt;&lt;div role=&#34;group&#34; data-slot=&#34;field&#34; data-orientation=&#34;vertical&#34; class=&#34;group/field flex w-full gap-2 data-[invalid=true]:text-red-400 flex-col [&amp;amp;&amp;gt;*]:w-full [&amp;amp;&amp;gt;.sr-only]:w-auto&#34;&gt;&lt;label data-slot=&#34;field-label&#34; class=&#34;items-center text-sm select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-[&amp;gt;[data-slot=field]]:w-full has-[&amp;gt;[data-slot=field]]:flex-col has-[&amp;gt;[data-slot=field]]:rounded-lg has-[&amp;gt;[data-slot=field]]:border has-[&amp;gt;[data-slot=field]]:transition-colors [&amp;amp;&amp;gt;*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5&#34;&gt;Volume&lt;/label&gt;&lt;span dir=&#34;ltr&#34; data-orientation=&#34;horizontal&#34; aria-disabled=&#34;false&#34; data-slot=&#34;slider&#34; aria-label=&#34;Volume&#34; class=&#34;relative flex h-4 w-full touch-none items-center select-none data-disabled:opacity-50&#34; style=&#34;--radix-slider-thumb-transform:translateX(-50%)&#34;&gt;&lt;span data-orientation=&#34;horizontal&#34; data-slot=&#34;slider-track&#34; class=&#34;relative h-4 grow overflow-hidden rounded-xl bg-secondary after:absolute after:top-1.5 after:right-1.5 after:size-1 after:rounded-full after:bg-primary&#34;&gt;&lt;span data-orientation=&#34;horizontal&#34; data-slot=&#34;slider-range&#34; class=&#34;absolute h-full rounded-lg bg-primary&#34; style=&#34;left:0%;right:40%&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;transform:var(--radix-slider-thumb-transform);position:absolute;left:calc(0% &#43; 0px)&#34;&gt;&lt;span role=&#34;slider&#34; aria-label=&#34;Volume&#34; aria-valuemin=&#34;0&#34; aria-valuemax=&#34;100&#34; aria-orientation=&#34;horizontal&#34; data-orientation=&#34;horizontal&#34; tabindex=&#34;0&#34; data-slot=&#34;slider-thumb&#34; class=&#34;group/thumb grid h-10 w-3.5 cursor-pointer place-content-center bg-card outline-none&#34; style=&#34;display:none&#34; data-radix-collection-item=&#34;&#34;&gt;&lt;span class=&#34;block h-10 w-1 rounded-lg bg-primary transition-[width] duration-100 group-focus-visible/thumb:outline-2 group-focus-visible/thumb:outline-offset-2 group-focus-visible/thumb:outline-primary group-active/thumb:w-0.5&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;input style=&#34;display:none&#34;/&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;form-choices&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Checkbox <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/checkbox&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Field<span style="color:#eceff4">,</span> FieldContent<span style="color:#eceff4">,</span> FieldDescription<span style="color:#eceff4">,</span> FieldGroup<span style="color:#eceff4">,</span> FieldLabel<span style="color:#eceff4">,</span> FieldTitle <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> RadioGroup<span style="color:#eceff4">,</span> RadioGroupItem <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/radio-group&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Slider <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/slider&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Switch <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/switch&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> FormChoices() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldGroup</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;max-w-md&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">orientation</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;horizontal&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Checkbox</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;terms&#34;</span> <span style="color:#8fbcbb">defaultChecked</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;terms&#34;</span><span style="color:#eceff4">&gt;</span>Accept terms and conditions<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>By clicking <span style="color:#81a1c1;font-weight:bold">this</span> checkbox<span style="color:#eceff4">,</span> you agree to the terms and conditions<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RadioGroup</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;monthly&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">orientation</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;horizontal&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RadioGroupItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;monthly&#34;</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;monthly&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;monthly&#34;</span><span style="color:#eceff4">&gt;</span>Monthly billing<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">orientation</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;horizontal&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RadioGroupItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;yearly&#34;</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;yearly&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;yearly&#34;</span><span style="color:#eceff4">&gt;</span>Yearly billing<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">RadioGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;notifications&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">orientation</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;horizontal&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldTitle</span><span style="color:#eceff4">&gt;</span>Email notifications<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldTitle</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>Get an email when someone mentions you<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">FieldDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Switch</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;notifications&#34;</span> <span style="color:#8fbcbb">defaultChecked</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>Volume<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Slider</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{[</span><span style="color:#b48ead">60</span><span style="color:#eceff4">]}</span> <span style="color:#8fbcbb">max</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#b48ead">100</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Volume&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<ul>
+<li>A checkbox or radio sits beside its label with <code>orientation=&quot;horizontal&quot;</code>.</li>
+<li>Wrapping a whole <code>Field</code> in a <code>FieldLabel</code> turns it into a choice card: the full card is clickable and highlights when its control is checked. The switch above uses this pattern.</li>
+<li><code>Slider</code> takes its value as an array, <code>[60]</code>, because it supports ranges with two thumbs: <code>[20, 80]</code>.</li>
+</ul>
+<h2 id="select-and-nativeselect">Select and NativeSelect</h2>
+<p>The template has two dropdowns:</p>
+<ul>
+<li><strong><code>Select</code></strong> opens a styled list in a popover. Use it when the list should match the rest of the design.</li>
+<li><strong><code>NativeSelect</code></strong> is the browser&rsquo;s own <code>&lt;select&gt;</code> with the template&rsquo;s border and caret. On phones it opens the system picker, which is easier to use with a thumb.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Select</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;pro&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectTrigger</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-full&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectValue</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Choose a plan&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SelectTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;starter&#34;</span><span style="color:#eceff4">&gt;</span>Starter<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SelectItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;pro&#34;</span><span style="color:#eceff4">&gt;</span>Pro<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SelectItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SelectItem</span> <span style="color:#8fbcbb">value</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;business&#34;</span><span style="color:#eceff4">&gt;</span>Business<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SelectItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SelectContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Select</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>For a long list that people should search, use the Combobox pattern from the Combobox page at <code>/components/combobox</code>. It puts a <code>Command</code> list inside a <code>Popover</code>.</p>
+<h2 id="input-groups-and-button-groups">Input groups and button groups</h2>
+<p><code>InputGroup</code> puts icons, text and buttons inside one field border. <code>ButtonGroup</code> joins separate inputs and buttons edge to edge.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex max-w-md flex-col gap-4&#34;&gt;&lt;div data-slot=&#34;input-group&#34; role=&#34;group&#34; class=&#34;group/input-group relative flex h-10 w-full min-w-0 items-center rounded-sm border border-input transition duration-150 ease-in-out outline-none has-[&amp;gt;textarea]:h-auto has-[&amp;gt;[data-align=inline-start]]:[&amp;amp;&amp;gt;input]:pl-2 has-[&amp;gt;[data-align=inline-end]]:[&amp;amp;&amp;gt;input]:pr-2 has-[&amp;gt;[data-align=block-start]]:h-auto has-[&amp;gt;[data-align=block-start]]:flex-col has-[&amp;gt;[data-align=block-start]]:[&amp;amp;&amp;gt;input]:pb-3 has-[&amp;gt;[data-align=block-end]]:h-auto has-[&amp;gt;[data-align=block-end]]:flex-col has-[&amp;gt;[data-align=block-end]]:[&amp;amp;&amp;gt;input]:pt-3 has-[[data-slot=input-group-control]:focus]:border-primary has-[[data-slot=input-group-control]:focus]:ring-1 has-[[data-slot=input-group-control]:focus]:ring-primary has-[[data-slot][aria-invalid=true]]:border-red-400 has-[[data-slot][aria-invalid=true]]:ring-red-400 data-[disabled=true]:opacity-50&#34;&gt;&lt;input data-slot=&#34;input-group-control&#34; class=&#34;w-full min-w-0 border-input px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 file:mr-3.5 file:-ml-3.5 file:border-0 file:border-r file:border-solid file:border-input file:bg-transparent file:px-3.5 file:pt-px file:text-foreground focus:border-primary focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400 h-full flex-1 rounded-none border-0 bg-transparent focus:ring-0 aria-invalid:focus:ring-0&#34; placeholder=&#34;Search...&#34; aria-label=&#34;Search&#34;/&gt;&lt;div role=&#34;group&#34; data-slot=&#34;input-group-addon&#34; data-align=&#34;inline-start&#34; class=&#34;flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&amp;amp;&amp;gt;svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-4 order-first pl-3.5 has-[&amp;gt;button]:-ml-1.5 has-[&amp;gt;kbd]:-ml-1&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-search&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m21 21-4.34-4.34&#34;&gt;&lt;/path&gt;&lt;circle cx=&#34;11&#34; cy=&#34;11&#34; r=&#34;8&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;input-group-addon&#34; data-align=&#34;inline-end&#34; class=&#34;flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&amp;amp;&amp;gt;svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-4 order-last pr-3.5 has-[&amp;gt;button]:-mr-1.5 has-[&amp;gt;kbd]:-mr-1&#34;&gt;&lt;kbd data-slot=&#34;kbd&#34; class=&#34;pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none [&amp;amp;_svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-3 [[data-slot=tooltip-content]_&amp;amp;]:bg-background/20 [[data-slot=tooltip-content]_&amp;amp;]:text-background dark:[[data-slot=tooltip-content]_&amp;amp;]:bg-background/10&#34;&gt;⌘K&lt;/kbd&gt;&lt;/div&gt;&lt;/div&gt;&lt;div data-slot=&#34;input-group&#34; role=&#34;group&#34; class=&#34;group/input-group relative flex h-10 w-full min-w-0 items-center rounded-sm border border-input transition duration-150 ease-in-out outline-none has-[&amp;gt;textarea]:h-auto has-[&amp;gt;[data-align=inline-start]]:[&amp;amp;&amp;gt;input]:pl-2 has-[&amp;gt;[data-align=inline-end]]:[&amp;amp;&amp;gt;input]:pr-2 has-[&amp;gt;[data-align=block-start]]:h-auto has-[&amp;gt;[data-align=block-start]]:flex-col has-[&amp;gt;[data-align=block-start]]:[&amp;amp;&amp;gt;input]:pb-3 has-[&amp;gt;[data-align=block-end]]:h-auto has-[&amp;gt;[data-align=block-end]]:flex-col has-[&amp;gt;[data-align=block-end]]:[&amp;amp;&amp;gt;input]:pt-3 has-[[data-slot=input-group-control]:focus]:border-primary has-[[data-slot=input-group-control]:focus]:ring-1 has-[[data-slot=input-group-control]:focus]:ring-primary has-[[data-slot][aria-invalid=true]]:border-red-400 has-[[data-slot][aria-invalid=true]]:ring-red-400 data-[disabled=true]:opacity-50&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;input-group-addon&#34; data-align=&#34;inline-start&#34; class=&#34;flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&amp;amp;&amp;gt;svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-4 order-first pl-3.5 has-[&amp;gt;button]:-ml-1.5 has-[&amp;gt;kbd]:-ml-1&#34;&gt;&lt;span class=&#34;flex items-center gap-2 text-sm text-muted-foreground [&amp;amp;_svg]:pointer-events-none [&amp;amp;_svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-4&#34;&gt;https://&lt;/span&gt;&lt;/div&gt;&lt;input data-slot=&#34;input-group-control&#34; class=&#34;w-full min-w-0 border-input px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 file:mr-3.5 file:-ml-3.5 file:border-0 file:border-r file:border-solid file:border-input file:bg-transparent file:px-3.5 file:pt-px file:text-foreground focus:border-primary focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400 h-full flex-1 rounded-none border-0 bg-transparent focus:ring-0 aria-invalid:focus:ring-0&#34; placeholder=&#34;example.com&#34; aria-label=&#34;Website&#34;/&gt;&lt;div role=&#34;group&#34; data-slot=&#34;input-group-addon&#34; data-align=&#34;inline-end&#34; class=&#34;flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&amp;amp;&amp;gt;svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-4 order-last pr-3.5 has-[&amp;gt;button]:-mr-1.5 has-[&amp;gt;kbd]:-mr-1&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;ghost&#34; data-size=&#34;xs&#34; class=&#34;shrink-0 justify-center rounded-full border whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent text-foreground hover:bg-accent flex items-center text-sm h-6 gap-1 px-2.5 [&amp;amp;&amp;gt;svg:not([class*=&amp;#x27;size-&amp;#x27;])]:size-3.5&#34; type=&#34;button&#34;&gt;Check&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;button-group&#34; class=&#34;flex items-stretch *:rounded-full *:focus-within:relative *:focus-within:z-10 *:focus:relative *:focus:z-10 has-[&amp;gt;[data-slot=button-group]]:gap-2 [&amp;amp;&amp;gt;input]:flex-1 [&amp;amp;&amp;gt;*:not(:first-child)]:-ml-px [&amp;amp;&amp;gt;*:not(:first-child)]:rounded-l-none [&amp;amp;&amp;gt;*:not(:last-child)]:rounded-r-none w-full&#34;&gt;&lt;input data-slot=&#34;input&#34; class=&#34;h-10 w-full min-w-0 rounded-sm border border-input bg-transparent px-3.5 py-2 text-sm text-foreground transition duration-150 ease-in-out outline-none placeholder:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 file:mr-3.5 file:-ml-3.5 file:border-0 file:border-r file:border-solid file:border-input file:bg-transparent file:px-3.5 file:pt-px file:text-foreground focus:border-primary focus:ring-1 focus:ring-primary aria-invalid:border-red-400 aria-invalid:focus:ring-red-400&#34; placeholder=&#34;Enter your email&#34; aria-label=&#34;Email&#34;/&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-mail&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7&#34;&gt;&lt;/path&gt;&lt;rect x=&#34;2&#34; y=&#34;4&#34; width=&#34;20&#34; height=&#34;16&#34; rx=&#34;2&#34;&gt;&lt;/rect&gt;&lt;/svg&gt;Subscribe&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;form-input-group&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Mail<span style="color:#eceff4">,</span> Search <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ButtonGroup <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button-group&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Input <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> InputGroup<span style="color:#eceff4">,</span> InputGroupAddon<span style="color:#eceff4">,</span> InputGroupButton<span style="color:#eceff4">,</span> InputGroupInput<span style="color:#eceff4">,</span> InputGroupText <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input-group&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Kbd <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/kbd&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> FormInputGroup() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex max-w-md flex-col gap-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupInput</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Search...&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Search&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Search</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupAddon</span> <span style="color:#8fbcbb">align</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;inline-end&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span><span style="color:#bf616a">⌘</span>K<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Kbd</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupText</span><span style="color:#eceff4">&gt;</span>https<span style="color:#81a1c1">:</span><span style="color:#616e87;font-style:italic">//&lt;/InputGroupText&gt;
+</span></span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupInput</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;example.com&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Website&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupAddon</span> <span style="color:#8fbcbb">align</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;inline-end&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupButton</span><span style="color:#eceff4">&gt;</span>Check<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ButtonGroup</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-full&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Enter your email&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Email&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Mail</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					Subscribe
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p><code>InputGroupAddon</code> goes before the input by default. <code>align=&quot;inline-end&quot;</code> moves it after the input, and <code>align=&quot;block-start&quot;</code> or <code>align=&quot;block-end&quot;</code> puts it above or below, which suits a text area with a toolbar.</p>
+<h2 id="other-inputs">Other inputs</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Need</th>
+          <th>Component</th>
+          <th>Example page</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>A one-time code</td>
+          <td><code>InputOTP</code></td>
+          <td><code>/components/input-otp</code></td>
+      </tr>
+      <tr>
+          <td>A date or a date range</td>
+          <td><code>Calendar</code> inside a <code>Popover</code></td>
+          <td><code>/components/date-picker</code></td>
+      </tr>
+      <tr>
+          <td>Formatted text</td>
+          <td><code>RichTextEditor</code></td>
+          <td><code>/components/rich-text-editor</code>, see <a href="./rich-text-editor.html">Rich Text Editor</a></td>
+      </tr>
+      <tr>
+          <td>A text area that grows with its content</td>
+          <td><code>Textarea</code>, which grows on its own in current browsers</td>
+          <td><code>/forms/elements</code></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="validation">Validation</h2>
+<p>The Form Validation page shows the full pattern. Here is the Bug Report form from <code>src/pages/forms/validation/page.tsx</code>.</p>
+<p><strong>1. Describe the data with a Zod schema.</strong> Each rule carries its own error message:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> z <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;zod&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> bugReportSchema <span style="color:#81a1c1">=</span> z<span style="color:#eceff4">.</span><span style="color:#81a1c1">object</span><span style="color:#eceff4">({</span>
+</span></span><span style="display:flex;"><span>	title: <span style="color:#81a1c1">z.string</span><span style="color:#eceff4">().</span>min<span style="color:#eceff4">(</span><span style="color:#b48ead">5</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Bug title must be at least 5 characters.&#34;</span><span style="color:#eceff4">).</span>max<span style="color:#eceff4">(</span><span style="color:#b48ead">32</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Bug title must be at most 32 characters.&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	description: <span style="color:#81a1c1">z.string</span><span style="color:#eceff4">().</span>min<span style="color:#eceff4">(</span><span style="color:#b48ead">20</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Description must be at least 20 characters.&#34;</span><span style="color:#eceff4">).</span>max<span style="color:#eceff4">(</span><span style="color:#b48ead">100</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Description must be at most 100 characters.&#34;</span><span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p><strong>2. Create the form with <code>useForm</code></strong> and connect the schema through <code>zodResolver</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> zodResolver <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@hookform/resolvers/zod&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Controller<span style="color:#eceff4">,</span> useForm <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react-hook-form&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> form <span style="color:#81a1c1">=</span> useForm<span style="color:#eceff4">({</span>
+</span></span><span style="display:flex;"><span>	resolver: <span style="color:#81a1c1">zodResolver</span><span style="color:#eceff4">(</span>bugReportSchema<span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	defaultValues<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> title<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;&#34;</span><span style="color:#eceff4">,</span> description<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p><strong>3. Render each field with a <code>Controller</code>.</strong> It hands the input its value and change handler in <code>field</code>, and the validation result in <code>fieldState</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">form</span> <span style="color:#8fbcbb">onSubmit</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>form<span style="color:#eceff4">.</span>handleSubmit<span style="color:#eceff4">(</span>showSubmitted<span style="color:#eceff4">)}&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Controller</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8fbcbb">name</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;title&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8fbcbb">control</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>form<span style="color:#eceff4">.</span>control<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8fbcbb">render</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{({</span> field<span style="color:#eceff4">,</span> fieldState <span style="color:#eceff4">})</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span> <span style="color:#8fbcbb">data-invalid</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>fieldState<span style="color:#eceff4">.</span>invalid<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bug-title&#34;</span><span style="color:#eceff4">&gt;</span>Bug Title<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#eceff4">{</span><span style="color:#8fbcbb">...field</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bug-title&#34;</span> <span style="color:#8fbcbb">aria-invalid</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>fieldState<span style="color:#eceff4">.</span>invalid<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Login button not working on mobile&#34;</span> <span style="color:#8fbcbb">autoComplete</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;off&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">{</span>fieldState<span style="color:#eceff4">.</span>invalid <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldError</span> <span style="color:#8fbcbb">errors</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{[</span>fieldState<span style="color:#eceff4">.</span>error<span style="color:#eceff4">]}</span> <span style="color:#eceff4">/&gt;}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">)}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;submit&#34;</span><span style="color:#eceff4">&gt;</span>Submit<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">form</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>form.handleSubmit</code> runs the schema first. It calls your function only when every field passes, and passes it the values with their types. Until then, each field shows its own error.</p>
+<p>The other forms on the page show more rules: matching passwords, a box the visitor must tick, a list of checkboxes with a minimum, and a list of emails the user can grow and shrink.</p>
+<h3 id="sending-the-data">Sending the data</h3>
+<p>Replace the demo&rsquo;s <code>showSubmitted</code> with your own function, and send the values to your server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">async</span> <span style="color:#81a1c1;font-weight:bold">function</span> onSubmit<span style="color:#eceff4">(</span>values: <span style="color:#81a1c1">z.infer</span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">typeof</span> <span style="color:#8fbcbb">bugReportSchema</span><span style="color:#eceff4">&gt;)</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> response <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">await</span> fetch<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;/api/bugs&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		method<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;POST&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		headers<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> <span style="color:#a3be8c">&#34;Content-Type&#34;</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;application/json&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		body: <span style="color:#81a1c1">JSON.stringify</span><span style="color:#eceff4">(</span>values<span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">});</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span>response<span style="color:#eceff4">.</span>ok<span style="color:#eceff4">)</span> toast<span style="color:#eceff4">.</span>success<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Bug report sent&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">else</span> toast<span style="color:#eceff4">.</span>error<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Could not send the report. Try again.&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">form</span> <span style="color:#8fbcbb">onSubmit</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>form<span style="color:#eceff4">.</span>handleSubmit<span style="color:#eceff4">(</span>onSubmit<span style="color:#eceff4">)}&gt;...&lt;/</span><span style="color:#81a1c1">form</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>z.infer</code> turns the schema into a TypeScript type, so <code>values</code> has the right field names and types with no extra work.</p>
+<h2 id="toasts">Toasts</h2>
+<p>Toasts are the small messages that slide up from the bottom of the screen, such as &ldquo;Bug report sent&rdquo;. They come from <a href="https://sonner.emilkowal.ski">Sonner</a>. <code>AppShell</code> already renders the <code>Toaster</code>, so any page can show one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> toast <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;sonner&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>toast<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Event has been created&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>toast<span style="color:#eceff4">.</span>success<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Settings saved&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>toast<span style="color:#eceff4">.</span>error<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Could not save your settings&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>toast<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Message archived&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	action<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Undo&#34;</span><span style="color:#eceff4">,</span> onClick<span style="color:#81a1c1">:</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> restore<span style="color:#eceff4">()</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p><code>src/components/ui/sonner.tsx</code> styles them as a dark pill in the center at the bottom, raised above the bottom nav bar on phones. Its demo page is at <code>/components/sonner</code>.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#fields">Fields</a></li>
+    <li><a href="#checkboxes-radios-switches-and-sliders">Checkboxes, radios, switches and sliders</a></li>
+    <li><a href="#select-and-nativeselect">Select and NativeSelect</a></li>
+    <li><a href="#input-groups-and-button-groups">Input groups and button groups</a></li>
+    <li><a href="#other-inputs">Other inputs</a></li>
+    <li><a href="#validation">Validation</a>
+      <ul>
+        <li><a href="#sending-the-data">Sending the data</a></li>
+      </ul>
+    </li>
+    <li><a href="#toasts">Toasts</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

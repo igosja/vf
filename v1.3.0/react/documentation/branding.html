@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Branding |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Branding
+This page lists every place where the template shows its own name, logo or icon, so you can replace them with yours.
+Name
+
+  
+      
+          Where
+          File
+          What to change
+      
+  
+  
+      
+          Browser tab title
+          index.html
+          &lt;title&gt;Materia&lt;/title&gt;
+      
+      
+          Menu drawer on small screens
+          src/components/layout/sidebar/sidebar.tsx
+          The Materia text next to the logo
+      
+      
+          Login page heading
+          src/pages/pages/login/page.tsx
+          title=&quot;Welcome to Materia!&quot;
+      
+      
+          Form Templates page
+          src/pages/forms/templates/page.tsx
+          Demo text that mentions Materia
+      
+      
+          AI Agent model picker
+          src/pages/apps/ai-agent/composer.tsx
+          The demo model names: Materia Pro, Materia, Materia Lite
+      
+  
+
+The last two are demo content. Change them when you adapt those pages, or delete the pages.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="branding">Branding</h1>
+<p>This page lists every place where the template shows its own name, logo or icon, so you can replace them with yours.</p>
+<h2 id="name">Name</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Where</th>
+          <th>File</th>
+          <th>What to change</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Browser tab title</td>
+          <td><code>index.html</code></td>
+          <td><code>&lt;title&gt;Materia&lt;/title&gt;</code></td>
+      </tr>
+      <tr>
+          <td>Menu drawer on small screens</td>
+          <td><code>src/components/layout/sidebar/sidebar.tsx</code></td>
+          <td>The <code>Materia</code> text next to the logo</td>
+      </tr>
+      <tr>
+          <td>Login page heading</td>
+          <td><code>src/pages/pages/login/page.tsx</code></td>
+          <td><code>title=&quot;Welcome to Materia!&quot;</code></td>
+      </tr>
+      <tr>
+          <td>Form Templates page</td>
+          <td><code>src/pages/forms/templates/page.tsx</code></td>
+          <td>Demo text that mentions Materia</td>
+      </tr>
+      <tr>
+          <td>AI Agent model picker</td>
+          <td><code>src/pages/apps/ai-agent/composer.tsx</code></td>
+          <td>The demo model names: Materia Pro, Materia, Materia Lite</td>
+      </tr>
+  </tbody>
+</table>
+<p>The last two are demo content. Change them when you adapt those pages, or delete the pages.</p>
+<h2 id="logo">Logo</h2>
+<p><code>src/components/common/logo.tsx</code> holds the logo as an inline SVG with two paths. The back shape uses the <code>secondary</code> color and the front shape uses <code>emphasis-foreground</code>, so the logo follows light and dark mode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">function</span> Logo<span style="color:#eceff4">({</span> className <span style="color:#eceff4">}</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> className?: <span style="color:#81a1c1">string</span> <span style="color:#eceff4">})</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">svg</span> <span style="color:#8fbcbb">width</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;40&#34;</span> <span style="color:#8fbcbb">height</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;40&#34;</span> <span style="color:#8fbcbb">fill</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;none&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>className<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">aria-hidden</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;true&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">path</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;fill-secondary&#34;</span> <span style="color:#8fbcbb">d</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;...&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">path</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;fill-emphasis-foreground&#34;</span> <span style="color:#8fbcbb">d</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;...&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">svg</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><p>The template shows it at the top of the sidebar rail, in the menu drawer, on the loading screen between pages and on the welcome form of the Form Templates page. Replace the SVG in this one file and every one of them changes.</p>
+<p>To use your own SVG logo:</p>
+<ol>
+<li>Open your logo file in a text editor and copy the <code>&lt;path&gt;</code> elements.</li>
+<li>Paste them into <code>logo.tsx</code> in place of the two existing paths. Keep the <code>className</code> on each path if you want it to follow the color mode, or set a fixed <code>fill</code> color.</li>
+<li>Change <code>width</code>, <code>height</code> and <code>viewBox</code> to match your logo. Keep it close to 40 by 40 pixels so it fits the rail.</li>
+<li>React writes attributes in camel case, so <code>fill-rule</code> becomes <code>fillRule</code> and <code>clip-path</code> becomes <code>clipPath</code>.</li>
+</ol>
+<p>To use an image file instead, put it in <code>public/img/</code> and return an <code>&lt;img&gt;</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> cn <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/lib/utils&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">function</span> Logo<span style="color:#eceff4">({</span> className <span style="color:#eceff4">}</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> className?: <span style="color:#81a1c1">string</span> <span style="color:#eceff4">})</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">img</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/logo.svg&#34;</span> <span style="color:#8fbcbb">alt</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>cn<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;size-10&#34;</span><span style="color:#eceff4">,</span> className<span style="color:#eceff4">)}</span> <span style="color:#eceff4">/&gt;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><h2 id="the-first-loading-screen">The first loading screen</h2>
+<p><code>index.html</code> shows a loading screen while the app starts, before React runs. It cannot use the Logo component, so it has its own copy of the logo SVG and its own colors in a <code>&lt;style&gt;</code> block. When you change the logo, change it here too:</p>
+<ul>
+<li>The <code>&lt;svg&gt;</code> inside <code>&lt;div id=&quot;page-loader&quot;&gt;</code> holds the two logo paths.</li>
+<li>The <code>&lt;style&gt;</code> block colors them: <code>#page-loader path:first-child</code> for the back shape and <code>#page-loader path:last-child</code> for the front, with <code>.dark</code> versions below.</li>
+</ul>
+<h2 id="favicon">Favicon</h2>
+<p><code>index.html</code> loads two favicons, one for a light browser theme and one for a dark one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">link</span> <span style="color:#8fbcbb">rel</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;image/svg+xml&#34;</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/favicon/favicon.svg&#34;</span> <span style="color:#8fbcbb">media</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;(prefers-color-scheme: light)&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">link</span> <span style="color:#8fbcbb">rel</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;image/svg+xml&#34;</span> <span style="color:#8fbcbb">href</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/favicon/favicon-dark.svg&#34;</span> <span style="color:#8fbcbb">media</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;(prefers-color-scheme: dark)&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p>Replace <code>public/img/favicon/favicon.svg</code> and <code>favicon-dark.svg</code> with your own, keeping the names. If you only have one icon, keep a single <code>&lt;link&gt;</code> without the <code>media</code> attribute. For a PNG icon, change the <code>type</code> to <code>image/png</code>.</p>
+<h2 id="primary-color">Primary color</h2>
+<p>Change the primary color in <code>src/styles/index.css</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#81a1c1">--color-primary</span><span style="color:#81a1c1">:</span> <span style="color:#eceff4">#</span><span style="color:#8fbcbb">118bff</span><span style="color:#81a1c1">;</span>
+</span></span></code></pre></div><p><a href="./colors.html">Colors</a> explains what follows it and how to change the other colors.</p>
+<h2 id="font">Font</h2>
+<p><a href="./typography.html">Typography</a> shows how to replace Figtree with your own font.</p>
+<h2 id="the-signed-in-user">The signed-in user</h2>
+<p>The nav bar shows a sample profile photo, <code>/img/contacts/2.jpg</code>, in <code>src/components/layout/nav-bar/nav-bar.tsx</code>. Replace it with your user&rsquo;s photo once your app has sign-in, and connect the Profile, Billing, Settings and Logout items in the same menu to your own pages.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#name">Name</a></li>
+    <li><a href="#logo">Logo</a></li>
+    <li><a href="#the-first-loading-screen">The first loading screen</a></li>
+    <li><a href="#favicon">Favicon</a></li>
+    <li><a href="#primary-color">Primary color</a></li>
+    <li><a href="#font">Font</a></li>
+    <li><a href="#the-signed-in-user">The signed-in user</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

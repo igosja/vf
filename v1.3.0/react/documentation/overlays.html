@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Overlays |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Overlays
+Overlays open on top of the page: dialogs, side sheets, menus, popovers, tooltips and toasts. They all come from shadcn/ui and run on Radix UI, which handles focus, the keyboard and screen readers. Click the buttons in the previews to open them.
+Each overlay has a trigger and content. Wrap your own button in the trigger with asChild, so the trigger takes your button&rsquo;s look:
+&lt;DialogTrigger asChild&gt;
+	&lt;Button variant=&#34;outline&#34;&gt;Redeem code&lt;/Button&gt;
+&lt;/DialogTrigger&gt;
+Dialog
+A dialog opens in the middle of the screen and dims the page behind it. Use it for a short task that needs the visitor&rsquo;s full attention: confirm a deletion, fill in a small form. Its demo page is at /components/dialog.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="overlays">Overlays</h1>
+<p>Overlays open on top of the page: dialogs, side sheets, menus, popovers, tooltips and toasts. They all come from shadcn/ui and run on Radix UI, which handles focus, the keyboard and screen readers. Click the buttons in the previews to open them.</p>
+<p>Each overlay has a trigger and content. Wrap your own button in the trigger with <code>asChild</code>, so the trigger takes your button&rsquo;s look:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Redeem code<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h2 id="dialog">Dialog</h2>
+<p>A dialog opens in the middle of the screen and dims the page behind it. Use it for a short task that needs the visitor&rsquo;s full attention: confirm a deletion, fill in a small form. Its demo page is at <code>/components/dialog</code>.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;button data-slot=&#34;dialog-trigger&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34; type=&#34;button&#34; aria-haspopup=&#34;dialog&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34;&gt;Redeem code&lt;/button&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 420) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;overlay-dialog&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Ticket <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> DialogFoot<span style="color:#eceff4">,</span> DialogHead<span style="color:#eceff4">,</span> DismissButton <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/dialog-parts&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Dialog<span style="color:#eceff4">,</span> DialogClose<span style="color:#eceff4">,</span> DialogContent<span style="color:#eceff4">,</span> DialogDescription<span style="color:#eceff4">,</span> DialogTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/dialog&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Field<span style="color:#eceff4">,</span> FieldLabel <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> InputGroup<span style="color:#eceff4">,</span> InputGroupAddon<span style="color:#eceff4">,</span> InputGroupInput <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input-group&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> RedeemDialog() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Dialog</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Redeem code<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogContent</span> <span style="color:#8fbcbb">showCloseButton</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;gap-0 p-0 sm:max-w-sm&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogHead</span><span style="color:#eceff4">&gt;</span>Redeem Code<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogHead</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;px-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogDescription</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;mb-5 text-sm text-muted-foreground&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						Enter a promo or gift code<span style="color:#eceff4">.</span> Its value <span style="color:#81a1c1;font-weight:bold">is</span> added to your account credit and applied to your next invoice<span style="color:#eceff4">.</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;redeem-code&#34;</span><span style="color:#eceff4">&gt;</span>Code<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Ticket</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroupAddon</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">InputGroupInput</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;redeem-code&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;uppercase placeholder:normal-case&#34;</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;e.g. SAVE20&#34;</span> <span style="color:#8fbcbb">autoComplete</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;off&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">InputGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogFoot</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DismissButton</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogClose</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>Redeem<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogClose</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogFoot</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DialogContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Dialog</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>The template&rsquo;s dialogs use three small helpers from <code>src/components/common/dialog-parts.tsx</code>, so every dialog lines up the same way:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Helper</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>DialogHead</code></td>
+          <td>The title row, with a close button on the right</td>
+      </tr>
+      <tr>
+          <td><code>DialogFoot</code></td>
+          <td>The row of buttons at the bottom, aligned right</td>
+      </tr>
+      <tr>
+          <td><code>DismissButton</code></td>
+          <td>A quiet Cancel button that closes the dialog</td>
+      </tr>
+  </tbody>
+</table>
+<p>Pass <code>showCloseButton={false}</code> to <code>DialogContent</code> when you use <code>DialogHead</code>, because the head brings its own close button.</p>
+<h3 id="opening-a-dialog-from-code">Opening a dialog from code</h3>
+<p>Without a trigger, control the dialog with <code>open</code> and <code>onOpenChange</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> <span style="color:#eceff4">[</span>open<span style="color:#eceff4">,</span> setOpen<span style="color:#eceff4">]</span> <span style="color:#81a1c1">=</span> useState<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Dialog</span> <span style="color:#8fbcbb">open</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>open<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">onOpenChange</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>setOpen<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DialogContent</span><span style="color:#eceff4">&gt;...&lt;/</span><span style="color:#81a1c1">DialogContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Dialog</span><span style="color:#eceff4">&gt;;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">// later, for example after a request finishes
+</span></span></span><span style="display:flex;"><span>setOpen<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">true</span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>Every dialog needs a <code>DialogTitle</code>, which <code>DialogHead</code> provides. Screen readers announce it when the dialog opens. If a dialog has no visible title, add one with <code>className=&quot;sr-only&quot;</code>.</p>
+<h2 id="sheet">Sheet</h2>
+<p>A sheet slides in from an edge of the screen. Use it for longer content that should keep the page in view, such as a filter panel or a details view. <code>side</code> picks the edge: <code>right</code> (the default), <code>left</code>, <code>top</code> or <code>bottom</code>. Its demo page is at <code>/components/sheet</code>.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;button data-slot=&#34;sheet-trigger&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34; type=&#34;button&#34; aria-haspopup=&#34;dialog&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34;&gt;Edit profile&lt;/button&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 420) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;overlay-sheet&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Field<span style="color:#eceff4">,</span> FieldGroup<span style="color:#eceff4">,</span> FieldLabel <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Input <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Sheet<span style="color:#eceff4">,</span> SheetClose<span style="color:#eceff4">,</span> SheetContent<span style="color:#eceff4">,</span> SheetDescription<span style="color:#eceff4">,</span> SheetFooter<span style="color:#eceff4">,</span> SheetHeader<span style="color:#eceff4">,</span> SheetTitle<span style="color:#eceff4">,</span> SheetTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/sheet&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> EditProfileSheet() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Sheet</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Edit profile<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetTitle</span><span style="color:#eceff4">&gt;</span>Edit profile<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetTitle</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetDescription</span><span style="color:#eceff4">&gt;</span>Make changes to your profile here<span style="color:#eceff4">.</span> Click save when you are done<span style="color:#eceff4">.&lt;/</span><span style="color:#81a1c1">SheetDescription</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetHeader</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldGroup</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;px-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sheet-name&#34;</span><span style="color:#eceff4">&gt;</span>Name<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sheet-name&#34;</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Pedro Duarte&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetFooter</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SheetClose</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>Save changes<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetClose</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetFooter</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">SheetContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Sheet</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>The sidebar drawer, the secondary sidebar drawer and the nav bar panels all use <code>Sheet</code>.</p>
+<h2 id="dropdown-menu">Dropdown menu</h2>
+<p>A dropdown menu lists actions under a button. Its demo page at <code>/components/dropdown-menu</code> also shows checkbox items, radio items and sub-menus.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;button data-slot=&#34;dropdown-menu-trigger&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34; type=&#34;button&#34; id=&#34;radix-_R_0_&#34; aria-haspopup=&#34;menu&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34;&gt;Open menu&lt;/button&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 320) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;overlay-dropdown&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> CreditCard<span style="color:#eceff4">,</span> LogOut<span style="color:#eceff4">,</span> Settings<span style="color:#eceff4">,</span> User <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	DropdownMenu<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuContent<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuGroup<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuItem<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuLabel<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuSeparator<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuShortcut<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DropdownMenuTrigger<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/dropdown-menu&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> AccountMenu() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenu</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Open menu<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuContent</span> <span style="color:#8fbcbb">align</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;start&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-56&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuLabel</span><span style="color:#eceff4">&gt;</span>My Account<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">User</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>						Profile
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuShortcut</span><span style="color:#eceff4">&gt;</span><span style="color:#bf616a">⇧⌘</span>P<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuShortcut</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">CreditCard</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>						Billing
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Settings</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>						Settings
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuSeparator</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuItem</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;destructive&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">LogOut</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					Log out
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenu</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p><code>variant=&quot;destructive&quot;</code> colors an item red. <code>DropdownMenuShortcut</code> shows a keyboard shortcut on the right, as a hint only: wiring up the keys is up to you.</p>
+<p>To make a menu item go to another page, use <code>asChild</code> with a React Router <code>Link</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DropdownMenuItem</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Link</span> <span style="color:#8fbcbb">to</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/user/profile&#34;</span><span style="color:#eceff4">&gt;</span>Profile<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Link</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">DropdownMenuItem</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h2 id="popover-and-tooltip">Popover and tooltip</h2>
+<p>A <strong>popover</strong> opens a small panel next to its trigger and can hold anything, including form fields. The date pickers use one. A <strong>tooltip</strong> shows a short label when the pointer rests on its trigger or the trigger gets keyboard focus.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex items-center gap-4&#34;&gt;&lt;button data-slot=&#34;popover-trigger&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34; type=&#34;button&#34; aria-haspopup=&#34;dialog&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34;&gt;Set dimensions&lt;/button&gt;&lt;button type=&#34;button&#34; class=&#34;grid avatar-mask size-8 place-items-center text-emphasis-foreground transition-colors duration-300 hover:bg-accent focus-visible:bg-accent data-[state=open]:bg-accent&#34; data-state=&#34;closed&#34; data-slot=&#34;tooltip-trigger&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-info&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;M12 16v-4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 8h.01&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span class=&#34;sr-only&#34;&gt;Information&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 300) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;overlay-popover-tooltip&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Info <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> IconButton <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/icon-button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Field<span style="color:#eceff4">,</span> FieldGroup<span style="color:#eceff4">,</span> FieldLabel <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Input <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/input&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Popover<span style="color:#eceff4">,</span> PopoverContent<span style="color:#eceff4">,</span> PopoverTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/popover&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Tooltip<span style="color:#eceff4">,</span> TooltipContent<span style="color:#eceff4">,</span> TooltipProvider<span style="color:#eceff4">,</span> TooltipTrigger <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/tooltip&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> PopoverAndTooltip() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TooltipProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex items-center gap-4&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Popover</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PopoverTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Set dimensions<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PopoverTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">PopoverContent</span> <span style="color:#8fbcbb">align</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;start&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-64&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldGroup</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;width&#34;</span><span style="color:#eceff4">&gt;</span>Width<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;width&#34;</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;100%&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">FieldLabel</span> <span style="color:#8fbcbb">htmlFor</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;height&#34;</span><span style="color:#eceff4">&gt;</span>Height<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldLabel</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Input</span> <span style="color:#8fbcbb">id</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;height&#34;</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;25px&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Field</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">FieldGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">PopoverContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Popover</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Tooltip</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TooltipTrigger</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Info</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Information<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TooltipTrigger</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">TooltipContent</span><span style="color:#eceff4">&gt;</span>Shows details about <span style="color:#81a1c1;font-weight:bold">this</span> card<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TooltipContent</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Tooltip</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">TooltipProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>Tooltips need a <code>TooltipProvider</code> above them. <code>AppShell</code> already wraps every page in one, so on your own pages a <code>Tooltip</code> works as it is. Keep tooltip text to a few words, and do not put a link or a button inside a tooltip, because the visitor cannot reach it.</p>
+<h2 id="toasts">Toasts</h2>
+<p>A toast is a short message at the bottom of the screen that goes away on its own. Call <code>toast()</code> from anywhere:</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 240) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;overlay-toast&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> toast <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;sonner&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Toaster <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/sonner&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ThemeProvider <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/providers/theme-provider&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> Toasts() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ThemeProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">onClick</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{()</span> <span style="color:#81a1c1">=&gt;</span> toast<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Event has been created&#34;</span><span style="color:#eceff4">)}&gt;</span>
+</span></span><span style="display:flex;"><span>					Default
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">onClick</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{()</span> <span style="color:#81a1c1">=&gt;</span> toast<span style="color:#eceff4">.</span>success<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Settings saved&#34;</span><span style="color:#eceff4">)}&gt;</span>
+</span></span><span style="display:flex;"><span>					Success
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">onClick</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{()</span> <span style="color:#81a1c1">=&gt;</span> toast<span style="color:#eceff4">.</span>error<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Could not save your settings&#34;</span><span style="color:#eceff4">)}&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#81a1c1">Error</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">onClick</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{()</span> <span style="color:#81a1c1">=&gt;</span> toast<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;Message archived&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span> action<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Undo&#34;</span><span style="color:#eceff4">,</span> onClick<span style="color:#81a1c1">:</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">{}</span> <span style="color:#eceff4">}</span> <span style="color:#eceff4">})}&gt;</span>
+</span></span><span style="display:flex;"><span>					With action
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Toaster</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ThemeProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p><code>AppShell</code> already renders the <code>Toaster</code>, so pages call <code>toast()</code> and never render a <code>Toaster</code> themselves. The preview above renders its own only because it runs outside the app. <a href="./forms.html">Forms</a> shows toasts after a form submits.</p>
+<h2 id="command">Command</h2>
+<p><code>Command</code> from <code>src/components/ui/command.tsx</code> is a searchable list. The template uses it inside a popover for the Combobox, at <code>/components/combobox</code>: a select that the visitor can type into to filter a long list.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#dialog">Dialog</a>
+      <ul>
+        <li><a href="#opening-a-dialog-from-code">Opening a dialog from code</a></li>
+      </ul>
+    </li>
+    <li><a href="#sheet">Sheet</a></li>
+    <li><a href="#dropdown-menu">Dropdown menu</a></li>
+    <li><a href="#popover-and-tooltip">Popover and tooltip</a></li>
+    <li><a href="#toasts">Toasts</a></li>
+    <li><a href="#command">Command</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

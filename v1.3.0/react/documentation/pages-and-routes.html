@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Pages and Routes |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Pages and Routes
+Materia uses React Router 8 in its data router mode. One file, src/routes.tsx, lists every page and the address it lives at.
+How a page gets its address
+src/main.tsx builds the router from the route list and hands it to React:
+const router = createBrowserRouter(routes);
+
+createRoot(document.getElementById(&#34;root&#34;)!).render(
+	&lt;StrictMode&gt;
+		&lt;ThemeProvider&gt;
+			&lt;RouterProvider router={router} /&gt;
+		&lt;/ThemeProvider&gt;
+	&lt;/StrictMode&gt;
+);
+src/routes.tsx holds the list. Each entry pairs an address with the file that renders it:
+{
+	path: &#34;dashboards/crm&#34;,
+	lazy: async () =&gt; ({ Component: (await import(&#34;@/pages/dashboards/crm/page&#34;)).default }),
+},
+lazy loads the page only when someone opens it. Vite builds each page into its own file, so a visitor downloads only the pages they open. While the next page downloads, the RouteLoader component shows the loading screen. It waits 150 milliseconds before it appears, so a page that is already cached never flashes it.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="pages-and-routes">Pages and Routes</h1>
+<p>Materia uses <a href="https://reactrouter.com">React Router 8</a> in its data router mode. One file, <code>src/routes.tsx</code>, lists every page and the address it lives at.</p>
+<h2 id="how-a-page-gets-its-address">How a page gets its address</h2>
+<p><code>src/main.tsx</code> builds the router from the route list and hands it to React:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> router <span style="color:#81a1c1">=</span> createBrowserRouter<span style="color:#eceff4">(</span>routes<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>createRoot<span style="color:#eceff4">(</span><span style="color:#81a1c1">document</span><span style="color:#eceff4">.</span>getElementById<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;root&#34;</span><span style="color:#eceff4">)</span><span style="color:#81a1c1">!</span><span style="color:#eceff4">).</span>render<span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">StrictMode</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ThemeProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">RouterProvider</span> <span style="color:#8fbcbb">router</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>router<span style="color:#eceff4">}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ThemeProvider</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">StrictMode</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p><code>src/routes.tsx</code> holds the list. Each entry pairs an address with the file that renders it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;dashboards/crm&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	lazy: <span style="color:#81a1c1">async</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> Component<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">await</span> <span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;@/pages/dashboards/crm/page&#34;</span><span style="color:#eceff4">)).</span><span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#eceff4">}),</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p><code>lazy</code> loads the page only when someone opens it. Vite builds each page into its own file, so a visitor downloads only the pages they open. While the next page downloads, the <code>RouteLoader</code> component shows the loading screen. It waits 150 milliseconds before it appears, so a page that is already cached never flashes it.</p>
+<h2 id="the-two-frames">The two frames</h2>
+<p>The route list has two parent routes. Each one wraps its pages in a frame and renders the current page where its <code>&lt;Outlet /&gt;</code> sits.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Frame</th>
+          <th>Address</th>
+          <th>What it draws around the page</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>AppShell</code></td>
+          <td><code>/</code> and everything under it</td>
+          <td>The sidebar, the nav bar, the scroll area and the toast area</td>
+      </tr>
+      <tr>
+          <td><code>BlankShell</code></td>
+          <td><code>/pages/login</code>, <code>/pages/register</code>, <code>/pages/forgot-password</code>, <code>/pages/coming-soon</code>, <code>/pages/error</code></td>
+          <td>Nothing. The page fills the window on its own</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> routes: <span style="color:#81a1c1">RouteObject</span><span style="color:#eceff4">[]</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		Component: <span style="color:#81a1c1">AppShell</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		HydrateFallback<span style="color:#81a1c1">:</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#81a1c1;font-weight:bold">null</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		children<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>				index: <span style="color:#81a1c1">true</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				lazy: <span style="color:#81a1c1">async</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> Component<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">await</span> <span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;@/pages/dashboards/e-commerce/page&#34;</span><span style="color:#eceff4">)).</span><span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#eceff4">}),</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#616e87;font-style:italic">// ...the other pages
+</span></span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>				path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;*&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				lazy: <span style="color:#81a1c1">async</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> Component<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">await</span> <span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;@/pages/not-found&#34;</span><span style="color:#eceff4">)).</span><span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#eceff4">}),</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/pages&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		Component: <span style="color:#81a1c1">BlankShell</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		HydrateFallback<span style="color:#81a1c1">:</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#81a1c1;font-weight:bold">null</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		children<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>				path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;login&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				lazy: <span style="color:#81a1c1">async</span> <span style="color:#eceff4">()</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> Component<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">await</span> <span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;@/pages/pages/login/page&#34;</span><span style="color:#eceff4">)).</span><span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#eceff4">}),</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#616e87;font-style:italic">// ...register, forgot-password, coming-soon, error
+</span></span></span><span style="display:flex;"><span>		<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">];</span>
+</span></span></code></pre></div><ul>
+<li><code>index: true</code> makes the E-Commerce dashboard the home page at <code>/</code>.</li>
+<li><code>path: &quot;*&quot;</code> catches any address that has no page and shows <code>src/pages/not-found.tsx</code> inside the normal frame.</li>
+<li><code>HydrateFallback</code> is what React Router shows while the first lazy page loads. The template returns nothing, because <code>index.html</code> already shows its own loading screen until the page is ready.</li>
+</ul>
+<h2 id="every-page">Every page</h2>
+<h3 id="dashboards">Dashboards</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>File</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>E-Commerce</td>
+          <td><code>/</code></td>
+          <td><code>src/pages/dashboards/e-commerce/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Analytics</td>
+          <td><code>/dashboards/analytics</code></td>
+          <td><code>src/pages/dashboards/analytics/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Project Management</td>
+          <td><code>/dashboards/project-management</code></td>
+          <td><code>src/pages/dashboards/project-management/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>CRM</td>
+          <td><code>/dashboards/crm</code></td>
+          <td><code>src/pages/dashboards/crm/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Email Marketing</td>
+          <td><code>/dashboards/email-marketing</code></td>
+          <td><code>src/pages/dashboards/email-marketing/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>SaaS</td>
+          <td><code>/dashboards/saas</code></td>
+          <td><code>src/pages/dashboards/saas/page.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="applications">Applications</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>File</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>User Profile</td>
+          <td><code>/user/profile</code></td>
+          <td><code>src/pages/user/profile/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>User Timeline</td>
+          <td><code>/user/timeline</code></td>
+          <td><code>src/pages/user/timeline/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>User Photos</td>
+          <td><code>/user/photos</code></td>
+          <td><code>src/pages/user/photos/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>User Connections</td>
+          <td><code>/user/connections</code></td>
+          <td><code>src/pages/user/connections/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>User Preferences</td>
+          <td><code>/user/preferences</code></td>
+          <td><code>src/pages/user/preferences/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>File Manager</td>
+          <td><code>/apps/file-manager</code></td>
+          <td><code>src/pages/apps/file-manager/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Contacts</td>
+          <td><code>/apps/contacts</code></td>
+          <td><code>src/pages/apps/contacts/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Mail</td>
+          <td><code>/apps/mail</code></td>
+          <td><code>src/pages/apps/mail/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Messages</td>
+          <td><code>/apps/messages</code></td>
+          <td><code>src/pages/apps/messages/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>AI Agent</td>
+          <td><code>/apps/ai-agent</code></td>
+          <td><code>src/pages/apps/ai-agent/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>AI Agent chat</td>
+          <td><code>/apps/ai-agent/chat</code></td>
+          <td><code>src/pages/apps/ai-agent/chat/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Photos</td>
+          <td><code>/apps/photos</code></td>
+          <td><code>src/pages/apps/photos/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Todo Lists</td>
+          <td><code>/apps/todo-lists</code></td>
+          <td><code>src/pages/apps/todo-lists/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Calendar</td>
+          <td><code>/apps/calendar</code></td>
+          <td><code>src/pages/apps/calendar/page.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="pages">Pages</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>File</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Invoice</td>
+          <td><code>/pages/invoice</code></td>
+          <td><code>src/pages/pages/invoice/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Pricing Tables</td>
+          <td><code>/pages/pricing-tables</code></td>
+          <td><code>src/pages/pages/pricing-tables/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Billing</td>
+          <td><code>/pages/billing</code></td>
+          <td><code>src/pages/pages/billing/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Search Results</td>
+          <td><code>/pages/search-results</code></td>
+          <td><code>src/pages/pages/search-results/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>FAQ</td>
+          <td><code>/pages/faq</code></td>
+          <td><code>src/pages/pages/faq/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Teams</td>
+          <td><code>/pages/teams</code></td>
+          <td><code>src/pages/pages/teams/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Login</td>
+          <td><code>/pages/login</code></td>
+          <td><code>src/pages/pages/login/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Register</td>
+          <td><code>/pages/register</code></td>
+          <td><code>src/pages/pages/register/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Forgot Password</td>
+          <td><code>/pages/forgot-password</code></td>
+          <td><code>src/pages/pages/forgot-password/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Coming Soon</td>
+          <td><code>/pages/coming-soon</code></td>
+          <td><code>src/pages/pages/coming-soon/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Error</td>
+          <td><code>/pages/error</code></td>
+          <td><code>src/pages/pages/error/page.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="content">Content</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>File</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Typography</td>
+          <td><code>/content/typography</code></td>
+          <td><code>src/pages/content/typography/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Figures</td>
+          <td><code>/content/figures</code></td>
+          <td><code>src/pages/content/figures/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Images</td>
+          <td><code>/content/images</code></td>
+          <td><code>src/pages/content/images/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Tables</td>
+          <td><code>/content/tables</code></td>
+          <td><code>src/pages/content/tables/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Icons</td>
+          <td><code>/content/icons</code></td>
+          <td><code>src/pages/content/icons/page.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="components-and-forms">Components and forms</h3>
+<p>Each UI element has a page at <code>/components/&lt;name&gt;</code> with its file at <code>src/pages/components/&lt;name&gt;/page.tsx</code>: accordion, alert, badge, breadcrumb, button, card, carousel, collapsible, combobox, date-picker, dialog, dropdown-menu, input-otp, item, pagination, popover, progress, rich-text-editor, sheet, skeleton, slider, sonner, spinner, tabs and tooltip.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Page</th>
+          <th>Address</th>
+          <th>File</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Form Elements</td>
+          <td><code>/forms/elements</code></td>
+          <td><code>src/pages/forms/elements/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Input Groups</td>
+          <td><code>/forms/input-groups</code></td>
+          <td><code>src/pages/forms/input-groups/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Form Layouts</td>
+          <td><code>/forms/layouts</code></td>
+          <td><code>src/pages/forms/layouts/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Form Templates</td>
+          <td><code>/forms/templates</code></td>
+          <td><code>src/pages/forms/templates/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Form Validation</td>
+          <td><code>/forms/validation</code></td>
+          <td><code>src/pages/forms/validation/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Charts</td>
+          <td><code>/charts</code></td>
+          <td><code>src/pages/components/charts/page.tsx</code></td>
+      </tr>
+      <tr>
+          <td>Maps</td>
+          <td><code>/maps</code></td>
+          <td><code>src/pages/components/maps/page.tsx</code></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="linking-between-pages">Linking between pages</h2>
+<p>Use React Router&rsquo;s <code>Link</code> for a link to another page. It changes the page without reloading the browser, so the sidebar, the nav bar and everything else stay in place:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Link <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react-router&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Link</span> <span style="color:#8fbcbb">to</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/apps/mail&#34;</span><span style="color:#eceff4">&gt;</span>Open the inbox<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Link</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>NavLink</code> works the same way and also knows when its page is open. The sidebar uses it to highlight the current page:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">NavLink</span> <span style="color:#8fbcbb">to</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>item<span style="color:#eceff4">.</span>to<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{({</span> isActive <span style="color:#eceff4">})</span> <span style="color:#81a1c1">=&gt;</span> cn<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;text-emphasis-foreground&#34;</span><span style="color:#eceff4">,</span> isActive <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#a3be8c">&#34;text-primary&#34;</span><span style="color:#eceff4">)}&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span>item<span style="color:#eceff4">.</span>label<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">NavLink</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>To change the page from code, such as after a form saves, use <code>useNavigate</code>. The Login page sends the visitor to the dashboard this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> navigate <span style="color:#81a1c1">=</span> useNavigate<span style="color:#eceff4">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>navigate<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;/&#34;</span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>A plain <code>&lt;a href=&quot;/apps/mail&quot;&gt;</code> also works, but it reloads the whole app. Keep plain links for addresses outside the template.</p>
+<h2 id="scroll-position">Scroll position</h2>
+<p>The page scrolls inside the frame&rsquo;s scroll area, not the browser window. <code>AppShell</code> scrolls that area back to the top whenever the address changes, so a new page always starts at the top.</p>
+<h2 id="adding-renaming-and-removing-pages">Adding, renaming and removing pages</h2>
+<ul>
+<li><a href="./adding-a-page.html">Adding a Page</a> walks through a new page from the empty file to the sidebar link.</li>
+<li>To rename an address, change its <code>path</code> in <code>src/routes.tsx</code> and its <code>to</code> in <code>src/data/navigation.ts</code>.</li>
+<li><a href="./removing-features.html">Removing Features</a> explains how to delete the pages you do not need.</li>
+</ul>
+<h2 id="showing-your-own-error-screen">Showing your own error screen</h2>
+<p>The template does not set an error boundary, so if a page throws an error while it renders, React Router shows its built-in error screen. To show your own, add an <code>ErrorBoundary</code> component to the parent route in <code>src/routes.tsx</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> isRouteErrorResponse<span style="color:#eceff4">,</span> useRouteError <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react-router&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">function</span> AppError() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> error <span style="color:#81a1c1">=</span> useRouteError<span style="color:#eceff4">();</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> message <span style="color:#81a1c1">=</span> isRouteErrorResponse<span style="color:#eceff4">(</span>error<span style="color:#eceff4">)</span> <span style="color:#81a1c1">?</span> <span style="color:#a3be8c">`</span><span style="color:#a3be8c">${</span>error<span style="color:#eceff4">.</span>status<span style="color:#a3be8c">}</span><span style="color:#a3be8c"> </span><span style="color:#a3be8c">${</span>error<span style="color:#eceff4">.</span>statusText<span style="color:#a3be8c">}</span><span style="color:#a3be8c">`</span> <span style="color:#81a1c1">:</span> error <span style="color:#81a1c1;font-weight:bold">instanceof</span> <span style="color:#81a1c1">Error</span> <span style="color:#81a1c1">?</span> error<span style="color:#eceff4">.</span>message <span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Something went wrong&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;grid min-h-screen place-items-center p-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;rounded-2xl bg-card p-6&#34;</span><span style="color:#eceff4">&gt;{</span>message<span style="color:#eceff4">}&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> routes: <span style="color:#81a1c1">RouteObject</span><span style="color:#eceff4">[]</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		path<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		Component: <span style="color:#81a1c1">AppShell</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		ErrorBoundary: <span style="color:#81a1c1">AppError</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">];</span>
+</span></span></code></pre></div><p>React Router renders the closest error boundary above the page that failed. See <a href="https://reactrouter.com/how-to/error-boundary">Error Boundaries</a> in the React Router docs for more.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-a-page-gets-its-address">How a page gets its address</a></li>
+    <li><a href="#the-two-frames">The two frames</a></li>
+    <li><a href="#every-page">Every page</a>
+      <ul>
+        <li><a href="#dashboards">Dashboards</a></li>
+        <li><a href="#applications">Applications</a></li>
+        <li><a href="#pages">Pages</a></li>
+        <li><a href="#content">Content</a></li>
+        <li><a href="#components-and-forms">Components and forms</a></li>
+      </ul>
+    </li>
+    <li><a href="#linking-between-pages">Linking between pages</a></li>
+    <li><a href="#scroll-position">Scroll position</a></li>
+    <li><a href="#adding-renaming-and-removing-pages">Adding, renaming and removing pages</a></li>
+    <li><a href="#showing-your-own-error-screen">Showing your own error screen</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

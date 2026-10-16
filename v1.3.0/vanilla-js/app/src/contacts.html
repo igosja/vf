@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-page="contacts">
+  {{> _head title="Contacts" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> contacts/_sidebar }}
+
+      <div class="content-body">
+        <!-- Content header-->
+        {{> contacts/_header }}
+
+        <!-- Contact list -->
+        <div id="contacts-list" class="list-row-wrapper card py-2"></div>
+
+        <!-- Contact preview -->
+        {{> contacts/_preview }}
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-user-circle-plus"></i>
+        <span class="d-none d-md-inline">Create New</span>
+      </button>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

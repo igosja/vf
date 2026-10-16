@@ -1,0 +1,17 @@
+/* The four-lobed silhouette of avatars, icon tiles and icon buttons. A mask,
+   so the shape clips images and coloured fills alike. */
+@utility avatar-mask {
+	mask-image: url(/img/misc/avatat-mask-image.svg);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: 100% 100%;
+	aspect-ratio: 1 / 1;
+}
+
+@utility no-scrollbar {
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

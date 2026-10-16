@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-page="todo-lists">
+  {{> _head title="Todo Lists" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> todo-lists/_sidebar }}
+
+      <div class="content-body">
+        <!-- Content header -->
+        {{> todo-lists/_header }}
+
+        <div class="list-row-wrapper card py-2" id="todo-lists"></div>
+      </div>
+
+      <button class="btn btn-action btn-action-float d-xl-none">
+        <i class="ph ph-plus"></i>
+        <span class="d-none d-md-inline">Create New</span>
+      </button>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Todo details -->
+    {{> todo-lists/_details }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

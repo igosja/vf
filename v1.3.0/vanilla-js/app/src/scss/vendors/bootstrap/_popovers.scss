@@ -1,0 +1,12 @@
+.popover {
+  overflow: hidden;
+}
+
+.popover-header,
+.popover-body {
+  border-radius: $border-radius-lg;
+}
+
+.popover-header {
+  padding-bottom: 0;
+}

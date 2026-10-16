@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Button |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Button
+Button from src/components/ui/button.tsx renders a button in one of seven styles and six sizes. Its demo page is at /components/button.
+Variants
+
+	
+		Light
+		Dark
+	
+	
+
+import { Button } from &#34;@/components/ui/button&#34;;
+
+export default function ButtonVariants() {
+	return (
+		&lt;div className=&#34;flex flex-wrap gap-2&#34;&gt;
+			&lt;Button&gt;Default&lt;/Button&gt;
+			&lt;Button variant=&#34;theme&#34;&gt;Theme&lt;/Button&gt;
+			&lt;Button variant=&#34;outline&#34;&gt;Outline&lt;/Button&gt;
+			&lt;Button variant=&#34;secondary&#34;&gt;Secondary&lt;/Button&gt;
+			&lt;Button variant=&#34;ghost&#34;&gt;Ghost&lt;/Button&gt;
+			&lt;Button variant=&#34;destructive&#34;&gt;Destructive&lt;/Button&gt;
+			&lt;Button variant=&#34;link&#34;&gt;Link&lt;/Button&gt;
+		&lt;/div&gt;
+	);
+}
+
+
+  
+      
+          Variant
+          Use it for
+      
+  
+  
+      
+          default
+          The main action in a form or a card: Save, Sign in, Continue
+      
+      
+          theme
+          A secondary action that should still stand out: an outlined button in the primary color
+      
+      
+          outline
+          Neutral actions, toolbars and filters
+      
+      
+          secondary
+          Quiet actions on a card
+      
+      
+          ghost
+          Actions that should stay out of the way until pointed at, such as Cancel
+      
+      
+          destructive
+          Delete, remove and other actions that cannot be undone
+      
+      
+          link
+          An action that reads as a text link
+      
+  
+
+Sizes
+
+	
+		Light
+		Dark
+	
+	
+
+import { ArrowUpRight } from &#34;lucide-react&#34;;
+
+import { Button } from &#34;@/components/ui/button&#34;;
+
+export default function ButtonSizes() {
+	return (
+		&lt;div className=&#34;flex flex-wrap items-center gap-2&#34;&gt;
+			&lt;Button size=&#34;sm&#34; variant=&#34;outline&#34;&gt;
+				Small
+			&lt;/Button&gt;
+			&lt;Button variant=&#34;outline&#34;&gt;Default&lt;/Button&gt;
+			&lt;Button size=&#34;lg&#34; variant=&#34;outline&#34;&gt;
+				Large
+			&lt;/Button&gt;
+			&lt;Button size=&#34;icon-sm&#34; variant=&#34;outline&#34; aria-label=&#34;Open&#34;&gt;
+				&lt;ArrowUpRight /&gt;
+			&lt;/Button&gt;
+			&lt;Button size=&#34;icon&#34; variant=&#34;outline&#34; aria-label=&#34;Open&#34;&gt;
+				&lt;ArrowUpRight /&gt;
+			&lt;/Button&gt;
+			&lt;Button size=&#34;icon-lg&#34; variant=&#34;outline&#34; aria-label=&#34;Open&#34;&gt;
+				&lt;ArrowUpRight /&gt;
+			&lt;/Button&gt;
+		&lt;/div&gt;
+	);
+}
+
+
+  
+      
+          Size
+          Height
+          Use it for
+      
+  
+  
+      
+          sm
+          32px
+          Tight spaces: table rows, card headers, toolbars
+      
+      
+          default
+          40px
+          Most buttons
+      
+      
+          lg
+          48px
+          The main action on a page that has room for it
+      
+      
+          icon-sm, icon, icon-lg
+          32, 40, 48px
+          Square buttons with only an icon
+      
+  
+
+With an icon
+Put a Lucide icon before or after the label. The button spaces them and keeps the icon at its default size. A disabled button with a Spinner shows work in progress.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="button">Button</h1>
+<p><code>Button</code> from <code>src/components/ui/button.tsx</code> renders a button in one of seven styles and six sizes. Its demo page is at <code>/components/button</code>.</p>
+<h2 id="variants">Variants</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap gap-2&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;default&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-primary bg-primary text-primary-foreground hover:brightness-110 h-10 px-5&#34;&gt;Default&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;theme&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-[1.5px] border-primary text-primary hover:bg-primary/10 active:bg-primary/10 h-10 px-5&#34;&gt;Theme&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;Outline&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;secondary&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-secondary bg-secondary text-emphasis-foreground hover:bg-secondary/70 h-10 px-5&#34;&gt;Secondary&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;ghost&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent text-foreground hover:bg-accent h-10 px-5&#34;&gt;Ghost&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;destructive&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-red-400 bg-red-400 text-white hover:bg-red-400/90 h-10 px-5&#34;&gt;Destructive&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;link&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-transparent text-link underline-offset-4 hover:underline h-10 px-5&#34;&gt;Link&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;button-variants&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> ButtonVariants() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>Default<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;theme&#34;</span><span style="color:#eceff4">&gt;</span>Theme<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Outline<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;secondary&#34;</span><span style="color:#eceff4">&gt;</span>Secondary<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ghost&#34;</span><span style="color:#eceff4">&gt;</span>Ghost<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;destructive&#34;</span><span style="color:#eceff4">&gt;</span>Destructive<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;link&#34;</span><span style="color:#eceff4">&gt;</span>Link<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Variant</th>
+          <th>Use it for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>default</code></td>
+          <td>The main action in a form or a card: Save, Sign in, Continue</td>
+      </tr>
+      <tr>
+          <td><code>theme</code></td>
+          <td>A secondary action that should still stand out: an outlined button in the primary color</td>
+      </tr>
+      <tr>
+          <td><code>outline</code></td>
+          <td>Neutral actions, toolbars and filters</td>
+      </tr>
+      <tr>
+          <td><code>secondary</code></td>
+          <td>Quiet actions on a card</td>
+      </tr>
+      <tr>
+          <td><code>ghost</code></td>
+          <td>Actions that should stay out of the way until pointed at, such as Cancel</td>
+      </tr>
+      <tr>
+          <td><code>destructive</code></td>
+          <td>Delete, remove and other actions that cannot be undone</td>
+      </tr>
+      <tr>
+          <td><code>link</code></td>
+          <td>An action that reads as a text link</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="sizes">Sizes</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap items-center gap-2&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;sm&#34; class=&#34;inline-flex shrink-0 items-center justify-center rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-8 gap-1.5 px-3.5&#34;&gt;Small&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;Default&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;lg&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-12 px-6&#34;&gt;Large&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;icon-sm&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input size-8&#34; aria-label=&#34;Open&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-arrow-up-right&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M7 7h10v10&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M7 17 17 7&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;icon&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input size-10&#34; aria-label=&#34;Open&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-arrow-up-right&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M7 7h10v10&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M7 17 17 7&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;icon-lg&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input size-12&#34; aria-label=&#34;Open&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-arrow-up-right&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M7 7h10v10&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M7 17 17 7&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;button-sizes&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ArrowUpRight <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> ButtonSizes() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap items-center gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sm&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				Small
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Default<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;lg&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				Large
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon-sm&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Open&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ArrowUpRight</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Open&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ArrowUpRight</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon-lg&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Open&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ArrowUpRight</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Size</th>
+          <th>Height</th>
+          <th>Use it for</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>sm</code></td>
+          <td>32px</td>
+          <td>Tight spaces: table rows, card headers, toolbars</td>
+      </tr>
+      <tr>
+          <td><code>default</code></td>
+          <td>40px</td>
+          <td>Most buttons</td>
+      </tr>
+      <tr>
+          <td><code>lg</code></td>
+          <td>48px</td>
+          <td>The main action on a page that has room for it</td>
+      </tr>
+      <tr>
+          <td><code>icon-sm</code>, <code>icon</code>, <code>icon-lg</code></td>
+          <td>32, 40, 48px</td>
+          <td>Square buttons with only an icon</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="with-an-icon">With an icon</h2>
+<p>Put a Lucide icon before or after the label. The button spaces them and keeps the icon at its default size. A disabled button with a <code>Spinner</code> shows work in progress.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap gap-2&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;default&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-primary bg-primary text-primary-foreground hover:brightness-110 h-10 px-5&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-plus&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M5 12h14&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 5v14&#34;&gt;&lt;/path&gt;&lt;/svg&gt;New project&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-git-branch&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M15 6a9 9 0 0 0-9 9V3&#34;&gt;&lt;/path&gt;&lt;circle cx=&#34;18&#34; cy=&#34;6&#34; r=&#34;3&#34;&gt;&lt;/circle&gt;&lt;circle cx=&#34;6&#34; cy=&#34;18&#34; r=&#34;3&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;New branch&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34; disabled=&#34;&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-loader-circle lucide-loader-2 size-4 animate-spin&#34; role=&#34;status&#34; aria-label=&#34;Loading&#34;&gt;&lt;path d=&#34;M21 12a9 9 0 1 1-6.219-8.56&#34;&gt;&lt;/path&gt;&lt;/svg&gt;Saving&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;button-icons&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> GitBranch<span style="color:#eceff4">,</span> Plus <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Spinner <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/spinner&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> ButtonIcons() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap gap-2&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Plus</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				New project
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">GitBranch</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				New branch
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">disabled</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Spinner</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				Saving
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>An icon-only button needs a name for screen readers. Give it <code>aria-label</code>, as in the sizes example above, or put a <code>&lt;span className=&quot;sr-only&quot;&gt;</code> inside it.</p>
+<p>For the small round icon buttons in card headers and page headers, use <code>IconButton</code> instead. <a href="./template-components.html">Template Components</a> describes it.</p>
+<h2 id="groups">Groups</h2>
+<p><code>ButtonGroup</code> joins buttons edge to edge, rounding only the outer corners. Nest groups to leave a gap between sets:</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;button-group&#34; class=&#34;flex w-fit items-stretch *:rounded-full *:focus-within:relative *:focus-within:z-10 *:focus:relative *:focus:z-10 has-[&amp;gt;[data-slot=button-group]]:gap-2 [&amp;amp;&amp;gt;input]:flex-1 [&amp;amp;&amp;gt;*:not(:first-child)]:-ml-px [&amp;amp;&amp;gt;*:not(:first-child)]:rounded-l-none [&amp;amp;&amp;gt;*:not(:last-child)]:rounded-r-none&#34;&gt;&lt;div role=&#34;group&#34; data-slot=&#34;button-group&#34; class=&#34;flex w-fit items-stretch *:rounded-full *:focus-within:relative *:focus-within:z-10 *:focus:relative *:focus:z-10 has-[&amp;gt;[data-slot=button-group]]:gap-2 [&amp;amp;&amp;gt;input]:flex-1 [&amp;amp;&amp;gt;*:not(:first-child)]:-ml-px [&amp;amp;&amp;gt;*:not(:first-child)]:rounded-l-none [&amp;amp;&amp;gt;*:not(:last-child)]:rounded-r-none&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;icon&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input size-10&#34; aria-label=&#34;Go back&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-arrow-left&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m12 19-7-7 7-7&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M19 12H5&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;button-group&#34; class=&#34;flex w-fit items-stretch *:rounded-full *:focus-within:relative *:focus-within:z-10 *:focus:relative *:focus:z-10 has-[&amp;gt;[data-slot=button-group]]:gap-2 [&amp;amp;&amp;gt;input]:flex-1 [&amp;amp;&amp;gt;*:not(:first-child)]:-ml-px [&amp;amp;&amp;gt;*:not(:first-child)]:rounded-l-none [&amp;amp;&amp;gt;*:not(:last-child)]:rounded-r-none&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;Archive&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;Report&lt;/button&gt;&lt;/div&gt;&lt;div role=&#34;group&#34; data-slot=&#34;button-group&#34; class=&#34;flex w-fit items-stretch *:rounded-full *:focus-within:relative *:focus-within:z-10 *:focus:relative *:focus:z-10 has-[&amp;gt;[data-slot=button-group]]:gap-2 [&amp;amp;&amp;gt;input]:flex-1 [&amp;amp;&amp;gt;*:not(:first-child)]:-ml-px [&amp;amp;&amp;gt;*:not(:first-child)]:rounded-l-none [&amp;amp;&amp;gt;*:not(:last-child)]:rounded-r-none&#34;&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;default&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input h-10 px-5&#34;&gt;Snooze&lt;/button&gt;&lt;button data-slot=&#34;button&#34; data-variant=&#34;outline&#34; data-size=&#34;icon&#34; class=&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm whitespace-nowrap outline-primary transition-colors duration-150 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-65 [&amp;amp;_svg]:pointer-events-none border-input text-foreground hover:bg-accent active:bg-accent dark:border-input size-10&#34; aria-label=&#34;More options&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-ellipsis lucide-more-horizontal&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;circle cx=&#34;19&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;circle cx=&#34;5&#34; cy=&#34;12&#34; r=&#34;1&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;button-group&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ArrowLeft<span style="color:#eceff4">,</span> MoreHorizontal <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ButtonGroup <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button-group&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> ButtonGroupExample() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Go back&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ArrowLeft</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Archive<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Report<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span><span style="color:#eceff4">&gt;</span>Snooze<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;outline&#34;</span> <span style="color:#8fbcbb">size</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;icon&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;More options&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">MoreHorizontal</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">ButtonGroup</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p>A button group can also hold inputs and selects, which line up with the buttons. <a href="./forms.html">Forms</a> shows those.</p>
+<h2 id="as-a-link">As a link</h2>
+<p>To make a button that goes to another page, pass <code>asChild</code> and put a React Router <code>Link</code> inside:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Link <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react-router&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Link</span> <span style="color:#8fbcbb">to</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/pages/pricing-tables&#34;</span><span style="color:#eceff4">&gt;</span>See plans<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Link</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>The <code>Link</code> renders with the button&rsquo;s styles.</p>
+<h2 id="submitting-forms">Submitting forms</h2>
+<p>A <code>Button</code> inside a <code>&lt;form&gt;</code> submits it, the same as a plain <code>&lt;button&gt;</code>. For a button inside a form that should not submit, set <code>type=&quot;button&quot;</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">form</span> <span style="color:#8fbcbb">onSubmit</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>handleSubmit<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;button&#34;</span> <span style="color:#8fbcbb">variant</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ghost&#34;</span> <span style="color:#8fbcbb">onClick</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>reset<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>		Reset
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;submit&#34;</span><span style="color:#eceff4">&gt;</span>Save<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">form</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h2 id="changing-the-styles">Changing the styles</h2>
+<p>The variants and sizes live at the top of <code>src/components/ui/button.tsx</code>. Change a variant&rsquo;s classes there to change every button that uses it. Add a key to create a new variant:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>variant<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span>	positive<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;border-emerald-500 bg-emerald-500 text-white hover:brightness-110 dark:text-black&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">},</span>
+</span></span></code></pre></div><p>Then use it with <code>&lt;Button variant=&quot;positive&quot;&gt;</code>.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#variants">Variants</a></li>
+    <li><a href="#sizes">Sizes</a></li>
+    <li><a href="#with-an-icon">With an icon</a></li>
+    <li><a href="#groups">Groups</a></li>
+    <li><a href="#as-a-link">As a link</a></li>
+    <li><a href="#submitting-forms">Submitting forms</a></li>
+    <li><a href="#changing-the-styles">Changing the styles</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

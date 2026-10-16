@@ -1,0 +1,39 @@
+<div class="header">
+  {{> _sidebar-toggle }}
+
+  <div class="search-field search-field-kbd">
+    <i class="ph ph-magnifying-glass fs-5"></i>
+    <input type="text" class="form-control" placeholder="Search Messages..." />
+  </div>
+
+  <i class="ms-auto"></i>
+
+  <button
+    type="button"
+    class="icon-link d-none d-sm-flex"
+    data-bs-toggle="modal"
+    data-bs-target="#channelDetails"
+  >
+    General
+    <i class="ph ph-caret-down fs-8"></i>
+  </button>
+
+  <div class="d-none d-md-flex gap-0.5 align-items-center border border-400 rounded-2 p-1">
+    <img class="avatar avatar-xs" src="./img/contacts/1.jpg" alt="" />
+    <img class="avatar avatar-xs" src="./img/contacts/2.jpg" alt="" />
+    <img class="avatar avatar-xs" src="./img/contacts/3.jpg" alt="" />
+    <img class="avatar avatar-xs" src="./img/contacts/4.jpg" alt="" />
+    <img class="avatar avatar-xs" src="./img/contacts/5.jpg" alt="" />
+    <span class="fs-8 text-body-emphasis mx-2 fw-medium">42</span>
+  </div>
+
+  <div class="d-flex me-3 gap-1.5">
+    <a
+      href=""
+      class="icon ph ph-info d-sm-none"
+      data-bs-toggle="modal"
+      data-bs-target="#channelDetails"
+    ></a>
+    <a href="" class="icon ph ph-dots-three-circle"></a>
+  </div>
+</div>

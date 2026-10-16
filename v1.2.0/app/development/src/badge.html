@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" data-page="bootstrap-badge">
+  {{> _head title="Badge" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+        {{> _sidebar-toggle }}
+        
+        <h2 class="header-title">Badge</h2>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Components</li>
+          </ol>
+        </nav>
+
+        <i class="ms-auto"></i>
+
+        <div id="toc-wrapper"></div>
+      </div>
+      <div class="content-body mw-1200 mx-auto" data-simplebar>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Buttons</h3>
+            <p class="card-subtitle mb-6">
+              Badges can be used as part of links or buttons to provide a counter.
+            </p>
+
+            <button type="button" class="btn btn-theme d-flex align-items-center">
+              Notifications
+              <span class="badge bg-white bg-opacity-25 ms-3">32</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Positioned</h3>
+            <p class="card-subtitle mb-6">
+              Use utilities to modify a <code>.badge</code> and position it in the corner of a link
+              or button.
+            </p>
+
+            <button type="button" class="btn btn-theme position-relative">
+              Inbox
+              <span class="position-absolute top-0 end-0 me-n2 mt-n1 badge rounded-pill bg-danger">
+                99+
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </button>
+
+            <div class="my-6"></div>
+
+            <p class="mb-6">
+              You can also replace the <code>.badge</code> class with a few more utilities without a
+              count for a more generic indicator.
+            </p>
+
+            <button type="button" class="btn btn-theme position-relative">
+              Profile
+              <span class="position-absolute top-0 end-0 mt-n1 p-1.5 bg-danger rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Background colors</h3>
+            <p class="card-subtitle mb-6">
+              Set a background-color with contrasting foreground color.
+            </p>
+
+            <span class="badge bg-primary">Primary</span>
+            <span class="badge bg-success">Success</span>
+            <span class="badge bg-danger">Danger</span>
+            <span class="badge bg-warning">Warning</span>
+            <span class="badge bg-info">Info</span>
+            <span class="badge bg-dark">Dark</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title fs-5">Pill badges</h3>
+            <p class="card-subtitle mb-6">
+              Use the <code>.rounded-pill</code> utility class to make badges more rounded with a
+              larger border-radius.
+            </p>
+
+            <span class="badge rounded-pill bg-primary">Primary</span>
+            <span class="badge rounded-pill bg-success">Success</span>
+            <span class="badge rounded-pill bg-danger">Danger</span>
+            <span class="badge rounded-pill bg-warning">Warning</span>
+            <span class="badge rounded-pill bg-info">Info</span>
+            <span class="badge rounded-pill bg-dark">Dark</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

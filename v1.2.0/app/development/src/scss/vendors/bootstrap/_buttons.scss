@@ -1,0 +1,94 @@
+@use "sass:color";
+
+button {
+  border: 0;
+  padding: 0;
+  text-align: left;
+  background-color: transparent;
+  color: var(--#{$prefix}body-color);
+}
+
+.btn-action {
+  --bs-btn-color: #{$body-emphasis-color};
+  --bs-btn-hover-color: #{$body-emphasis-color};
+  --bs-btn-bg: #c2e7ff;
+  --bs-btn-hover-bg: #{color.adjust(#c2e7ff, $lightness: -5%)};
+  --bs-btn-active-bg: #{color.adjust(#c2e7ff, $lightness: -5%)};
+  --bs-btn-font-size: #{$font-size-md};
+  --bs-btn-padding-y: 0.75rem;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-border-radius: #{$border-radius-lg};
+  --bs-btn-box-shadow: none;
+  --bs-btn-active-border-color: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  & > .ph {
+    font-size: 1.2rem;
+    margin-left: -0.15rem;
+  }
+
+  &.btn-action-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: $navbar-z-index + 2;
+
+    @include media-breakpoint-down(sm) {
+      bottom: 4.5rem;
+      right: 1rem;
+    }
+  }
+}
+
+.btn-theme {
+  --bs-btn-color: #{$blue};
+  --bs-btn-bg: transparent;
+  --bs-btn-hover-color: #{$blue};
+  --bs-btn-active-bg: #{rgba($blue, 0.1)};
+  --bs-btn-hover-bg: #{rgba($blue, 0.1)};
+  --bs-btn-border-width: 1.5px;
+  --bs-btn-hover-border-color: #{$blue};
+  --bs-btn-border-color: #{$blue};
+  --bs-btn-active-border-color: #{$blue};
+  --bs-btn-active-color: #{$blue};
+  --bs-btn-box-shadow: none;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #{rgba($blue, 0.5)};
+  --bs-btn-disabled-color: #{rgba($blue, 0.75)};
+  --bs-btn-font-size: #{$font-size-md};
+
+  display: inline-flex;
+  align-items: center;
+}
+
+a.btn,
+button.btn {
+  --bs-btn-focus-box-shadow: 0 0 0;
+
+  &:focus-visible,
+  &:focus {
+    outline: 2px solid var(--bs-btn-bg);
+    outline-offset: 2px;
+  }
+
+  .badge {
+    --bs-badge-border-radius: #{$border-radius-sm};
+    --bs-badge-padding-x: 0.25rem;
+    --bs-badge-padding-y: 0;
+
+    min-width: 1.3rem;
+    height: 1.3rem;
+    display: inline-grid;
+    place-content: center;
+    line-height: 1;
+    top: 0;
+  }
+}
+
+.btn-secondary {
+  --bs-btn-color: #{color.adjust($body-emphasis-color, $lightness: 2.5%)};
+  --bs-btn-hover-color: #{color.adjust($body-emphasis-color, $lightness: 5%)};
+}

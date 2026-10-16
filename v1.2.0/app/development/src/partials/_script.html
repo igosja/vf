@@ -1,0 +1,8 @@
+<script>
+  // Get current color mode from LocalStorage or default to light var color =
+  var color = localStorage.getItem("color-mode") || "light";
+  document.documentElement.setAttribute("data-bs-theme", color);
+</script>
+
+<script src="/js/main.js" type="module"></script>
+<script src="/js/vendor.js" type="module"></script>

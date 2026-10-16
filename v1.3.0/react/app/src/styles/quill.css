@@ -1,0 +1,109 @@
+/* -------------------------------------------------------------------------
+   Quill, restyled to sit inside a card. Imported by the pages that mount an
+   editor, so the editor's own stylesheet only loads where it is used.
+   ------------------------------------------------------------------------- */
+
+@import "quill/dist/quill.snow.css";
+
+.ql-toolbar.ql-snow {
+	border-color: transparent;
+	padding: 0.5rem;
+	font-family: inherit;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+	display: inline-flex;
+	align-items: center;
+	gap: 1px;
+	margin-right: 0.5rem;
+}
+
+.ql-snow.ql-toolbar button {
+	display: inline-grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	color: var(--foreground);
+	mask-image: url(/img/misc/avatat-mask-image.svg);
+	mask-size: 100% 100%;
+	transition: background-color 300ms;
+}
+
+.ql-snow.ql-toolbar button svg {
+	float: none;
+	width: 0.9rem;
+	height: 0.9rem;
+	stroke-width: 2.25;
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow.ql-toolbar button.ql-active {
+	background-color: var(--secondary);
+	color: var(--emphasis-foreground);
+}
+
+.ql-container.ql-snow {
+	min-height: 3rem;
+	border: 0;
+	font-family: inherit;
+}
+
+.ql-snow .ql-editor {
+	font-size: 0.75rem;
+	color: var(--foreground);
+}
+
+.ql-snow .ql-editor.ql-blank::before {
+	font-size: 0.75rem;
+	font-style: normal;
+	color: var(--muted-foreground);
+}
+
+.ql-snow .ql-tooltip {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0.25rem 0.5rem;
+	border: 1px solid var(--input);
+	border-radius: 0.5rem;
+	background-color: var(--popover);
+	color: var(--foreground);
+	box-shadow: none;
+}
+
+.ql-snow .ql-tooltip.ql-hidden {
+	display: none;
+}
+
+.ql-snow .ql-tooltip::before,
+.ql-snow .ql-tooltip[data-mode="link"]::before {
+	display: none;
+}
+
+.ql-snow .ql-tooltip input[type="text"] {
+	width: 10rem;
+	height: auto;
+	border: 0;
+	padding: 0 0.5rem;
+	background-color: transparent;
+	color: var(--foreground);
+	font-family: inherit;
+}
+
+.ql-snow .ql-tooltip a.ql-preview {
+	width: 8rem;
+	margin-right: 0.5rem;
+	font-size: 0.75rem;
+	color: var(--link);
+}
+
+.ql-snow .ql-tooltip a.ql-action,
+.ql-snow .ql-tooltip a.ql-remove {
+	color: var(--muted-foreground);
+}
+
+.ql-snow .ql-tooltip a.ql-action:hover,
+.ql-snow .ql-tooltip a.ql-remove:hover {
+	color: var(--emphasis-foreground);
+}

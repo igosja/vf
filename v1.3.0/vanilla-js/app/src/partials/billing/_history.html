@@ -1,0 +1,76 @@
+<div class="card print-content">
+  <!-- Print header -->
+  <div class="d-none d-print-block">
+    <div class="d-flex align-items-start justify-content-between mb-8">
+      <div
+        class="w-32 h-12 border border-2 border-current fs-5 rounded d-grid place-content-center"
+      >
+        Company Logo
+      </div>
+      <div class="text-end">
+        <div class="fs-3 text-body-emphasis mb-1">Billing History</div>
+        <div class="fs-7 text-body-secondary" id="billing-print-filter">All invoices</div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-start border-bottom border-gray-400 pb-5 mb-5">
+      <div class="flex-grow-1">
+        <div class="mb-2 fs-7 uppercase text-body-secondary">Account</div>
+        <address class="mb-0">
+          <span class="text-body-emphasis d-block mb-1">Abacaus Apple Inc</span>
+          2810 D Street, Center Line, Michigan 48015<br />
+          billing@abacaus-apple.app<br />
+          US EIN 47-2938105
+        </address>
+      </div>
+
+      <div class="flex-grow-1 text-end">
+        <div class="mb-2 fs-7 uppercase text-body-secondary">Subscription</div>
+        <div class="text-body-emphasis mb-1">Pro Plan · Monthly</div>
+        <div>Visa ending in 4242</div>
+        <div>Generated on <span id="billing-print-date"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body d-print-none">
+    <div class="d-md-flex flex-wrap align-items-center gap-6">
+      <h3 class="card-title mb-md-0 flex-grow-1">Billing History</h3>
+
+      <nav id="billing-filter" class="nav nav-pills nav-scroll fs-7 mx-n6 px-4">
+        <button type="button" class="nav-link active" data-status="all">All Invoices</button>
+        <button type="button" class="nav-link" data-status="Paid">Paid</button>
+        <button type="button" class="nav-link" data-status="Pending">Pending</button>
+        <button type="button" class="nav-link" data-status="Failed">Failed</button>
+      </nav>
+
+      <div class="h-7 border-start w-px me-1 d-none d-md-block"></div>
+
+      <button type="button" class="btn btn-theme d-none d-md-inline-flex" onclick="window.print()">
+        <i class="ph ph-download"></i>Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive scrollbar px-4 pb-6 mb-0.5">
+    <table class="table table-list text-nowrap mb-0">
+      <thead>
+        <tr class="fs-7 text-body-secondary">
+          <th class="fw-normal">Invoice</th>
+          <th class="fw-normal">Date</th>
+          <th class="fw-normal">Description</th>
+          <th class="fw-normal">Status</th>
+          <th class="fw-normal text-end">Amount</th>
+          <th class="d-print-none"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody id="billing-history"></tbody>
+    </table>
+
+    <!-- Print total -->
+    <div class="d-none d-print-flex justify-content-between pt-2 text-body-emphasis">
+      <span><span id="billing-print-count"></span> invoices</span>
+      <span class="fs-4" id="billing-print-total"></span>
+    </div>
+  </div>
+</div>

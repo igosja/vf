@@ -1,0 +1,389 @@
+@use "sass:color";
+
+//---------------------------------------
+// Misc
+//---------------------------------------
+.map-common {
+  .jvm-region {
+    &[fill="INITIAL_FILL"] {
+      fill: var(--bs-map-common-fill);
+    }
+
+    &:not([fill="INITIAL_FILL"]) {
+      fill: var(--bs-map-common-active-fill);
+    }
+  }
+}
+
+//---------------------------------------
+// Photos
+//---------------------------------------
+.photos-check {
+  &.form-check-input[type="checkbox"] {
+    &:not(:checked) {
+      border-color: $white;
+      background-color: transparent;
+    }
+  }
+}
+
+.photos-item {
+  &:hover {
+    .photos-check {
+      display: block !important;
+    }
+  }
+}
+
+.photos-highlight {
+  &::before {
+    content: "";
+    left: 0;
+    top: 0;
+    border-radius: $border-radius-lg;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(180deg, rgba($black, 0.5) 0%, rgba($black, 0) 100%);
+  }
+}
+
+#content {
+  &:has(.photos-check:checked) {
+    .sidebar-toggle {
+      display: none !important;
+    }
+  }
+}
+
+//---------------------------------------
+// Todo lists
+//---------------------------------------
+.todo-checkbox {
+  & ~ label {
+    transition: color 300ms;
+  }
+  &:checked {
+    & ~ * {
+      text-decoration: line-through;
+      opacity: 0.75;
+    }
+  }
+}
+
+//---------------------------------------
+// Messages
+//---------------------------------------
+.messages-reply {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bs-body-bg);
+  padding-bottom: 0.65rem;
+  z-index: 5;
+}
+
+.messages-reply-inner {
+  background-color: $card-bg;
+  padding: 0.5rem;
+  padding-top: 0;
+  border-bottom-left-radius: $border-radius-xl;
+  border-bottom-right-radius: $border-radius-xl;
+
+  .quill {
+    background-color: var(--bs-theme-100);
+    border-radius: $border-radius-lg;
+    border: 2px solid transparent;
+
+    &:focus-within {
+      background-color: $card-bg;
+      border-color: var(--bs-border-color);
+    }
+  }
+}
+
+//---------------------------------------
+// AI Agent
+// Layout and spacing use utilities in the markup.
+// These cover states and content utilities can't reach.
+//---------------------------------------
+.ai-agent-card {
+  min-height: calc(100vh - #{$header-height} - 1rem);
+
+  @include media-breakpoint-down(sm) {
+    min-height: calc(100vh - #{$header-height} - #{$navbar-mobile-height} - 1rem);
+  }
+}
+
+// Composer
+.ai-composer {
+  background-color: var(--bs-theme-popup-bg);
+  border: 1px solid var(--bs-border-color);
+  box-shadow: 0 0.25rem 1.5rem rgba(var(--bs-theme-shadow-color), 0.12);
+  transition: border-color 200ms;
+
+  &:focus-within {
+    border-color: var(--bs-theme-500);
+  }
+}
+
+.ai-composer-input {
+  min-height: 3rem;
+  max-height: 15rem;
+  overflow-y: auto;
+
+  @include placeholder {
+    font-size: $font-size-lg;
+  }
+}
+
+.ai-composer-send {
+  background-color: $blue;
+  color: $white;
+  transition:
+    background-color 200ms,
+    opacity 200ms;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($blue, $lightness: -7.5%);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+  }
+
+  &.is-streaming {
+    background-color: var(--bs-emphasis-color);
+    color: var(--bs-body-bg);
+  }
+}
+
+.ai-composer-wrap {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+
+  & > div {
+    border-radius: 0 0 $border-radius-2xl $border-radius-2xl;
+  }
+
+  @include media-breakpoint-down(sm) {
+    bottom: $navbar-mobile-height;
+  }
+}
+
+// Message actions, revealed on hover
+.ai-message-actions {
+  opacity: 0;
+  transition: opacity 200ms;
+  scale: 0.8;
+  transform-origin: left center;
+
+  .icon {
+    opacity: 0.5;
+
+    &:hover,
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  .ai-message:hover &,
+  .ai-message:has(:focus-visible) &,
+  .ai-message:last-child & {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+}
+
+// Search palette
+.ai-search-results {
+  max-height: min(60vh, 28rem);
+  overflow-y: auto;
+}
+
+.ai-search-item {
+  .ai-search-enter {
+    opacity: 0;
+  }
+
+  &.active {
+    background: var(--bs-tertiary-bg);
+
+    .ai-search-enter {
+      opacity: 1;
+    }
+  }
+}
+
+// Snackbar sits above the mobile navbar
+.ai-snackbar-container {
+  .toast {
+    --bs-toast-spacing: 0.5rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    bottom: $navbar-mobile-height !important;
+    width: 100%;
+  }
+}
+
+// Sidebar chat item menu, revealed on hover
+.ai-chat-item {
+  &:has(.show) {
+    z-index: 1;
+  }
+
+  &:hover,
+  &:has(.show) {
+    .nav-link {
+      padding-right: 2rem;
+
+      &:not(.active) {
+        background: var(--nav-link-hover-bg);
+      }
+    }
+
+    .ai-chat-menu {
+      opacity: 0.5;
+
+      &:hover,
+      &.show {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.ai-chat-menu {
+  color: var(--bs-emphasis-color);
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+// Assistant reply content (rendered markup, so styled by element)
+.ai-message-body {
+  color: var(--bs-emphasis-color);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  p,
+  ol,
+  ul {
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  strong {
+    font-weight: $font-weight-semibold;
+  }
+
+  code:not(pre code) {
+    font-size: 0.875em;
+    padding: 0.1rem 0.35rem;
+    border-radius: $border-radius-sm;
+    background-color: var(--bs-theme-100);
+    color: var(--bs-emphasis-color);
+  }
+
+  .table {
+    overflow-wrap: normal;
+  }
+}
+
+// Thinking disclosure
+.ai-thinking {
+  summary {
+    color: var(--bs-secondary-color);
+    cursor: pointer;
+    list-style: none;
+    transition: color 200ms;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover {
+      color: var(--bs-emphasis-color);
+    }
+
+    .ph-caret-right {
+      transition: transform 200ms;
+    }
+  }
+
+  &[open] summary .ph-caret-right {
+    transform: rotate(90deg);
+  }
+}
+
+// Code syntax tokens
+.ai-code {
+  .tok-k {
+    color: $purple;
+  }
+
+  .tok-f {
+    color: $blue;
+  }
+
+  .tok-s {
+    color: $green;
+  }
+
+  .tok-n {
+    color: $orange;
+  }
+}
+
+// Typing indicator
+.ai-typing {
+  display: inline-flex;
+  gap: 0.3rem;
+  padding: 0.5rem 0;
+
+  span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background-color: var(--bs-secondary-color);
+    animation: ai-typing 1.2s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+@keyframes ai-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-0.2rem);
+  }
+}

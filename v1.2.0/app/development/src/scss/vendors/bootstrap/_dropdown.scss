@@ -1,0 +1,12 @@
+.dropdown-item,
+.dropdown-item-text {
+	display: flex;
+	align-items: center;
+	font-size: $font-size-md;
+
+	& > img,
+	& > .ph {
+		font-size: 1.25rem;
+		margin-right: 0.65rem;
+	}
+}

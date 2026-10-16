@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Components Overview |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Components Overview
+The building blocks of every page live in src/components/ui. They are shadcn/ui components: React components built on Radix UI for behavior and accessibility, and styled with Tailwind classes. Materia restyled each one in place to match its design, so you import them and use them as they are.
+import { Button } from &#34;@/components/ui/button&#34;;
+import { Card, CardHeader, CardTitle } from &#34;@/components/ui/card&#34;;
+The code is yours. Each component is a file in your project, not a package, so you can open it and change it.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="components-overview">Components Overview</h1>
+<p>The building blocks of every page live in <code>src/components/ui</code>. They are <a href="https://ui.shadcn.com">shadcn/ui</a> components: React components built on <a href="https://www.radix-ui.com">Radix UI</a> for behavior and accessibility, and styled with Tailwind classes. Materia restyled each one in place to match its design, so you import them and use them as they are.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Card<span style="color:#eceff4">,</span> CardHeader<span style="color:#eceff4">,</span> CardTitle <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/card&#34;</span><span style="color:#eceff4">;</span>
+</span></span></code></pre></div><p>The code is yours. Each component is a file in your project, not a package, so you can open it and change it.</p>
+<h2 id="the-full-list">The full list</h2>
+<p>Each UI element has a demo page in the template under Components, UI Elements. The forms have their own pages under Components, Forms.</p>
+<h3 id="actions">Actions</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>File</th>
+          <th>Docs</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Button</td>
+          <td><code>button.tsx</code></td>
+          <td><a href="./button.html">Button</a></td>
+      </tr>
+      <tr>
+          <td>Button Group</td>
+          <td><code>button-group.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Toggle, Toggle Group</td>
+          <td><code>toggle.tsx</code>, <code>toggle-group.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="form-controls">Form controls</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>File</th>
+          <th>Docs</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Field, Field Label, Field Error and the rest</td>
+          <td><code>field.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Input, Textarea, Label</td>
+          <td><code>input.tsx</code>, <code>textarea.tsx</code>, <code>label.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Input Group</td>
+          <td><code>input-group.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Select, Native Select</td>
+          <td><code>select.tsx</code>, <code>native-select.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Checkbox, Radio Group, Switch, Slider</td>
+          <td><code>checkbox.tsx</code>, <code>radio-group.tsx</code>, <code>switch.tsx</code>, <code>slider.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Input OTP</td>
+          <td><code>input-otp.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+      <tr>
+          <td>Calendar</td>
+          <td><code>calendar.tsx</code></td>
+          <td><a href="./forms.html">Forms</a></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="display">Display</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>File</th>
+          <th>Docs</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Card</td>
+          <td><code>card.tsx</code></td>
+          <td><a href="./card.html">Card</a></td>
+      </tr>
+      <tr>
+          <td>Badge</td>
+          <td><code>badge.tsx</code></td>
+          <td><a href="./badge-and-alert.html">Badge and Alert</a></td>
+      </tr>
+      <tr>
+          <td>Alert</td>
+          <td><code>alert.tsx</code></td>
+          <td><a href="./badge-and-alert.html">Badge and Alert</a></td>
+      </tr>
+      <tr>
+          <td>Table</td>
+          <td><code>table.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+      <tr>
+          <td>Tabs, Accordion, Collapsible</td>
+          <td><code>tabs.tsx</code>, <code>accordion.tsx</code>, <code>collapsible.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+      <tr>
+          <td>Progress, Skeleton, Spinner</td>
+          <td><code>progress.tsx</code>, <code>skeleton.tsx</code>, <code>spinner.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+      <tr>
+          <td>Item, Separator, Kbd</td>
+          <td><code>item.tsx</code>, <code>separator.tsx</code>, <code>kbd.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+      <tr>
+          <td>Breadcrumb, Pagination</td>
+          <td><code>breadcrumb.tsx</code>, <code>pagination.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+      <tr>
+          <td>Carousel, Scroll Area</td>
+          <td><code>carousel.tsx</code>, <code>scroll-area.tsx</code></td>
+          <td><a href="./data-display.html">Data Display</a></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="overlays">Overlays</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>File</th>
+          <th>Docs</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Dialog, Sheet</td>
+          <td><code>dialog.tsx</code>, <code>sheet.tsx</code></td>
+          <td><a href="./overlays.html">Overlays</a></td>
+      </tr>
+      <tr>
+          <td>Dropdown Menu, Popover, Tooltip</td>
+          <td><code>dropdown-menu.tsx</code>, <code>popover.tsx</code>, <code>tooltip.tsx</code></td>
+          <td><a href="./overlays.html">Overlays</a></td>
+      </tr>
+      <tr>
+          <td>Command</td>
+          <td><code>command.tsx</code></td>
+          <td><a href="./overlays.html">Overlays</a></td>
+      </tr>
+      <tr>
+          <td>Sonner (toasts)</td>
+          <td><code>sonner.tsx</code></td>
+          <td><a href="./overlays.html">Overlays</a></td>
+      </tr>
+  </tbody>
+</table>
+<p>The template also has its own components in <code>src/components/common</code>, such as IconButton, Avatar, SearchField and Trend. <a href="./template-components.html">Template Components</a> covers those.</p>
+<h2 id="the-materia-look">The Materia look</h2>
+<p>The restyling follows a few rules that run through every component:</p>
+<ul>
+<li><strong>Rounded shapes.</strong> Buttons, badges and inputs in pill shapes, cards at <code>rounded-2xl</code>, and the four-lobed <code>avatar-mask</code> on avatars, icon tiles and icon buttons.</li>
+<li><strong>Flat surfaces.</strong> Cards have no border and no shadow. The light blue page background sets them apart. Only popups and floating panels carry a shadow.</li>
+<li><strong>Tints instead of fills.</strong> Badges, alerts and active menu items use a color at low opacity behind text in the same color, such as <code>bg-primary/10 text-primary</code>.</li>
+<li><strong>Theme tokens throughout.</strong> Every component reads <code>bg-card</code>, <code>text-foreground</code>, <code>border-input</code> and the other tokens, so all of them work in light and dark mode.</li>
+</ul>
+<h2 id="variants-and-sizes">Variants and sizes</h2>
+<p>Components with styles to choose from take <code>variant</code> and <code>size</code> props. The options live in a <code>cva()</code> call at the top of the file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> buttonVariants <span style="color:#81a1c1">=</span> cva<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm ...&#34;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	variants<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		variant<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#81a1c1;font-weight:bold">default</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;border-primary bg-primary text-primary-foreground hover:brightness-110&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>			outline<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;border-input text-foreground hover:bg-accent active:bg-accent dark:border-input&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span>		<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		size<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#81a1c1;font-weight:bold">default</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;h-10 px-5&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>			sm<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;h-8 gap-1.5 px-3.5&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span>		<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	defaultVariants<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		variant<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;default&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		size<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;default&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p>To add a variant, add a key with its classes. TypeScript picks it up, so <code>&lt;Button variant=&quot;your-key&quot;&gt;</code> works right away with completion in your editor.</p>
+<h2 id="classname-and-aschild">className and asChild</h2>
+<p>Every component accepts <code>className</code>, and your classes win over the component&rsquo;s own through <code>cn()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-full&#34;</span><span style="color:#eceff4">&gt;</span>Sign <span style="color:#81a1c1;font-weight:bold">in</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>Many components accept <code>asChild</code>. With it, the component passes its styles and behavior to its single child instead of rendering its own element. Use it to make a button that is a link:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Button</span> <span style="color:#8fbcbb">asChild</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Link</span> <span style="color:#8fbcbb">to</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/apps/mail&#34;</span><span style="color:#eceff4">&gt;</span>Open the inbox<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Link</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Button</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><h2 id="data-slot">data-slot</h2>
+<p>Each component sets a <code>data-slot</code> attribute on its root, such as <code>data-slot=&quot;card&quot;</code> or <code>data-slot=&quot;card-title&quot;</code>. Other components and parent styles use it to find their parts. The Navigate menu in the content header finds each card&rsquo;s title this way, and a parent can style a child component with a class such as <code>[&amp;_[data-slot=card-title]]:text-lg</code>.</p>
+<h2 id="adding-more-shadcnui-components">Adding more shadcn/ui components</h2>
+<p>The shadcn command line tool adds components that the template does not include:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx shadcn@latest add hover-card
+</span></span></code></pre></div><p><code>components.json</code> points the tool at the right folders and at <code>src/styles/index.css</code>. A new component uses the theme tokens, so it picks up the Materia colors. Its shapes and spacing follow the default shadcn style, so compare it with the components next to it and adjust its classes if it looks out of place.</p>
+<p>Do not run <code>add</code> for a component that already exists in <code>src/components/ui</code>. The tool would replace the restyled file with the plain shadcn version. To see what the template changed, compare a file with the same component in the <a href="https://ui.shadcn.com/docs/components">shadcn/ui docs</a>.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-full-list">The full list</a>
+      <ul>
+        <li><a href="#actions">Actions</a></li>
+        <li><a href="#form-controls">Form controls</a></li>
+        <li><a href="#display">Display</a></li>
+        <li><a href="#overlays">Overlays</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-materia-look">The Materia look</a></li>
+    <li><a href="#variants-and-sizes">Variants and sizes</a></li>
+    <li><a href="#classname-and-aschild">className and asChild</a></li>
+    <li><a href="#data-slot">data-slot</a></li>
+    <li><a href="#adding-more-shadcnui-components">Adding more shadcn/ui components</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

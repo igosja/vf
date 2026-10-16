@@ -1,0 +1,227 @@
+<aside class="nav-bar">
+  <ul class="navbar-menu">
+    <!-- Profile -->
+    <li>
+      <button
+        type="button"
+        class="p-2"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        style="--squircle-size: 2.75rem"
+      >
+        <img class="avatar" src="./img/contacts/2.jpg" alt="" />
+      </button>
+
+      <div class="dropdown-menu">
+        <a href="" class="dropdown-item">
+          <i class="ph ph-user-circle"></i>
+          Profile
+        </a>
+        <a href="" class="dropdown-item">
+          <i class="ph ph-currency-circle-dollar"></i>
+          Billing
+        </a>
+        <a href="" class="dropdown-item">
+          <i class="ph ph-gear"></i>
+          Settings
+        </a>
+        <a href="" class="dropdown-item">
+          <i class="ph ph-sign-out"></i>
+          Logout
+        </a>
+      </div>
+    </li>
+
+    <!-- Languages -->
+    <li class="d-none d-sm-block">
+      <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="h-5 rounded-circle" src="./img/flags/england.svg" alt="" />
+      </button>
+
+      <div class="dropdown-menu">
+        <a href="" class="dropdown-item">
+          <img class="h-5 rounded-circle" src="./img/flags/japan.svg" alt="" />
+          Japanese
+        </a>
+        <a href="" class="dropdown-item">
+          <img class="h-5 rounded-circle" src="./img/flags/germany.svg" alt="" />
+          German
+        </a>
+        <a href="" class="dropdown-item">
+          <img class="h-5 rounded-circle" src="./img/flags/china.svg" alt="" />
+          Chinese
+        </a>
+        <a href="" class="dropdown-item">
+          <img class="h-5 rounded-circle" src="./img/flags/france.svg" alt="" />
+          French
+        </a>
+      </div>
+    </li>
+
+    <!-- Search -->
+    <li>
+      <button
+        type="button"
+        class="ph ph-magnifying-glass"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        <span class="visually-hidden">Search</span>
+      </button>
+
+      <div class="dropdown-menu navbar-dropdown-menu px-6">
+        <div class="d-flex align-items-center h-11 flex-shrink-0">
+          <div class="text-body-emphasis fw-medium">Search</div>
+
+          <div class="d-flex ms-auto gap-1">
+            <button type="button" class="icon ph ph-broom">
+              <span class="visually-hidden">Clear recent searches</span>
+            </button>
+            <button type="button" class="icon ph ph-gear ms-auto me-n1">
+              <span class="visually-hidden">Settings</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="search-field mb-5 mx-n1">
+          <i class="ph ph-magnifying-glass"></i>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter a keyword"
+            aria-label="Search"
+            autofocus
+          />
+        </div>
+
+        <div class="fs-7 text-body-secondary mb-1">Recent Searches</div>
+
+        <div class="flex-grow-1 mx-n6" data-simplebar>
+          <div id="recent-searches"></div>
+        </div>
+      </div>
+    </li>
+
+    <!-- Notifications -->
+    <li class="dropdown">
+      <span
+        data-badge-count="99+"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        data-bs-auto-close="outside"
+      >
+        <button type="button" class="ph ph-bell">
+          <span class="visually-hidden">Notifications</span>
+        </button>
+      </span>
+      <div class="dropdown-menu navbar-dropdown-menu px-6">
+        <div class="d-flex align-items-center h-11 flex-shrink-0">
+          <div class="text-body-emphasis fw-medium">Notifications</div>
+
+          <div class="d-flex ms-auto me-n2.5 gap-1">
+            <button type="button" class="icon ph ph-check-circle">
+              <span class="visually-hidden">Mark as read</span>
+            </button>
+            <button type="button" class="icon ph ph-app-window">
+              <span class="visually-hidden">Open Notifications</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex-grow-1 mx-n6" data-simplebar>
+          <div id="top-notifications"></div>
+        </div>
+      </div>
+    </li>
+
+    <!-- Direct Messages -->
+    <li class="dropdown d-none d-sm-block">
+      <span
+        data-badge-count="12"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        data-bs-auto-close="outside"
+      >
+        <button type="button" class="ph ph-chat-centered-text">
+          <span class="visually-hidden">Direct Messages</span>
+        </button>
+      </span>
+      <div class="dropdown-menu navbar-dropdown-menu px-6">
+        <div class="d-flex align-items-center h-11 flex-shrink-0">
+          <div class="text-body-emphasis fw-medium">Direct Messages</div>
+
+          <div class="d-flex ms-auto me-n2.5 gap-1">
+            <button type="button" class="icon ph ph-plus-circle">
+              <span class="visually-hidden">Mark as read</span>
+            </button>
+            <button type="button" class="icon ph ph-app-window">
+              <span class="visually-hidden">Open Direct Messages</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex-grow-1 mx-n6" data-simplebar>
+          <div id="top-messages"></div>
+        </div>
+      </div>
+    </li>
+
+    <!-- Ongoing Tasks -->
+    <li class="dropdown d-none d-sm-block">
+      <button
+        type="button"
+        class="ph ph-check-circle"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        <span class="visually-hidden">Tasks</span>
+      </button>
+      <div class="dropdown-menu navbar-dropdown-menu px-6">
+        <div class="d-flex align-items-center h-11 flex-shrink-0">
+          <div class="text-body-emphasis fw-medium">Ongoing Tasks</div>
+
+          <div class="d-flex ms-auto me-n2 gap-1">
+            <button type="button" class="icon ph ph-app-window">
+              <span class="visually-hidden">Open Tasks</span>
+            </button>
+            <button type="button" class="icon ph ph-gear">
+              <span class="visually-hidden">Settings</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex-grow-1 pt-2 mx-n6" data-simplebar>
+          <div id="top-tasks"></div>
+        </div>
+      </div>
+    </li>
+
+    <!-- Color mode toggler -->
+    <li>
+      <button id="color-mode-toggle" type="button">
+        <i class="ph ph-sun"></i>
+        <i class="ph ph-moon"></i>
+        <span class="visually-hidden">Search</span>
+      </button>
+    </li>
+
+    <li class="d-sm-none icon">
+      <!-- Sidebar toggle -->
+      <button type="button" class="sidebar-toggle">
+        <svg class="pe-none" width="15" height="12" viewBox="0 0 16 13" fill="none">
+          <path
+            d="M1 1H15M1 6.25H10.5455M1 11.5H15"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span class="visually-hidden">Open Sidebar</span>
+      </button>
+    </li>
+  </ul>
+</aside>
+
+<i class="backdrop backdrop-navbar"></i>

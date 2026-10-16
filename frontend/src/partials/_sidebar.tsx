@@ -19,7 +19,7 @@ const Sidebar = () => {
                         </div>
                         <ul>
                             <li>
-                                <Link href="#">
+                                <Link href={'/teams/1'}>
                                     <i className="ph ph-globe-stand"></i>
                                     Ростер
                                 </Link>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" data-page="user-timeline">
+  {{> _head title="User Timeline" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="content-body content-body-centered">
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <h2 class="header-title">User Timeline</h2>
+
+          <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Application Views</a></li>
+              <li class="breadcrumb-item"><a href="#">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Timeline</li>
+            </ol>
+          </nav>
+
+          <div class="d-flex gap-2 ms-auto">
+            <a href="" class="icon ph ph-arrow-clockwise"></a>
+            <a href="" class="icon ph ph-gear"></a>
+          </div>
+        </div>
+
+        <div class="card mb-4">{{> user/_cover active="timeline"}}</div>
+
+        <div class="d-lg-flex align-items-start gap-4">
+          {{> user/_about }}
+
+          <div class="flex-grow-1">
+            <div class="card mb-4">
+              <textarea
+                class="bg-transparent border-0 p-5"
+                placeholder="What's on your mind..."
+              ></textarea>
+
+              <nav class="d-flex align-items-center py-4 p-4 mb-n1">
+                <a href="" class="icon ph ph-image"></a>
+                <a href="" class="icon ph ph-play-circle"></a>
+                <a href="" class="icon ph ph-smiley"></a>
+                <a href="" class="icon ph ph-map-pin"></a>
+                <a href="" class="icon ph ph-chart-bar"></a>
+
+                <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 ms-auto">
+                  Submit
+                </button>
+              </nav>
+            </div>
+
+            <div class="card p-6 mb-4">
+              {{> user/timeline/_post-header time="5 mins ago" }}
+
+              <div class="mb-5">
+                The Eiffel Tower is a wrought-iron masterpiece located in Paris, France. It was
+                designed by Gustave Eiffel and was completed in 1889 as the entrance arch for the
+                1889 World's Fair. The tower stands at a height of 324 meters (1,063 feet) and was
+                the tallest man-made structure in the world until the completion of the Chrysler
+                Building in New York City. The Eiffel Tower offers breathtaking panoramic views of
+                the city and is one of the most iconic landmarks globally, attracting millions of
+                visitors each year.
+              </div>
+
+              {{> user/timeline/_post-actions }}
+
+              <!-- Comments -->
+              <div>
+                <!-- prettier-ignore -->
+                {{> user/timeline/_comment-item
+                  img="1"
+                  name="Pauline Jennings"
+                  time="10 mins ago"
+                  comment="The Eiffel
+                    Tower truly is a marvel of engineering and a symbol of Parisian elegance. I had the
+                    incredible opportunity to visit last summer, and the panoramic view from the top was
+                    absolutely breathtaking. Its amazing to think about the history and craftsmanship
+                    that went into creating this iconic landmark." time="5 mins ago"
+                }}
+
+                {{> user/timeline/_comment-item
+                  img="3"
+                  name="Sophie Logan"
+                  time="14 mins ago"
+                  comment="I have always
+                    dreamt of visiting the Eiffel Tower, and your description has reignited my
+                    wanderlust! The fact that it was built over a century ago and still stands tall as a
+                    testament to human ingenuity is awe-inspiring"
+                }}
+              </div>
+
+              {{> user/timeline/_post-reply }}
+            </div>
+
+            <div class="card p-6 mb-4">
+              {{> user/timeline/_post-header time="12 mins ago" }}
+
+              <div class="mb-3">
+                <p class="mb-5">
+                  Perched atop a rugged hill, the ancient and majestic castle, shrouded in ominous
+                  dark clouds, stood as a haunting and awe-inspiring silhouette against the
+                  ever-changing canvas of the dimly lit sky.
+                </p>
+                <p>
+                  <img src="./img/gallery/9.jpg" class="w-100 rounded" alt="" />
+                </p>
+              </div>
+
+              {{> user/timeline/_post-actions }}
+
+              <!-- Comments -->
+              <div>
+                <!-- prettier-ignore -->
+                {{> user/timeline/_comment-item
+                  img="4"
+                  name="Nellie McLaughlin"
+                  time="2 hours ago"
+                  comment="Your vivid description truly transports me to a world of mystery and grandeur. 
+                    The contrast between the ancient castle, perched atop the rugged hill, and the foreboding 
+                    dark clouds creates a captivating scene that sparks the imagination."
+                }}
+              </div>
+
+              {{> user/timeline/_post-reply }}
+            </div>
+
+            <div class="card p-6">
+              {{> user/timeline/_post-header time="32 mins ago" }}
+
+              <div class="mb-5">
+                <p class="mb-5">
+                  Prepare to be spellbound by 'Eclipse of Destiny,' a cinematic masterpiece that
+                  intertwines ancient legends with modern-day struggles. As dark clouds gather over
+                  the enchanting kingdom, an age-old prophecy sets the stage for an epic journey of
+                  courage, sacrifice, and self-discovery. With breathtaking visuals, mesmerizing
+                  storytelling, and a cast that brings characters to life, get ready to embark on an
+                  adventure that will leave you on the edge of your seat, craving for more.
+                </p>
+
+                <div class="ratio ratio-16x9">
+                  <iframe
+                    class="rounded"
+                    src="https://www.youtube.com/embed/uYPbbksJxIg"
+                    frameborder="0"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+
+              {{> user/timeline/_post-actions }}
+
+              <!-- Comments -->
+              <div>
+                <!-- prettier-ignore -->
+                {{> user/timeline/_comment-item
+                  img="5"
+                  name="Catherine Ramsey"
+                  time="4 hours ago"
+                  comment="This trailer has me completely hooked! The blend of ancient legends and modern struggles is intriguing, and the visuals are absolutely stunning."
+                }}
+
+                {{> user/timeline/_comment-item
+                  img="6"
+                  name="Sara Bishop"
+                  time="5 hours ago"
+                  comment="Wow, just wow. This looks like a true cinematic gem. The way they have combined history and present-day challenges is captivating, and those visuals are on another level. Counting down the days till this adventure hits the screen!"
+                }}
+
+                {{> user/timeline/_comment-item
+                  img="7"
+                  name="Belle Henderson"
+                  time="6 hours ago"
+                  comment="I am already on the edge of my seat, eagerly awaiting this epic journey!"
+                }}
+
+                {{> user/timeline/_comment-item
+                  img="8"
+                  name="Lydia McCarthy"
+                  time="10 hours ago"
+                  comment="The cinematography in this trailer is absolutely breathtaking! I can't wait to see how the story unfolds."
+                }}
+              </div>
+
+              {{> user/timeline/_post-reply }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

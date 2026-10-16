@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en" data-page="ai-agent">
+  {{> _head title="AI Agent"}}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> ai-agent/_sidebar }}
+
+      <div class="content-body p-0">
+        <!-- Content header -->
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <div class="search-field search-field-kbd">
+            <i class="ph ph-magnifying-glass fs-5"></i>
+            <input
+              id="ai-search-input"
+              type="text"
+              class="form-control"
+              placeholder="Search Chats..."
+              aria-label="Search chats"
+            />
+          </div>
+
+          <i class="ms-auto"></i>
+
+          <div class="dropdown d-none d-md-block">
+            <button
+              type="button"
+              class="icon-link mw-300"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span id="ai-chat-title" class="text-truncate py-0.5"
+                >Q3 sales performance summary</span
+              >
+              <i class="ph ph-caret-down fs-8"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-toast="Removed from starred"
+                data-ai-toast-icon="ph-star"
+                ><i class="ph ph-star"></i>Unstar</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-rename-chat"
+                ><i class="ph ph-pencil-simple-line"></i>Rename</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-project-chat"
+                ><i class="ph ph-folder"></i>Add to project</a
+              >
+              <a
+                href="#"
+                class="dropdown-item text-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-delete-chat"
+                ><i class="ph ph-trash"></i>Delete</a
+              >
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button
+              type="button"
+              class="icon ph ph-dots-three-circle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="visually-hidden">More options</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a
+                href="#"
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-share-chat"
+                ><i class="ph ph-share-network"></i>Share conversation</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-copy-link
+                data-ai-toast="Link copied to clipboard"
+                data-ai-toast-icon="ph-link"
+                ><i class="ph ph-link"></i>Copy link</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-toast="Chat pinned to top"
+                data-ai-toast-icon="ph-push-pin"
+                ><i class="ph ph-push-pin"></i>Pin to top</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-rename-chat"
+                ><i class="ph ph-pencil-simple-line"></i>Rename</a
+              >
+              <div class="dropdown-divider"></div>
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-toast="Downloading PDF..."
+                data-ai-toast-icon="ph-file-pdf"
+                ><i class="ph ph-file-pdf"></i>Download as PDF</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-toast="Exported as Markdown"
+                data-ai-toast-icon="ph-file-md"
+                ><i class="ph ph-file-md"></i>Export as Markdown</a
+              >
+              <a
+                href="#"
+                class="dropdown-item"
+                data-ai-toast="Chat archived"
+                data-ai-toast-icon="ph-archive"
+                data-ai-toast-undo
+                ><i class="ph ph-archive"></i>Archive</a
+              >
+              <div class="dropdown-divider"></div>
+              <a
+                href="#"
+                class="dropdown-item text-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#ai-delete-chat"
+                ><i class="ph ph-trash"></i>Delete</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="card ai-agent-card">
+          <div
+            id="ai-thread"
+            class="flex-grow-1 w-100 mw-800 mx-auto px-4 px-sm-6 pt-8 pb-4"
+            data-chat-id="1"
+          >
+            <!-- User message -->
+            <div class="ai-message d-flex flex-column align-items-end gap-2 mb-8">
+              <div class="d-flex align-items-center gap-3 py-2.5 ps-3 pe-4 border rounded-3">
+                <i class="ph ph-file-pdf fs-1 text-danger"></i>
+                <div class="lh-sm">
+                  <div class="text-body-emphasis">q3-sales-report.pdf</div>
+                  <div class="fs-8 text-body-secondary">pdf · 2.4 mb</div>
+                </div>
+              </div>
+              <div
+                class="mw-600 px-4 py-3 rounded-4 bg-theme-100 text-body-emphasis text-break"
+                data-ai-content
+              >
+                Summarize our Q3 sales performance from the attached report. Highlight the regions
+                that grew the most and anything I should be worried about.
+              </div>
+              <div class="ai-message-actions d-flex gap-0.5 mt-n2">
+                <button type="button" class="icon ph ph-clipboard" data-ai-copy>
+                  <span class="visually-hidden">Copy</span>
+                </button>
+                <button type="button" class="icon ph ph-pencil-simple-line">
+                  <span class="visually-hidden">Edit</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Assistant message -->
+            <div class="ai-message mb-8">
+              <details class="ai-thinking mb-4">
+                <summary
+                  class="d-inline-flex align-items-center gap-2 px-2.5 py-1 ms-n2.5 rounded-2 fs-7 bg-hover"
+                >
+                  <i class="ph ph-lightbulb fs-4"></i>
+                  Thought for 8 seconds
+                  <i class="ph ph-caret-right fs-8"></i>
+                </summary>
+                <div class="mt-2 ps-4 border-start border-2 fs-7 text-body-secondary">
+                  The report covers four regions across July to September. I should compare each
+                  region against Q2, call out the biggest movers, and flag the margin drop in EMEA
+                  since it runs against the revenue trend.
+                </div>
+              </details>
+
+              <div class="ai-message-body" data-ai-content>
+                <p>
+                  Q3 was a strong quarter overall. Total revenue reached <strong>$4.82M</strong>, up
+                  <strong>18.4%</strong> from Q2, driven mainly by North America and APAC.
+                </p>
+
+                <h3>Revenue by region</h3>
+
+                <div class="table-responsive mb-4">
+                  <table class="table text-nowrap mb-0">
+                    <thead>
+                      <tr>
+                        <th>Region</th>
+                        <th class="text-end">Q2</th>
+                        <th class="text-end">Q3</th>
+                        <th class="text-end">Change</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>North America</td>
+                        <td class="text-end">$1.64M</td>
+                        <td class="text-end">$2.05M</td>
+                        <td class="text-end text-success">+25.0%</td>
+                      </tr>
+                      <tr>
+                        <td>APAC</td>
+                        <td class="text-end">$0.88M</td>
+                        <td class="text-end">$1.12M</td>
+                        <td class="text-end text-success">+27.3%</td>
+                      </tr>
+                      <tr>
+                        <td>EMEA</td>
+                        <td class="text-end">$1.18M</td>
+                        <td class="text-end">$1.21M</td>
+                        <td class="text-end text-success">+2.5%</td>
+                      </tr>
+                      <tr>
+                        <td>LATAM</td>
+                        <td class="text-end">$0.37M</td>
+                        <td class="text-end">$0.44M</td>
+                        <td class="text-end text-success">+18.9%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3>Things to watch</h3>
+
+                <ol>
+                  <li>
+                    <strong>EMEA margins fell 4 points</strong> even though revenue was flat.
+                    Discounting on enterprise renewals looks like the cause.
+                  </li>
+                  <li>
+                    <strong>Churn ticked up to 3.1%</strong> in September, mostly from small
+                    accounts on monthly plans.
+                  </li>
+                  <li>
+                    <strong>APAC pipeline is thin for Q4.</strong> Most of the Q3 growth came from
+                    two large deals that won't repeat.
+                  </li>
+                </ol>
+
+                <p>
+                  Want me to break down the EMEA discounting by account, or draft a short update for
+                  the leadership team?
+                </p>
+              </div>
+
+              <div class="ai-message-actions d-flex gap-0.5 mt-2 ms-n1.5">
+                <button type="button" class="icon ph ph-copy" data-ai-copy>
+                  <span class="visually-hidden">Copy</span>
+                </button>
+                <button type="button" class="icon ph ph-thumbs-up" data-ai-vote>
+                  <span class="visually-hidden">Good response</span>
+                </button>
+                <button type="button" class="icon ph ph-thumbs-down" data-ai-vote>
+                  <span class="visually-hidden">Bad response</span>
+                </button>
+                <button type="button" class="icon ph ph-arrow-clockwise">
+                  <span class="visually-hidden">Retry</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- User message -->
+            <div class="ai-message d-flex flex-column align-items-end gap-2 mb-8">
+              <div
+                class="mw-600 px-4 py-3 rounded-4 bg-theme-100 text-body-emphasis text-break"
+                data-ai-content
+              >
+                Write a SQL query to get the top 5 products by revenue for this quarter.
+              </div>
+              <div class="ai-message-actions d-flex gap-0.5 mt-n1">
+                <button type="button" class="icon ph ph-copy" data-ai-copy>
+                  <span class="visually-hidden">Copy</span>
+                </button>
+                <button type="button" class="icon ph ph-pencil-simple">
+                  <span class="visually-hidden">Edit</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Assistant message -->
+            <div class="ai-message mb-8">
+              <div class="ai-message-body" data-ai-content>
+                <p>
+                  Here's a query that joins orders with products and ranks them by revenue for the
+                  current quarter:
+                </p>
+
+                <div class="ai-code mb-4 rounded-3 bg-theme-100 overflow-hidden">
+                  <div
+                    class="d-flex align-items-center justify-content-between py-1.5 ps-4 pe-2 border-bottom fs-8 text-body-secondary"
+                  >
+                    <span>sql</span>
+                    <button
+                      type="button"
+                      class="d-inline-flex align-items-center gap-1.5 px-2 py-1 rounded-2 fs-8 link-secondary bg-hover"
+                      data-ai-copy-code
+                    >
+                      <i class="ph ph-copy"></i>
+                      Copy
+                    </button>
+                  </div>
+                  <pre
+                    class="m-0 p-4 fs-7 lh-base text-body-emphasis"
+                  ><code><span class="tok-k">SELECT</span>
+  p.name,
+  <span class="tok-f">SUM</span>(oi.quantity * oi.unit_price) <span class="tok-k">AS</span> revenue
+<span class="tok-k">FROM</span> order_items oi
+<span class="tok-k">JOIN</span> orders o   <span class="tok-k">ON</span> o.id = oi.order_id
+<span class="tok-k">JOIN</span> products p <span class="tok-k">ON</span> p.id = oi.product_id
+<span class="tok-k">WHERE</span> o.created_at &gt;= <span class="tok-f">DATE_TRUNC</span>(<span class="tok-s">'quarter'</span>, <span class="tok-f">CURRENT_DATE</span>)
+  <span class="tok-k">AND</span> o.status = <span class="tok-s">'completed'</span>
+<span class="tok-k">GROUP BY</span> p.name
+<span class="tok-k">ORDER BY</span> revenue <span class="tok-k">DESC</span>
+<span class="tok-k">LIMIT</span> <span class="tok-n">5</span>;</code></pre>
+                </div>
+
+                <p>
+                  It only counts <code>completed</code> orders, so refunds and pending payments
+                  won't inflate the totals. If your database is MySQL, swap
+                  <code>DATE_TRUNC</code> for <code>MAKEDATE(YEAR(CURDATE()), 1)</code> plus a
+                  quarter offset.
+                </p>
+              </div>
+
+              <div class="ai-message-actions d-flex gap-0.5 mt-2 ms-n1.5">
+                <button type="button" class="icon ph ph-copy" data-ai-copy>
+                  <span class="visually-hidden">Copy</span>
+                </button>
+                <button type="button" class="icon ph ph-thumbs-up" data-ai-vote>
+                  <span class="visually-hidden">Good response</span>
+                </button>
+                <button type="button" class="icon ph ph-thumbs-down" data-ai-vote>
+                  <span class="visually-hidden">Bad response</span>
+                </button>
+                <button type="button" class="icon ph ph-arrow-clockwise">
+                  <span class="visually-hidden">Retry</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai-composer-wrap bg-body pb-4">
+            <div class="bg-card px-4 pb-4">
+              {{> ai-agent/_composer placeholder="Reply to Materia..." }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    <!-- Chat modals and snackbar -->
+    {{> ai-agent/_modals }} {{> _script }}
+  </body>
+</html>

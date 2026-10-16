@@ -1,0 +1,34 @@
+<div class="p-2 pb-0">
+  <img
+    class="object-fit-cover rounded-top-2 rounded-bottom-1 h-64 w-100"
+    src="./img/misc/cover.jpeg"
+    alt=""
+  />
+</div>
+<nav class="nav nav-pills nav-scroll fw-medium p-2">
+  <a
+    class="nav-link {{#if (eq active 'about')}}active{{/if}}"
+    href="user-profile.html"
+    >About</a
+  >
+  <a
+    class="nav-link {{#if (eq active 'timeline')}}active{{/if}}"
+    href="user-timeline.html"
+  >
+    Timeline
+  </a>
+  <a
+    class="nav-link {{#if (eq active 'connections')}}active{{/if}}"
+    href="user-connections.html"
+  >
+    Connections
+  </a>
+  <a
+    class="nav-link {{#if (eq active 'photos')}}active{{/if}}"
+    href="user-photos.html"
+    >Photos</a
+  >
+  <a class="nav-link" href="coming-soon.html">Events</a>
+  <a class="nav-link" href="coming-soon.html">Bookmarks</a>
+  <a class="nav-link" href="coming-soon.html">Activity Log</a>
+</nav>

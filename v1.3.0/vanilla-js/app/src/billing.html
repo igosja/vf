@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-page="billing">
+  {{> _head title="Billing" }}
+
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="content-body mw-1200 mx-auto">
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <h2 class="header-title">Billing</h2>
+
+          <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Samples Pages</li>
+            </ol>
+          </nav>
+
+          <div class="d-flex align-items-center gap-1.5 ms-auto me-3">
+            <button
+              type="button"
+              class="btn btn-theme d-none d-sm-inline-flex"
+              data-bs-toggle="modal"
+              data-bs-target="#redeem-code"
+            >
+              <i class="ph ph-ticket"></i>
+              Redeem Code
+            </button>
+            <button type="button" class="icon ph ph-dots-three-circle">
+              <span class="visually-hidden">More options</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid gap-4 mb-4 d-print-none">
+          <!-- Current plan -->
+          {{> billing/_plan }}
+
+          <!-- Payment method -->
+          {{> billing/_payment-method }}
+        </div>
+
+        <!-- Billing history -->
+        {{> billing/_history }}
+      </div>
+    </div>
+
+    <!-- Payment method modals -->
+    {{> billing/_payment-modals }}
+
+    <!-- Cancel subscription modal -->
+    {{> billing/_cancel-modal }}
+
+    <!-- Switch to yearly modal -->
+    {{> billing/_yearly-modal }}
+
+    <!-- Redeem code modal -->
+    {{> billing/_redeem-modal }}
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

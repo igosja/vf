@@ -1,0 +1,13 @@
+$tooltip-bg-color: var(--bs-tooltips-bg);
+$tooltip-font-family: $font-family-sans-serif;
+$tooltip-radius: $tooltip-border-radius;
+$tooltip-padding: $tooltip-padding-y $tooltip-padding-x;
+$tooltip-font-size: $tooltip-font-size;
+
+@import "jsvectormap/src/scss/jsvectormap.scss";
+
+.jvm-tooltip {
+	color: $tooltip-color;
+	z-index: 10;
+	pointer-events: none;
+}

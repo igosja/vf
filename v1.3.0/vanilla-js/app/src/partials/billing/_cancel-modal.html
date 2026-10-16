@@ -1,0 +1,65 @@
+<!-- Cancel subscription -->
+<div
+  class="modal fade"
+  id="cancel-subscription"
+  tabindex="-1"
+  aria-labelledby="cancel-subscription-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body pt-8 pb-0 text-center">
+        <div
+          class="avatar avatar-lg bg-danger text-danger mx-auto mb-5"
+          style="--bs-bg-opacity: 0.15"
+        >
+          <i class="ph ph-warning fs-2"></i>
+        </div>
+
+        <h2 class="modal-title fs-5 mb-2" id="cancel-subscription-title">
+          Cancel your subscription?
+        </h2>
+        <p class="text-body-secondary mb-6">
+          Your Pro Plan stays active until <span class="text-body-emphasis">Nov 12, 2026</span>.
+          After that, your workspace moves to the Free plan.
+        </p>
+
+        <ul
+          class="list-unstyled d-grid gap-2.5 p-4 mb-6 rounded-3 bg-danger text-danger bg-opacity-10 text-start fs-7"
+        >
+          <li class="d-flex align-items-center gap-2">
+            <i class="ph ph-x-circle fs-4 text-danger"></i>
+            Seats drop from 10 to 2 members
+          </li>
+          <li class="d-flex align-items-center gap-2">
+            <i class="ph ph-x-circle fs-4 text-danger"></i>
+            Storage limit drops to 5 GB
+          </li>
+          <li class="d-flex align-items-center gap-2">
+            <i class="ph ph-x-circle fs-4 text-danger"></i>
+            API access and priority support removed
+          </li>
+        </ul>
+
+        <div class="text-start">
+          <label for="cancel-reason" class="form-label">Why are you cancelling?</label>
+          <select id="cancel-reason" class="form-select">
+            <option selected disabled>Select a reason</option>
+            <option>Too expensive</option>
+            <option>Missing features I need</option>
+            <option>Switching to another product</option>
+            <option>No longer needed</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn link-secondary" data-bs-dismiss="modal">
+          Keep subscription
+        </button>
+        <button type="button" class="btn btn-danger">Cancel subscription</button>
+      </div>
+    </div>
+  </div>
+</div>

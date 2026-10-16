@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-page="xxx">
+  {{> _head title="xxx" }}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <div class="header">
+       {{> _sidebar-toggle }}
+
+        <h2 class="header-title">xxx</h2>
+
+        <i class="ms-auto"></i>
+
+        <nav aria-label="breadcrumb" class="ms-6 d-none d-sm-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Miscellaneous</a></li>
+            <li class="breadcrumb-item"><a href="#">xxxx</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Content</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="content-body" data-simplebar>
+        xxx
+
+        <module href="./src/html/partials/_footer.html"></module>
+      </div>
+    </div>
+
+    <!-- Scripts-->
+    {{> _script }}
+  </body>
+</html>

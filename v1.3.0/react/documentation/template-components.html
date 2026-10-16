@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Template Components |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Template Components
+Besides the shadcn/ui components, the template has its own components for pieces that repeat across pages. They live in src/components/common and src/components/charts.
+
+  
+      
+          Component
+          File
+          What it is
+      
+  
+  
+      
+          IconButton
+          common/icon-button.tsx
+          The small icon button in card and page headers
+      
+      
+          ActionButton
+          common/action-button.tsx
+          The main button of an app page: Compose, Upload, Create New
+      
+      
+          Avatar
+          common/avatar.tsx
+          A photo, or an initial on a colored tile
+      
+      
+          ListRowAvatar
+          common/list-row-avatar.tsx
+          An avatar that turns into a checkbox when you point at its row
+      
+      
+          SearchField
+          common/search-field.tsx
+          The pill-shaped search field
+      
+      
+          DateRangePicker
+          common/date-range-picker.tsx
+          The date range button in the dashboard headers
+      
+      
+          Trend
+          common/trend.tsx
+          A change figure with an up or down arrow
+      
+      
+          DialogHead, DialogFoot, DismissButton
+          common/dialog-parts.tsx
+          The title row and button row of a dialog
+      
+      
+          Lightbox
+          common/lightbox.tsx
+          A full-window photo viewer
+      
+      
+          RichTextEditor
+          common/rich-text-editor.tsx
+          The formatted text editor
+      
+      
+          Logo
+          common/logo.tsx
+          The template&rsquo;s logo
+      
+      
+          ExampleCard, ExampleSection, Preview
+          common/example.tsx
+          The cards on the component and content pages
+      
+      
+          ChartLegend
+          charts/chart-legend.tsx
+          The dot-and-label key under a chart
+      
+      
+          VectorMap
+          charts/vector-map.tsx
+          A map
+      
+  
+
+IconButton, SearchField and DateRangePicker
+
+	
+		Light
+		Dark
+	
+	
+
+import { Download, Info } from &#34;lucide-react&#34;;
+
+import { DateRangePicker } from &#34;@/components/common/date-range-picker&#34;;
+import { IconButton } from &#34;@/components/common/icon-button&#34;;
+import { SearchField } from &#34;@/components/common/search-field&#34;;
+
+export default function HeaderTools() {
+	return (
+		&lt;div className=&#34;flex flex-wrap items-center gap-3&#34;&gt;
+			&lt;SearchField className=&#34;w-64&#34; placeholder=&#34;Search...&#34; aria-label=&#34;Search&#34; shortcut /&gt;
+			&lt;DateRangePicker defaultValue={{ from: new Date(2026, 9, 1), to: new Date(2026, 9, 31) }} /&gt;
+			&lt;div className=&#34;flex gap-1.5&#34;&gt;
+				&lt;IconButton&gt;
+					&lt;Download /&gt;
+					&lt;span className=&#34;sr-only&#34;&gt;Download&lt;/span&gt;
+				&lt;/IconButton&gt;
+				&lt;IconButton&gt;
+					&lt;Info /&gt;
+					&lt;span className=&#34;sr-only&#34;&gt;Information&lt;/span&gt;
+				&lt;/IconButton&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	);
+}
+
+IconButton is a 32-pixel button in the avatar shape that fills on hover. Every icon-only button in a card header or a page header uses it. Put the icon and a hidden label inside:
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="template-components">Template Components</h1>
+<p>Besides the shadcn/ui components, the template has its own components for pieces that repeat across pages. They live in <code>src/components/common</code> and <code>src/components/charts</code>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>File</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>IconButton</code></td>
+          <td><code>common/icon-button.tsx</code></td>
+          <td>The small icon button in card and page headers</td>
+      </tr>
+      <tr>
+          <td><code>ActionButton</code></td>
+          <td><code>common/action-button.tsx</code></td>
+          <td>The main button of an app page: Compose, Upload, Create New</td>
+      </tr>
+      <tr>
+          <td><code>Avatar</code></td>
+          <td><code>common/avatar.tsx</code></td>
+          <td>A photo, or an initial on a colored tile</td>
+      </tr>
+      <tr>
+          <td><code>ListRowAvatar</code></td>
+          <td><code>common/list-row-avatar.tsx</code></td>
+          <td>An avatar that turns into a checkbox when you point at its row</td>
+      </tr>
+      <tr>
+          <td><code>SearchField</code></td>
+          <td><code>common/search-field.tsx</code></td>
+          <td>The pill-shaped search field</td>
+      </tr>
+      <tr>
+          <td><code>DateRangePicker</code></td>
+          <td><code>common/date-range-picker.tsx</code></td>
+          <td>The date range button in the dashboard headers</td>
+      </tr>
+      <tr>
+          <td><code>Trend</code></td>
+          <td><code>common/trend.tsx</code></td>
+          <td>A change figure with an up or down arrow</td>
+      </tr>
+      <tr>
+          <td><code>DialogHead</code>, <code>DialogFoot</code>, <code>DismissButton</code></td>
+          <td><code>common/dialog-parts.tsx</code></td>
+          <td>The title row and button row of a dialog</td>
+      </tr>
+      <tr>
+          <td><code>Lightbox</code></td>
+          <td><code>common/lightbox.tsx</code></td>
+          <td>A full-window photo viewer</td>
+      </tr>
+      <tr>
+          <td><code>RichTextEditor</code></td>
+          <td><code>common/rich-text-editor.tsx</code></td>
+          <td>The formatted text editor</td>
+      </tr>
+      <tr>
+          <td><code>Logo</code></td>
+          <td><code>common/logo.tsx</code></td>
+          <td>The template&rsquo;s logo</td>
+      </tr>
+      <tr>
+          <td><code>ExampleCard</code>, <code>ExampleSection</code>, <code>Preview</code></td>
+          <td><code>common/example.tsx</code></td>
+          <td>The cards on the component and content pages</td>
+      </tr>
+      <tr>
+          <td><code>ChartLegend</code></td>
+          <td><code>charts/chart-legend.tsx</code></td>
+          <td>The dot-and-label key under a chart</td>
+      </tr>
+      <tr>
+          <td><code>VectorMap</code></td>
+          <td><code>charts/vector-map.tsx</code></td>
+          <td>A map</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="iconbutton-searchfield-and-daterangepicker">IconButton, SearchField and DateRangePicker</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap items-center gap-3&#34;&gt;&lt;label class=&#34;flex h-11 items-center rounded-full border-1 border-secondary bg-secondary px-4 transition-colors duration-250 focus-within:border-input focus-within:bg-transparent w-64&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-search size-4.5 text-emphasis-foreground&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m21 21-4.34-4.34&#34;&gt;&lt;/path&gt;&lt;circle cx=&#34;11&#34; cy=&#34;11&#34; r=&#34;8&#34;&gt;&lt;/circle&gt;&lt;/svg&gt;&lt;input type=&#34;text&#34; class=&#34;h-full min-w-0 flex-1 bg-transparent pl-3 text-sm text-emphasis-foreground outline-none placeholder:text-foreground&#34; placeholder=&#34;Search...&#34; aria-label=&#34;Search&#34;/&gt;&lt;span class=&#34;hidden text-xs font-medium text-emphasis-foreground md:block&#34;&gt;⌘K&lt;/span&gt;&lt;/label&gt;&lt;button type=&#34;button&#34; aria-haspopup=&#34;dialog&#34; aria-expanded=&#34;false&#34; data-state=&#34;closed&#34; data-slot=&#34;popover-trigger&#34; class=&#34;flex h-9 items-center gap-2 rounded-full border-[1.5px] border-sky-500 px-4 text-xs text-sky-500 transition-colors hover:bg-sky-500/10 data-[state=open]:bg-sky-500/10&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-calendar-days&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M8 2v3&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M16 2v3&#34;&gt;&lt;/path&gt;&lt;rect x=&#34;3&#34; y=&#34;3&#34; width=&#34;18&#34; height=&#34;18&#34; rx=&#34;2&#34;&gt;&lt;/rect&gt;&lt;path d=&#34;M3 9h18&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M8 13h.01&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 13h.01&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M16 13h.01&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M8 17h.01&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 17h.01&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M16 17h.01&#34;&gt;&lt;/path&gt;&lt;/svg&gt;10/01/2026&lt;span&gt;-&lt;/span&gt;10/31/2026&lt;/button&gt;&lt;div class=&#34;flex gap-1.5&#34;&gt;&lt;button type=&#34;button&#34; class=&#34;grid avatar-mask size-8 place-items-center text-emphasis-foreground transition-colors duration-300 hover:bg-accent focus-visible:bg-accent data-[state=open]:bg-accent&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-download&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;M12 15V3&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;m7 10 5 5 5-5&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span class=&#34;sr-only&#34;&gt;Download&lt;/span&gt;&lt;/button&gt;&lt;button type=&#34;button&#34; class=&#34;grid avatar-mask size-8 place-items-center text-emphasis-foreground transition-colors duration-300 hover:bg-accent focus-visible:bg-accent data-[state=open]:bg-accent&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-info&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;M12 16v-4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 8h.01&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span class=&#34;sr-only&#34;&gt;Information&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 420) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;common-header-tools&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Download<span style="color:#eceff4">,</span> Info <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;lucide-react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> DateRangePicker <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/date-range-picker&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> IconButton <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/icon-button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> SearchField <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/search-field&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> HeaderTools() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap items-center gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">SearchField</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;w-64&#34;</span> <span style="color:#8fbcbb">placeholder</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Search...&#34;</span> <span style="color:#8fbcbb">aria-label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Search&#34;</span> <span style="color:#8fbcbb">shortcut</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">DateRangePicker</span> <span style="color:#8fbcbb">defaultValue</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span> <span style="color:#81a1c1;font-weight:bold">from</span><span style="color:#81a1c1">:</span> <span style="color:#81a1c1;font-weight:bold">new</span> <span style="color:#81a1c1">Date</span><span style="color:#eceff4">(</span><span style="color:#b48ead">2026</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">9</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">1</span><span style="color:#eceff4">),</span> to: <span style="color:#81a1c1">new</span> <span style="color:#81a1c1">Date</span><span style="color:#eceff4">(</span><span style="color:#b48ead">2026</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">9</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">31</span><span style="color:#eceff4">)</span> <span style="color:#eceff4">}}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex gap-1.5&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Download</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Download<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Info</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Information<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p><strong><code>IconButton</code></strong> is a 32-pixel button in the avatar shape that fills on hover. Every icon-only button in a card header or a page header uses it. Put the icon and a hidden label inside:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Download</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Download<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p>It is a plain <code>&lt;button&gt;</code> with <code>type=&quot;button&quot;</code>, so it takes <code>onClick</code> and every other button attribute.</p>
+<p><strong><code>SearchField</code></strong> is a text input in a pill with a search icon. It takes every <code>&lt;input&gt;</code> attribute, such as <code>placeholder</code>, <code>value</code> and <code>onChange</code>. With <code>shortcut</code>, it shows a ⌘K hint (Ctrl K on Windows and Linux) and focuses the field when the visitor presses that key. Use <code>shortcut</code> on one search field per page.</p>
+<p><strong><code>DateRangePicker</code></strong> shows a start and an end date and opens a calendar to change them. Pass the starting range as <code>defaultValue</code>. It keeps the chosen range in its own state, so to filter your data by it, add an <code>onChange</code> prop that passes the range up.</p>
+<h2 id="avatar-and-listrowavatar">Avatar and ListRowAvatar</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;link rel=&#34;preload&#34; as=&#34;image&#34; href=&#34;img/contacts/2.jpg&#34;/&gt;&lt;link rel=&#34;preload&#34; as=&#34;image&#34; href=&#34;img/contacts/5.jpg&#34;/&gt;&lt;link rel=&#34;preload&#34; as=&#34;image&#34; href=&#34;img/contacts/8.jpg&#34;/&gt;&lt;div class=&#34;flex flex-col gap-5&#34;&gt;&lt;div class=&#34;flex items-center gap-3&#34;&gt;&lt;img class=&#34;avatar-mask size-8 shrink-0 object-cover&#34; src=&#34;img/contacts/2.jpg&#34; alt=&#34;Harper Collins&#34;/&gt;&lt;img class=&#34;avatar-mask shrink-0 object-cover size-10&#34; src=&#34;img/contacts/5.jpg&#34; alt=&#34;Liam Turner&#34;/&gt;&lt;span class=&#34;grid avatar-mask size-8 shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-emerald-500&#34;&gt;M&lt;/span&gt;&lt;span class=&#34;grid avatar-mask shrink-0 place-items-center text-sm font-medium text-white uppercase dark:text-black bg-purple-400 size-10&#34;&gt;J&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;group/row flex items-center gap-3 rounded-xl bg-card p-3&#34;&gt;&lt;div class=&#34;grid place-items-center *:col-start-1 *:row-start-1&#34;&gt;&lt;img class=&#34;avatar-mask size-8 shrink-0 object-cover transition-opacity duration-300 group-hover/row:opacity-0&#34; src=&#34;img/contacts/8.jpg&#34; alt=&#34;&#34;/&gt;&lt;button type=&#34;button&#34; role=&#34;checkbox&#34; aria-checked=&#34;false&#34; data-state=&#34;unchecked&#34; value=&#34;on&#34; data-slot=&#34;checkbox&#34; class=&#34;peer relative grid size-4.5 shrink-0 place-content-center rounded-xs border-[1.5px] border-foreground before:absolute before:-inset-px before:scale-50 before:rounded-full before:ring-primary/15 before:transition before:duration-200 hover:before:scale-100 hover:before:ring-10 focus:border-emphasis-foreground focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary hover:focus-visible:before:ring-0 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-red-400 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-white z-1 opacity-0 transition-opacity duration-300 group-hover/row:opacity-100 focus-visible:opacity-100&#34; aria-label=&#34;Select Sofia Martinez&#34;&gt;&lt;/button&gt;&lt;input type=&#34;checkbox&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34; style=&#34;position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)&#34; value=&#34;on&#34;/&gt;&lt;/div&gt;&lt;span class=&#34;text-emphasis-foreground&#34;&gt;Sofia Martinez&lt;/span&gt;&lt;span class=&#34;ml-auto text-xs text-muted-foreground&#34;&gt;Point at the row&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;common-avatars&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> useState <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Avatar <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/avatar&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> ListRowAvatar <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/list-row-avatar&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> Avatars() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> <span style="color:#eceff4">[</span>checked<span style="color:#eceff4">,</span> setChecked<span style="color:#eceff4">]</span> <span style="color:#81a1c1">=</span> useState<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-col gap-5&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex items-center gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/contacts/2.jpg&#34;</span> <span style="color:#8fbcbb">alt</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Harper Collins&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/contacts/5.jpg&#34;</span> <span style="color:#8fbcbb">alt</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Liam Turner&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;size-10&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;M&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-emerald-500&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;J&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-purple-400&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;size-10&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;group/row flex items-center gap-3 rounded-xl bg-card p-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ListRowAvatar</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/contacts/8.jpg&#34;</span> <span style="color:#8fbcbb">label</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Sofia Martinez&#34;</span> <span style="color:#8fbcbb">checked</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>checked<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">onCheckedChange</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>setChecked<span style="color:#eceff4">}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;text-emphasis-foreground&#34;</span><span style="color:#eceff4">&gt;</span>Sofia Martinez<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;ml-auto text-xs text-muted-foreground&#34;</span><span style="color:#eceff4">&gt;</span>Point at the row<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<p><strong><code>Avatar</code></strong> shows a photo when you pass <code>src</code>. Without a photo, it shows <code>initial</code> on a tile colored by <code>color</code>, a background class. It is 32 pixels by default. Pass a size class to change it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/img/contacts/2.jpg&#34;</span> <span style="color:#8fbcbb">alt</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Harper Collins&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Avatar</span> <span style="color:#8fbcbb">initial</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;M&#34;</span> <span style="color:#8fbcbb">color</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bg-emerald-500&#34;</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;size-10&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p><strong><code>ListRowAvatar</code></strong> sits at the start of a selectable list row, as in Mail and Contacts. When the pointer is over the row, the avatar turns into a checkbox, and the checkbox stays while the row is selected. The row needs the <code>group/row</code> class:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;group/row flex items-center gap-3&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ListRowAvatar</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>contact<span style="color:#eceff4">.</span>photo<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">label</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>contact<span style="color:#eceff4">.</span>name<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">checked</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>selected<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">onCheckedChange</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>setSelected<span style="color:#eceff4">}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span>contact<span style="color:#eceff4">.</span>name<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>label</code> names the checkbox for screen readers: &ldquo;Select Sofia Martinez&rdquo;.</p>
+<h2 id="trend">Trend</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;div class=&#34;flex flex-wrap items-center gap-6&#34;&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-emerald-500&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-up lucide-arrow-up-circle&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;m16 12-4-4-4 4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 16V8&#34;&gt;&lt;/path&gt;&lt;/svg&gt;24.99%&lt;/div&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-red-400&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-down lucide-arrow-down-circle&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;M12 8v8&#34;&gt;&lt;/path&gt;&lt;path d=&#34;m8 12 4 4 4-4&#34;&gt;&lt;/path&gt;&lt;/svg&gt;9.39%&lt;/div&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-red-400&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-up lucide-arrow-up-circle&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;m16 12-4-4-4 4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 16V8&#34;&gt;&lt;/path&gt;&lt;/svg&gt;8.07%&lt;/div&gt;&lt;div class=&#34;flex items-center gap-1 text-sm text-emerald-500&#34;&gt;3.54%&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; class=&#34;lucide lucide-circle-arrow-up lucide-arrow-up-circle size-4&#34; aria-hidden=&#34;true&#34;&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;10&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;m16 12-4-4-4 4&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M12 16V8&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;common-trend&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Trend <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/common/trend&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> <span style="color:#81a1c1;font-weight:bold">function</span> Trends() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;flex flex-wrap items-center gap-6&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">24.99</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">up</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">9.39</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">positive</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">8.07</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">iconEnd</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">3.54</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span></span></span></code></pre></div>
+
+<table>
+  <thead>
+      <tr>
+          <th>Prop</th>
+          <th>Default</th>
+          <th>What it does</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>up</code></td>
+          <td><code>true</code></td>
+          <td>The direction of the arrow. Also sets the color: green when up, red when down</td>
+      </tr>
+      <tr>
+          <td><code>positive</code></td>
+          <td>Same as <code>up</code></td>
+          <td>Overrides the color, for a figure where a rise is bad news, such as a bounce rate or a cost</td>
+      </tr>
+      <tr>
+          <td><code>iconEnd</code></td>
+          <td><code>false</code></td>
+          <td>Puts a smaller arrow after the figure, as list rows show it</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span><span style="color:#b48ead">24.99</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">up</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">9.39</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">positive</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#81a1c1;font-weight:bold">false</span><span style="color:#eceff4">}&gt;</span><span style="color:#b48ead">8.07</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Trend</span> <span style="color:#8fbcbb">up</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>item<span style="color:#eceff4">.</span>up<span style="color:#eceff4">}</span> <span style="color:#8fbcbb">iconEnd</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;hidden sm:flex&#34;</span><span style="color:#eceff4">&gt;{</span>item<span style="color:#eceff4">.</span>change<span style="color:#eceff4">}</span><span style="color:#81a1c1">%</span><span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">Trend</span><span style="color:#eceff4">&gt;</span>
+</span></span></code></pre></div><p><code>className</code> passes layout classes through, such as spacing or hiding the trend on phones.</p>
+<h2 id="actionbutton">ActionButton</h2>
+<p>The light blue button at the top of an app page&rsquo;s sidebar. <code>floating</code> pins a copy to the bottom right corner below 1280px, where the sidebar becomes a drawer. <a href="./secondary-sidebar.html">Secondary Sidebar</a> shows both.</p>
+<h2 id="dialog-parts">Dialog parts</h2>
+<p><code>DialogHead</code>, <code>DialogFoot</code> and <code>DismissButton</code> give every dialog the same title row and button row. <a href="./overlays.html">Overlays</a> shows them in a working dialog.</p>
+<h2 id="lightbox">Lightbox</h2>
+<p><code>Lightbox</code> shows photos one at a time over a dark backdrop, with arrows, the arrow keys and swipe to move between them. The Photos app and the User Photos page use it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> <span style="color:#eceff4">[</span>viewing<span style="color:#eceff4">,</span> setViewing<span style="color:#eceff4">]</span> <span style="color:#81a1c1">=</span> useState<span style="color:#eceff4">({</span> open: <span style="color:#81a1c1">false</span><span style="color:#eceff4">,</span> index: <span style="color:#81a1c1">0</span> <span style="color:#eceff4">});</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Lightbox</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">photos</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>ALL_PHOTOS<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">open</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>viewing<span style="color:#eceff4">.</span>open<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">index</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>viewing<span style="color:#eceff4">.</span>index<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">onOpenChange</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{(</span>open<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> setViewing<span style="color:#eceff4">((</span>current<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> <span style="color:#eceff4">...</span>current<span style="color:#eceff4">,</span> open <span style="color:#eceff4">}))}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">actions</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">IconButton</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>lightboxAction<span style="color:#eceff4">}&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Download</span> <span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sr-only&#34;</span><span style="color:#eceff4">&gt;</span>Download<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">span</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">IconButton</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>Prop</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>photos</code></td>
+          <td>A list of image addresses</td>
+      </tr>
+      <tr>
+          <td><code>open</code>, <code>onOpenChange</code></td>
+          <td>Whether the viewer is open, and the function that opens or closes it</td>
+      </tr>
+      <tr>
+          <td><code>index</code></td>
+          <td>The photo it opens on</td>
+      </tr>
+      <tr>
+          <td><code>actions</code></td>
+          <td>Buttons for the top bar. Give each one the <code>lightboxAction</code> class, which styles it for the dark backdrop</td>
+      </tr>
+  </tbody>
+</table>
+<p>To open the viewer on a photo, set <code>open</code> to <code>true</code> and <code>index</code> to the photo&rsquo;s position, for example from the photo&rsquo;s <code>onClick</code>.</p>
+<h2 id="examplecard-examplesection-and-preview">ExampleCard, ExampleSection and Preview</h2>
+<p>These three build the template&rsquo;s component and content pages: a card with a title and a description, sections inside it, and an outlined box around each sample. Use them if you add your own reference pages. Your app&rsquo;s real pages use <code>Card</code> directly.</p>
+<h2 id="the-rest">The rest</h2>
+<ul>
+<li><code>RichTextEditor</code>: <a href="./rich-text-editor.html">Rich Text Editor</a></li>
+<li><code>Logo</code>: <a href="./branding.html">Branding</a></li>
+<li><code>ChartLegend</code>: <a href="./charts.html">Charts</a></li>
+<li><code>VectorMap</code>: <a href="./maps.html">Maps</a></li>
+</ul>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#iconbutton-searchfield-and-daterangepicker">IconButton, SearchField and DateRangePicker</a></li>
+    <li><a href="#avatar-and-listrowavatar">Avatar and ListRowAvatar</a></li>
+    <li><a href="#trend">Trend</a></li>
+    <li><a href="#actionbutton">ActionButton</a></li>
+    <li><a href="#dialog-parts">Dialog parts</a></li>
+    <li><a href="#lightbox">Lightbox</a></li>
+    <li><a href="#examplecard-examplesection-and-preview">ExampleCard, ExampleSection and Preview</a></li>
+    <li><a href="#the-rest">The rest</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

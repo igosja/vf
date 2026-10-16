@@ -1,0 +1,34 @@
+<aside id="sidebar-secondary">
+  {{> _sidebar-close }}
+
+  <div class="sidebar-inner" data-simplebar>
+    <div class="sidebar-header">
+      {{> _sidebar-back}}
+
+      <h2 class="sidebar-title">AI Agent</h2>
+    </div>
+
+    <div class="sidebar-action">
+      <a href="ai-agent.html" class="btn btn-action">
+        <i class="ph ph-plus"></i>
+        New Chat
+      </a>
+    </div>
+
+    <nav class="nav nav-pills nav-pills-sidebar">
+      <a class="nav-link" href="#"><i class="ph ph-image-square"></i>Images</a>
+      <a class="nav-link" href="#"><i class="ph ph-folder"></i>Projects</a>
+      <a class="nav-link" href="#"><i class="ph ph-books"></i>Library</a>
+      <a class="nav-link" href="#"><i class="ph ph-clock"></i>Scheduled</a>
+      <a class="nav-link" href="#"><i class="ph ph-puzzle-piece"></i>Plugins</a>
+    </nav>
+
+    <div class="fs-7 text-body-secondary mb-2 lh-1">Starred</div>
+
+    <nav id="ai-starred" class="nav nav-pills nav-pills-sidebar"></nav>
+
+    <div class="fs-7 text-body-secondary mb-2 lh-1">Recents</div>
+
+    <nav id="ai-recents" class="nav nav-pills nav-pills-sidebar"></nav>
+  </div>
+</aside>

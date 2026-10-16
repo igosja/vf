@@ -1,0 +1,66 @@
+@use "sass:color";
+
+//---------------------------------------------------
+// CSS custom properties for dark/light color mode.
+// Here, the first value is for light mode and the
+// second value is for dark mode.
+//---------------------------------------------------
+$theme-custom-properties: (
+  //
+  // Theme colors to use across the template
+  "theme-50": color.adjust($gray-100, $lightness: 2%) color.adjust($dark-100, $lightness: -0.25%),
+  "theme-100": $gray-100 $dark-100,
+  "theme-200": $gray-200 $dark-200,
+  "theme-400": $gray-400 $dark-400,
+  "theme-500": $gray-500 $dark-500,
+  "theme-600": $gray-600 $dark-600,
+  "theme-700": $gray-700 $dark-700,
+  "theme-800": $gray-800 $dark-800,
+  "theme-900": $gray-900 $dark-900,
+  //
+  // Component Colors
+  "tertiary-emphasis-bg": $gray-200 $dark-200,
+  "tertiary-content-bg": $gray-100 $dark-100,
+  "secondary-content-bg": $gray-100 $dark-300,
+  //
+  // Custom theme colors
+  "theme-list-hover-bg": color.adjust($gray-100, $lightness: 3%) $dark-100,
+  "theme-component-bg": $white $dark-50,
+  "theme-popup-bg": $white $dark-100,
+  "theme-popup-hover-bg": $gray-100 $dark-300,
+  "theme-shadow-color": (106, 149, 185) (27, 40, 47),
+  "theme-backdrop-bg": rgba(0, 65, 119, 0.5) #0d181f,
+  "theme-body-highlight-bg": $gray-300 color.adjust($dark-50, $lightness: 1%),
+  "theme-body-highlight-popup-bg": color.adjust($gray-100, $lightness: -1.5%) $dark-200,
+  //
+  // Text
+  "text-invert-color": $white $black,
+  //
+  // Border
+  "border-light": $gray-100 $dark-100,
+  //
+  // Sidebar
+  "navbar-mobile-bg": $white $dark-100,
+  "sidebar-bg": $gray-200 $dark-50,
+  "sidebar-sub-bg": color.adjust($gray-100, $lightness: -1%)
+    color.adjust($dark-100, $lightness: -1.5%),
+  "sidebar-close-handle-bg": $white $dark-300,
+  "sidebar-box-shadow": rgba($gray-900, 0.1) rgba($black, 0.1),
+  "sidebar-border-color": rgba($white, 0.75) $theme-200,
+  "logo-fill": $gray-400 $dark-300,
+  //
+  // Scrollbar
+  "scrollbar-bg": $gray-400 $dark-100,
+  //
+  // Tooltips
+  "tooltips-bg": $gray-900 color.adjust($dark-900, $lightness: 25%),
+  "tooltips-color": $gray-100 color.adjust($black, $lightness: 5%),
+  //
+  // Chart
+  "map-common-fill": rgba($orange, 0.35) rgba($orange, 0.1),
+  "map-common-active-fill": $orange $orange,
+  "chart-pie-border-color": $white $card-bg
+);
+
+// Generate color mode custom properties by calling the mixin.
+@include generate-custom-properties($theme-custom-properties);

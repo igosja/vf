@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Deployment |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Deployment
+Materia builds into a folder of static files: one index.html, plus JavaScript, CSS and images. Any web host that serves static files can run it. You do not need a Node.js server in production.
+Build the site
+Run the build in the app folder:
+npm run build
+The command checks the TypeScript types first. If it finds an error, it stops and prints the file and line. Fix the error and run the build again.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="deployment">Deployment</h1>
+<p>Materia builds into a folder of static files: one <code>index.html</code>, plus JavaScript, CSS and images. Any web host that serves static files can run it. You do not need a Node.js server in production.</p>
+<h2 id="build-the-site">Build the site</h2>
+<p>Run the build in the <code>app</code> folder:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm run build
+</span></span></code></pre></div><p>The command checks the TypeScript types first. If it finds an error, it stops and prints the file and line. Fix the error and run the build again.</p>
+<p>When it succeeds, the site sits in <code>dist/</code>:</p>
+<pre tabindex="0"><code>dist/
+├── index.html
+├── assets/        JavaScript and CSS split into small files, with a hash in each name
+└── img/           A copy of public/img
+</code></pre><p>The hash in each file name changes whenever the file&rsquo;s content changes. You can tell your host to cache everything in <code>assets/</code> for a year, and visitors still get the new version after each deploy.</p>
+<p>Test the build on your own computer before you upload it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm run preview
+</span></span></code></pre></div><p>This serves <code>dist/</code> at <code>http://localhost:4173</code>. Click through a few pages, then reload the browser on a page other than the dashboard to check that it still loads.</p>
+<h2 id="send-every-address-to-indexhtml">Send every address to index.html</h2>
+<p>Materia is a single-page app. The browser downloads <code>index.html</code> once, and React Router changes the page from then on. That works until a visitor reloads the browser on <code>/apps/mail</code> or opens a bookmark to it. The browser then asks the server for <code>/apps/mail</code>, and there is no such file on the server.</p>
+<p>The fix is a rewrite rule: the server answers every address with <code>index.html</code>, and React Router reads the address and shows the right page. Each host sets this up in its own way.</p>
+<h3 id="vercel">Vercel</h3>
+<p>The template already includes the rule in <code>vercel.json</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">&#34;rewrites&#34;</span><span style="color:#eceff4">:</span> <span style="color:#eceff4">[{</span> <span style="color:#81a1c1">&#34;source&#34;</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;/(.*)&#34;</span><span style="color:#eceff4">,</span> <span style="color:#81a1c1">&#34;destination&#34;</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;/index.html&#34;</span> <span style="color:#eceff4">}]</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><p>Import the project on <a href="https://vercel.com">vercel.com</a>, and Vercel detects Vite and builds it with no further settings.</p>
+<h3 id="netlify">Netlify</h3>
+<p>Create <code>public/_redirects</code> with this line:</p>
+<pre tabindex="0"><code>/*  /index.html  200
+</code></pre><p>Vite copies it into <code>dist/</code>, and Netlify reads it from there. Set the build command to <code>npm run build</code> and the publish directory to <code>dist</code>.</p>
+<h3 id="cloudflare-pages">Cloudflare Pages</h3>
+<p>Cloudflare Pages serves <code>index.html</code> for any address that does not match a file, as long as the build has no <code>404.html</code>. Materia&rsquo;s build has none, so it works with no extra file. Set the build command to <code>npm run build</code> and the output directory to <code>dist</code>.</p>
+<h3 id="apache">Apache</h3>
+<p>Create <code>public/.htaccess</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-apache" data-lang="apache"><span style="display:flex;"><span><span style="color:#81a1c1">&lt;IfModule</span> <span style="color:#a3be8c">mod_rewrite.c</span><span style="color:#81a1c1">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteEngine</span> <span style="color:#81a1c1;font-weight:bold">On</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteBase</span> /
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteRule</span> ^index\.html$ - [L]
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteCond</span> %{REQUEST_FILENAME} !-f
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteCond</span> %{REQUEST_FILENAME} !-d
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1">RewriteRule</span> . <span style="color:#a3be8c">/index.html</span> [L]
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">&lt;/IfModule&gt;</span>
+</span></span></code></pre></div><p>The two <code>RewriteCond</code> lines leave real files, such as the JavaScript and images, alone. Your host needs <code>mod_rewrite</code> turned on, which most shared hosts have.</p>
+<h3 id="nginx">Nginx</h3>
+<p>Add <code>try_files</code> to the <code>location</code> block of your site:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">location</span> <span style="color:#a3be8c">/</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">root</span> <span style="color:#a3be8c">/var/www/materia/dist</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">try_files</span> $uri $uri/ <span style="color:#a3be8c">/index.html</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><h3 id="other-hosts">Other hosts</h3>
+<p>Look in your host&rsquo;s documentation for &ldquo;single-page app&rdquo;, &ldquo;SPA fallback&rdquo; or &ldquo;rewrite to index.html&rdquo;. If the host cannot rewrite addresses, the site still loads from its home page, but reloading any other page shows the host&rsquo;s 404 page.</p>
+<h2 id="deploy-to-a-sub-folder">Deploy to a sub-folder</h2>
+<p>The template expects to live at the root of a domain, such as <code>https://admin.example.com/</code>. A sub-domain is the simplest setup. To serve it from a folder instead, such as <code>https://example.com/admin/</code>, change three things.</p>
+<p><strong>1. Tell Vite the folder.</strong> In <code>vite.config.ts</code>, add <code>base</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">default</span> defineConfig<span style="color:#eceff4">({</span>
+</span></span><span style="display:flex;"><span>	base<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/admin/&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	plugins<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>react<span style="color:#eceff4">(),</span> tailwindcss<span style="color:#eceff4">()],</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#616e87;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p>Vite then adjusts the paths in <code>index.html</code>, the CSS <code>url()</code> references and the imported files.</p>
+<p><strong>2. Tell React Router the folder.</strong> In <code>src/main.tsx</code>, pass <code>basename</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> router <span style="color:#81a1c1">=</span> createBrowserRouter<span style="color:#eceff4">(</span>routes<span style="color:#eceff4">,</span> <span style="color:#eceff4">{</span> basename<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;/admin&#34;</span> <span style="color:#eceff4">});</span>
+</span></span></code></pre></div><p><strong>3. Fix the image paths in the code.</strong> Pages refer to images in <code>public/img</code> with paths that start at the root, such as <code>&quot;/img/contacts/2.jpg&quot;</code>. Vite does not rewrite paths written inside your code. Prefix them with <code>import.meta.env.BASE_URL</code>, which Vite fills in with the <code>base</code> you set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">img</span> <span style="color:#8fbcbb">src</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#a3be8c">`</span><span style="color:#a3be8c">${</span><span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">.</span>meta<span style="color:#eceff4">.</span>env<span style="color:#eceff4">.</span>BASE_URL<span style="color:#a3be8c">}</span><span style="color:#a3be8c">img/contacts/2.jpg`</span><span style="color:#eceff4">}</span> <span style="color:#8fbcbb">alt</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p>Search <code>src/</code> for <code>&quot;/img/</code> to find each one. About two dozen files in <code>src/pages</code>, <code>src/data</code> and <code>src/components</code> use them.</p>
+<p>Then update your host&rsquo;s rewrite rule to point at <code>/admin/index.html</code>.</p>
+<h2 id="environment-variables">Environment variables</h2>
+<p>Vite reads <code>.env</code> files in the <code>app</code> folder. Only variables that start with <code>VITE_</code> reach your code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># .env.production</span>
+</span></span><span style="display:flex;"><span>VITE_API_URL<span style="color:#81a1c1">=</span>https://api.example.com
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> response <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">await</span> fetch<span style="color:#eceff4">(</span><span style="color:#a3be8c">`</span><span style="color:#a3be8c">${</span><span style="color:#81a1c1;font-weight:bold">import</span><span style="color:#eceff4">.</span>meta<span style="color:#eceff4">.</span>env<span style="color:#eceff4">.</span>VITE_API_URL<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/orders`</span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>Vite writes these values into the JavaScript at build time, so anyone who opens your site can read them. Never put a secret key in a <code>VITE_</code> variable. The template&rsquo;s <code>.gitignore</code> keeps <code>.env</code> files out of Git, except <code>.env.example</code>.</p>
+<h2 id="checklist-before-you-go-live">Checklist before you go live</h2>
+<ol>
+<li><code>npm run build</code> finishes with no errors.</li>
+<li><code>npm run preview</code> works, including a reload on a page other than the dashboard.</li>
+<li>The host has a rewrite rule that sends every address to <code>index.html</code>.</li>
+<li>You changed the page title in <code>index.html</code> and the favicon in <code>public/img/favicon/</code>. <a href="./branding.html">Branding</a> lists everything that carries the template&rsquo;s name.</li>
+<li>You removed the demo pages you do not need. <a href="./removing-features.html">Removing Features</a> explains how.</li>
+</ol>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#build-the-site">Build the site</a></li>
+    <li><a href="#send-every-address-to-indexhtml">Send every address to index.html</a>
+      <ul>
+        <li><a href="#vercel">Vercel</a></li>
+        <li><a href="#netlify">Netlify</a></li>
+        <li><a href="#cloudflare-pages">Cloudflare Pages</a></li>
+        <li><a href="#apache">Apache</a></li>
+        <li><a href="#nginx">Nginx</a></li>
+        <li><a href="#other-hosts">Other hosts</a></li>
+      </ul>
+    </li>
+    <li><a href="#deploy-to-a-sub-folder">Deploy to a sub-folder</a></li>
+    <li><a href="#environment-variables">Environment variables</a></li>
+    <li><a href="#checklist-before-you-go-live">Checklist before you go live</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

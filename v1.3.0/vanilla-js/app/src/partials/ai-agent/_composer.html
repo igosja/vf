@@ -1,0 +1,119 @@
+<form
+  class="ai-composer rounded-4 p-3 pb-2.5 mw-800 mx-auto w-100"
+  data-ai-composer
+  action="ai-agent-chat.html"
+>
+  <label class="visually-hidden" for="ai-composer-input">Message</label>
+  <textarea
+    id="ai-composer-input"
+    class="ai-composer-input d-block w-100 border-0 bg-transparent px-2 pt-1 pb-2 fs-5 text-body-emphasis"
+    rows="1"
+    placeholder="{{ placeholder }}"
+  ></textarea>
+
+  <div class="d-flex align-items-center gap-1">
+    <!-- Attach -->
+    <div class="dropdown">
+      <button type="button" class="icon ph ph-plus" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Add content</span>
+      </button>
+      <div class="dropdown-menu">
+        <a href="#" class="dropdown-item"><i class="ph ph-upload"></i>Upload files</a>
+        <a href="#" class="dropdown-item"><i class="ph ph-camera"></i>Take a screenshot</a>
+        <a href="#" class="dropdown-item"><i class="ph ph-folder-simple"></i>Add to project</a>
+        <a href="#" class="dropdown-item"><i class="ph ph-hard-drives"></i>Add from Drive</a>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="dropdown">
+      <button
+        type="button"
+        class="icon ph ph-sliders-horizontal"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        <span class="visually-hidden">Tools</span>
+      </button>
+      <div class="dropdown-menu w-64">
+        <label class="dropdown-item" for="ai-tool-search">
+          <i class="ph ph-globe"></i>
+          <span class="flex-grow-1">Web search</span>
+          <span class="form-check form-switch my-n1">
+            <input class="form-check-input" type="checkbox" id="ai-tool-search" checked />
+            <span class="form-check-label"></span>
+          </span>
+        </label>
+        <label class="dropdown-item" for="ai-tool-thinking">
+          <i class="ph ph-lightbulb"></i>
+          <span class="flex-grow-1">Extended thinking</span>
+          <span class="form-check form-switch my-n1">
+            <input class="form-check-input" type="checkbox" id="ai-tool-thinking" />
+            <span class="form-check-label"></span>
+          </span>
+        </label>
+        <label class="dropdown-item" for="ai-tool-research">
+          <i class="ph ph-binoculars"></i>
+          <span class="flex-grow-1">Deep research</span>
+          <span class="form-check form-switch my-n1">
+            <input class="form-check-input" type="checkbox" id="ai-tool-research" />
+            <span class="form-check-label"></span>
+          </span>
+        </label>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item"><i class="ph ph-plugs-connected"></i>Manage connectors</a>
+      </div>
+    </div>
+
+    <i class="ms-auto"></i>
+
+    <!-- Model -->
+    <div class="dropdown">
+      <button type="button" class="icon-link fs-7" data-bs-toggle="dropdown" aria-expanded="false">
+        <span data-ai-model-label>Materia Pro</span>
+        <i class="ph ph-caret-down fs-8"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-end w-72">
+        <button type="button" class="dropdown-item text-wrap" data-ai-model="Materia Pro">
+          <span class="flex-grow-1">
+            <span class="d-block text-body-emphasis">Materia Pro</span>
+            <span class="d-block fs-8 text-body-secondary">Most capable for complex work</span>
+          </span>
+          <i class="ph ph-check ms-3 me-0 text-primary"></i>
+        </button>
+        <button type="button" class="dropdown-item text-wrap" data-ai-model="Materia">
+          <span class="flex-grow-1">
+            <span class="d-block text-body-emphasis">Materia</span>
+            <span class="d-block fs-8 text-body-secondary"
+              >Smart and efficient for everyday tasks</span
+            >
+          </span>
+          <i class="ph ph-check ms-3 me-0 text-primary opacity-0"></i>
+        </button>
+        <button type="button" class="dropdown-item text-wrap" data-ai-model="Materia Lite">
+          <span class="flex-grow-1">
+            <span class="d-block text-body-emphasis">Materia Lite</span>
+            <span class="d-block fs-8 text-body-secondary">Fastest for quick answers</span>
+          </span>
+          <i class="ph ph-check ms-3 me-0 text-primary opacity-0"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Voice -->
+    <button type="button" class="icon ph ph-microphone d-none d-sm-inline-flex">
+      <span class="visually-hidden">Voice input</span>
+    </button>
+
+    <!-- Send -->
+    <button
+      type="submit"
+      class="ai-composer-send d-inline-grid place-content-center flex-shrink-0 w-9 h-9 ms-1 rounded-3 fs-4"
+      disabled
+    >
+      <i class="ph ph-arrow-up"></i>
+      <span class="visually-hidden">Send message</span>
+    </button>
+  </div>
+</form>

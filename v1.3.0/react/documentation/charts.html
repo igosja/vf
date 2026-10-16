@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Charts |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Charts
+Every chart in Materia uses Chart.js 4 through react-chartjs-2, which turns each chart type into a React component: &lt;Line&gt;, &lt;Bar&gt;, &lt;Doughnut&gt;, &lt;Pie&gt;, &lt;Scatter&gt; and &lt;Chart&gt; for mixed charts. The Charts page at /charts shows every type the template uses.
+The previews below are the template&rsquo;s own dashboard cards, running with their real data. Point at a chart to see its tooltip, and switch the preview to Dark to see the chart follow.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="charts">Charts</h1>
+<p>Every chart in Materia uses <a href="https://www.chartjs.org/docs/latest/">Chart.js 4</a> through <a href="https://react-chartjs-2.js.org">react-chartjs-2</a>, which turns each chart type into a React component: <code>&lt;Line&gt;</code>, <code>&lt;Bar&gt;</code>, <code>&lt;Doughnut&gt;</code>, <code>&lt;Pie&gt;</code>, <code>&lt;Scatter&gt;</code> and <code>&lt;Chart&gt;</code> for mixed charts. The Charts page at <code>/charts</code> shows every type the template uses.</p>
+<p>The previews below are the template&rsquo;s own dashboard cards, running with their real data. Point at a chart to see its tooltip, and switch the preview to Dark to see the chart follow.</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;chart-sales-history&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+
+<h2 id="a-chart-card-step-by-step">A chart card, step by step</h2>
+<p>This is the Sales History card from <code>src/pages/dashboards/e-commerce/sales-history.tsx</code>, shortened to its chart:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> addDays <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;date-fns&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Line <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;react-chartjs-2&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> alpha<span style="color:#eceff4">,</span> areaGradient<span style="color:#eceff4">,</span> CHART_COLORS<span style="color:#eceff4">,</span> useChartTheme <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/charts/use-chart-theme&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> SALES_HISTORY<span style="color:#eceff4">,</span> <span style="color:#81a1c1;font-weight:bold">type</span> DailySeries <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/data/e-commerce&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> points <span style="color:#81a1c1">=</span> <span style="color:#eceff4">(</span>series: <span style="color:#81a1c1">DailySeries</span><span style="color:#eceff4">,</span> values: <span style="color:#81a1c1">number</span><span style="color:#eceff4">[])</span> <span style="color:#81a1c1">=&gt;</span> values<span style="color:#eceff4">.</span>map<span style="color:#eceff4">((</span>y<span style="color:#eceff4">,</span> i<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#eceff4">({</span> x: <span style="color:#81a1c1">addDays</span><span style="color:#eceff4">(</span>series<span style="color:#eceff4">.</span>start<span style="color:#eceff4">,</span> i<span style="color:#eceff4">).</span>getTime<span style="color:#eceff4">(),</span> y <span style="color:#eceff4">}));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">function</span> SalesHistory() {
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> theme <span style="color:#81a1c1">=</span> useChartTheme<span style="color:#eceff4">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">const</span> options <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>		maintainAspectRatio: <span style="color:#81a1c1">false</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		interaction<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> mode<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;index&#34;</span> <span style="color:#81a1c1;font-weight:bold">as</span> <span style="color:#81a1c1;font-weight:bold">const</span><span style="color:#eceff4">,</span> intersect: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		layout<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> padding<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> left<span style="color:#81a1c1">:</span> <span style="color:#81a1c1">-</span><span style="color:#b48ead">5</span> <span style="color:#eceff4">}</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		scales<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>			x<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">type</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;time&#34;</span> <span style="color:#81a1c1;font-weight:bold">as</span> <span style="color:#81a1c1;font-weight:bold">const</span><span style="color:#eceff4">,</span> border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span> ticks<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> <span style="color:#eceff4">...</span>theme<span style="color:#eceff4">.</span>ticks<span style="color:#eceff4">(),</span> maxTicksLimit: <span style="color:#81a1c1">8</span> <span style="color:#eceff4">}</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			y<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>				min: <span style="color:#81a1c1">100</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				max: <span style="color:#81a1c1">120</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>				grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				ticks<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> <span style="color:#eceff4">...</span>theme<span style="color:#eceff4">.</span>ticks<span style="color:#eceff4">(),</span> maxTicksLimit: <span style="color:#81a1c1">7</span><span style="color:#eceff4">,</span> callback<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span>label: <span style="color:#81a1c1">string</span> <span style="color:#81a1c1">|</span> <span style="color:#81a1c1">number</span><span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> <span style="color:#a3be8c">`</span><span style="color:#a3be8c">${</span>label<span style="color:#a3be8c">}</span><span style="color:#a3be8c">K`</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		plugins<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> legend<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> tooltip: <span style="color:#81a1c1">theme.tooltip</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">div</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;h-66&#34;</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Line</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#8fbcbb">options</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>options<span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#8fbcbb">data</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>					datasets<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>							label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Current Month&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							data: <span style="color:#81a1c1">points</span><span style="color:#eceff4">(</span>SALES_HISTORY<span style="color:#eceff4">,</span> SALES_HISTORY<span style="color:#eceff4">.</span>current<span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>							fill: <span style="color:#81a1c1">true</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							backgroundColor<span style="color:#81a1c1">:</span> <span style="color:#eceff4">(</span>context<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> areaGradient<span style="color:#eceff4">(</span>context<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.9</span><span style="color:#eceff4">,</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>cyan<span style="color:#eceff4">,</span> <span style="color:#b48ead">0.2</span><span style="color:#eceff4">),</span> alpha<span style="color:#eceff4">(</span>CHART_COLORS<span style="color:#eceff4">.</span>cyan<span style="color:#eceff4">,</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">)),</span>
+</span></span><span style="display:flex;"><span>							borderColor: <span style="color:#81a1c1">CHART_COLORS.cyan</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							borderWidth: <span style="color:#81a1c1">1.25</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							tension: <span style="color:#81a1c1">0.4</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							pointRadius: <span style="color:#81a1c1">0</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>							pointHoverBackgroundColor: <span style="color:#81a1c1">CHART_COLORS.cyan</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#eceff4">}}</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">&lt;/</span><span style="color:#81a1c1">div</span><span style="color:#eceff4">&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span></code></pre></div><p>The pieces, in order:</p>
+<ol>
+<li><strong><code>useChartTheme()</code></strong> returns the colors and fonts for the axes, the grid lines and the tooltip in the current color mode. Spread them into the options: <code>grid: theme.grid</code>, <code>ticks: theme.ticks()</code>, <code>tooltip: theme.tooltip</code>. <a href="./chart-colors.html">Chart Colors</a> explains each one.</li>
+<li><strong><code>maintainAspectRatio: false</code></strong> lets the chart fill its container. The container sets the height with a class, here <code>h-66</code>. A chart without a height on its container collapses.</li>
+<li><strong><code>interaction: { mode: &quot;index&quot;, intersect: false }</code></strong> shows one tooltip with every series at the point under the pointer, anywhere above it, not only on the line itself.</li>
+<li><strong><code>legend: { display: false }</code></strong> hides Chart.js&rsquo;s own legend. The cards draw a <code>ChartLegend</code> under the chart instead, which matches the rest of the design.</li>
+<li><strong><code>CHART_COLORS</code></strong> holds the palette colors for series, and <code>alpha()</code> fades one for fills.</li>
+<li><strong>The data</strong> comes from a file in <code>src/data/</code>. Each dashboard card file keeps its options and its helper functions, such as <code>points</code> here, next to the chart.</li>
+</ol>
+<h2 id="bars-lines-and-mixed-charts">Bars, lines and mixed charts</h2>
+<p>Use <code>&lt;Chart type=&quot;bar&quot;&gt;</code> to combine bars and a line in one chart. Each dataset then sets its own <code>type</code>. The MRR Movement card stacks three bar series and draws the net total as a line over them:</p>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;chart-mrr-movement&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+
+<p>Here is its chart, shortened to the settings that matter:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Chart</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">type</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bar&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">options</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>		maintainAspectRatio: <span style="color:#81a1c1">false</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		interaction<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> mode<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;index&#34;</span><span style="color:#eceff4">,</span> intersect: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		scales<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>			x<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> stacked: <span style="color:#81a1c1">true</span><span style="color:#eceff4">,</span> border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span> ticks: <span style="color:#81a1c1">theme.ticks</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			y<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> stacked: <span style="color:#81a1c1">true</span><span style="color:#eceff4">,</span> border<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> grid: <span style="color:#81a1c1">theme.grid</span><span style="color:#eceff4">,</span> ticks: <span style="color:#81a1c1">theme.ticks</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		plugins<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> legend<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> tooltip: <span style="color:#81a1c1">theme.tooltip</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">}}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">data</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>		labels: <span style="color:#81a1c1">MRR_MOVEMENT.labels</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		datasets<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">type</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;line&#34;</span><span style="color:#eceff4">,</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Net new MRR&#34;</span><span style="color:#eceff4">,</span> data: <span style="color:#81a1c1">NET</span><span style="color:#eceff4">,</span> borderColor: <span style="color:#81a1c1">CHART_COLORS.amber</span><span style="color:#eceff4">,</span> order: <span style="color:#81a1c1">1</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">type</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bar&#34;</span><span style="color:#eceff4">,</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;New&#34;</span><span style="color:#eceff4">,</span> data: <span style="color:#81a1c1">MRR_MOVEMENT.new</span><span style="color:#eceff4">,</span> backgroundColor: <span style="color:#81a1c1">CHART_COLORS.emerald</span><span style="color:#eceff4">,</span> stack<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;mrr&#34;</span><span style="color:#eceff4">,</span> order: <span style="color:#81a1c1">2</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">type</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bar&#34;</span><span style="color:#eceff4">,</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Expansion&#34;</span><span style="color:#eceff4">,</span> data: <span style="color:#81a1c1">MRR_MOVEMENT.expansion</span><span style="color:#eceff4">,</span> backgroundColor: <span style="color:#81a1c1">CHART_COLORS.sky</span><span style="color:#eceff4">,</span> stack<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;mrr&#34;</span><span style="color:#eceff4">,</span> order: <span style="color:#81a1c1">2</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">type</span><span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bar&#34;</span><span style="color:#eceff4">,</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Churned&#34;</span><span style="color:#eceff4">,</span> data: <span style="color:#81a1c1">MRR_MOVEMENT.churned</span><span style="color:#eceff4">,</span> backgroundColor: <span style="color:#81a1c1">CHART_COLORS.red</span><span style="color:#eceff4">,</span> stack<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;mrr&#34;</span><span style="color:#eceff4">,</span> order: <span style="color:#81a1c1">2</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p><code>stacked: true</code> on both axes piles the bars with the same <code>stack</code> name on top of each other. A lower <code>order</code> draws on top, so the line sits over the bars.</p>
+<h2 id="doughnuts-and-pies">Doughnuts and pies</h2>
+<div class="preview not-prose" data-mode="light">
+	<div class="preview-bar" role="group" aria-label="Colour mode">
+		<button type="button" data-mode="light" aria-pressed="true">Light</button>
+		<button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+	</div>
+	<iframe class="preview-frame" title="Preview" srcdoc="&lt;!doctype html&gt;&lt;html class=&#34;light&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;utf-8&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.googleapis.com&#34;&gt;&lt;link rel=&#34;preconnect&#34; href=&#34;https://fonts.gstatic.com&#34; crossorigin&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap&#34;&gt;&lt;link rel=&#34;stylesheet&#34; href=&#34;css/preview.b0fa04c488eb1d97d2a2fc2c1472b8f611e536f9af92683bbe17ab46556688f2.css&#34;&gt;&lt;/head&gt;&lt;body class=&#34;bg-background p-6&#34;&gt;&lt;div id=&#34;preview&#34;&gt;&lt;/div&gt;&lt;script src=&#34;js/previews.9f201eaaae2bc0a8f89edf9474545c3a726a10f0045cb402eb2cfd0879fc118b.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;
+	const report = () =&gt; parent.postMessage({ preview: &#34;height&#34;, height: Math.max(document.documentElement.scrollHeight, 0) }, &#34;*&#34;);
+	new ResizeObserver(report).observe(document.body);
+	document.fonts.ready.then(report);
+	addEventListener(&#34;message&#34;, (event) =&gt; {
+		if (!event.data || event.data.preview !== &#34;mode&#34;) return;
+		document.documentElement.className = event.data.mode;
+		if (window.MateriaPreviews) MateriaPreviews.refresh();
+	});
+	if (window.MateriaPreviews) MateriaPreviews.mount(&#34;chart-plan-mix&#34;);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+
+<p>A doughnut takes one dataset with one color per slice:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">Doughnut</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">options</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>		maintainAspectRatio: <span style="color:#81a1c1">false</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		animation: <span style="color:#81a1c1">false</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		cutout<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;68%&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>		plugins<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> legend<span style="color:#81a1c1">:</span> <span style="color:#eceff4">{</span> display: <span style="color:#81a1c1">false</span> <span style="color:#eceff4">},</span> tooltip: <span style="color:#81a1c1">theme.tooltip</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">}}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">data</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{{</span>
+</span></span><span style="display:flex;"><span>		labels: <span style="color:#81a1c1">PLAN_MIX.map</span><span style="color:#eceff4">((</span>item<span style="color:#eceff4">)</span> <span style="color:#81a1c1">=&gt;</span> item<span style="color:#eceff4">.</span>plan<span style="color:#eceff4">),</span>
+</span></span><span style="display:flex;"><span>		datasets<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>				data: <span style="color:#81a1c1">MRR</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				backgroundColor<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>CHART_COLORS<span style="color:#eceff4">.</span>cyan<span style="color:#eceff4">,</span> CHART_COLORS<span style="color:#eceff4">.</span>sky<span style="color:#eceff4">,</span> CHART_COLORS<span style="color:#eceff4">.</span>purple<span style="color:#eceff4">,</span> CHART_COLORS<span style="color:#eceff4">.</span>amber<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>				borderWidth: <span style="color:#81a1c1">2</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				borderColor: <span style="color:#81a1c1">theme.pieBorder</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>				borderRadius: <span style="color:#81a1c1">5</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p><code>borderColor: theme.pieBorder</code> draws the gaps between slices in the card color, so they look like empty space in both color modes. The number in the middle is a normal element laid over the chart with <code>absolute inset-0</code>.</p>
+<h2 id="the-legend">The legend</h2>
+<p><code>ChartLegend</code> from <code>src/components/charts/chart-legend.tsx</code> draws the key under a chart. Each item takes a label and a background class that matches the series color:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">ChartLegend</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8fbcbb">items</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{[</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;New&#34;</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-emerald-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Expansion&#34;</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-sky-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Churned&#34;</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-red-400&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#eceff4">{</span> label<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Net new MRR&#34;</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-amber-400&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">]}</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p>Use the class that matches the <code>CHART_COLORS</code> key of the series: <code>CHART_COLORS.emerald</code> goes with <code>bg-emerald-500</code>. <a href="./colors.html">Colors</a> lists the pairs.</p>
+<h2 id="dates-on-an-axis">Dates on an axis</h2>
+<p>Charts with dates on the x axis use <code>type: &quot;time&quot;</code>. Chart.js needs a date library for time axes, and the template connects <a href="https://date-fns.org">date-fns</a> through <code>chartjs-adapter-date-fns</code>, imported once in <code>use-chart-theme.ts</code>. Pass each point as <code>{ x: timestamp, y: value }</code>, as the <code>points</code> helper above does.</p>
+<h2 id="adding-a-chart-type">Adding a chart type</h2>
+<p>Chart.js only includes the parts you register, which keeps the bundle small. <code>src/components/charts/use-chart-theme.ts</code> registers the parts the template uses:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span>Chart<span style="color:#eceff4">.</span>register<span style="color:#eceff4">(</span>
+</span></span><span style="display:flex;"><span>	ArcElement<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	BarController<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	BarElement<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	CategoryScale<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	DoughnutController<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Filler<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	LinearScale<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	LineController<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	LineElement<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	PieController<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	PointElement<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	ScatterController<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	TimeScale<span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	Tooltip
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>To use a chart type the template does not include, register its parts there. A radar chart needs its controller and its scale:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> RadarController<span style="color:#eceff4">,</span> RadialLinearScale <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;chart.js&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Chart<span style="color:#eceff4">.</span>register<span style="color:#eceff4">(</span><span style="color:#616e87;font-style:italic">/* ...the existing parts, */</span> RadarController<span style="color:#eceff4">,</span> RadialLinearScale<span style="color:#eceff4">);</span>
+</span></span></code></pre></div><p>Then render <code>&lt;Radar&gt;</code> from <code>react-chartjs-2</code>. The <a href="https://www.chartjs.org/docs/latest/getting-started/integration.html">Chart.js integration guide</a> lists the parts each chart type needs. If a chart stays blank and the browser console says that something &ldquo;is not a registered controller&rdquo;, &ldquo;element&rdquo; or &ldquo;scale&rdquo;, a part is missing from this list.</p>
+<h2 id="chart-sizes-on-small-screens">Chart sizes on small screens</h2>
+<p>Each chart fills the width of its card and keeps the height its container sets. Chart.js redraws when the card changes size. For a chart that needs more room on a phone, set a responsive height on the container, such as <code>h-52 md:h-66</code>.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#a-chart-card-step-by-step">A chart card, step by step</a></li>
+    <li><a href="#bars-lines-and-mixed-charts">Bars, lines and mixed charts</a></li>
+    <li><a href="#doughnuts-and-pies">Doughnuts and pies</a></li>
+    <li><a href="#the-legend">The legend</a></li>
+    <li><a href="#dates-on-an-axis">Dates on an axis</a></li>
+    <li><a href="#adding-a-chart-type">Adding a chart type</a></li>
+    <li><a href="#chart-sizes-on-small-screens">Chart sizes on small screens</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

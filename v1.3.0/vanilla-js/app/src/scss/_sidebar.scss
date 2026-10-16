@@ -1,0 +1,503 @@
+@use "sass:color";
+
+#sidebar {
+  z-index: $navbar-z-index - 1;
+  transition:
+    transform 300ms,
+    opacity 300ms;
+  will-change: transform;
+  background-color: var(--bs-sidebar-bg);
+  flex-shrink: 0;
+  width: $sidebar-width;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+
+  @include media-breakpoint-down(xl) {
+    transform: translate3d(-105%, 0, 0);
+    width: $sidebar-mobile-width;
+    z-index: $navbar-z-index + 3;
+    left: 0.5rem;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+    border-radius: $border-radius-xl;
+    background-color: var(--bs-sidebar-sub-bg);
+
+    &.toggled {
+      transform: translate3d(0, 0, 0);
+
+      .sidebar-close {
+        display: block;
+      }
+    }
+  }
+
+  .sidebar-inner {
+    @include hide-scrollbar();
+
+    @include media-breakpoint-up(xl) {
+      padding: 0;
+      overflow-y: hidden;
+
+      // Rail layer above the flyout panel, so the panel slides out from behind it
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: $sidebar-width;
+        background-color: var(--bs-sidebar-bg);
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .logo,
+      .menu > li > div {
+        position: relative;
+        z-index: 3;
+      }
+    }
+  }
+}
+
+.sidebar-inner {
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include media-breakpoint-down(xl) {
+    margin: -0.5rem 0 1.5rem;
+  }
+}
+
+#sidebar-back,
+.sidebar-close {
+  display: none;
+}
+
+#sidebar-back {
+  @include media-breakpoint-down(xl) {
+    display: inline-flex;
+  }
+}
+
+.sidebar-close {
+  & > span {
+    font-size: 0;
+    height: 5rem;
+    width: 0.4rem;
+    background-color: var(--bs-sidebar-close-handle-bg);
+    border-radius: $border-radius-pill;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    right: -0.9rem;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.sidebar-action {
+  --sidebar-action-end-bg: rgb(var(--bs-body-bg-rgb));
+
+  position: sticky;
+  top: 0;
+  padding: 0.75rem;
+  background: linear-gradient(0deg, transparent 0, var(--sidebar-action-end-bg) 0.75rem);
+  margin: 0 -0.35rem 1rem;
+  z-index: 1;
+
+  .btn {
+    margin-left: -0.75rem;
+  }
+
+  @include media-breakpoint-down(xl) {
+    --sidebar-action-end-bg: var(--bs-sidebar-sub-bg);
+  }
+}
+
+.sidebar-title {
+  font-size: $font-size-lg;
+  margin: 0;
+  color: var(--bs-emphasis-color);
+}
+
+// Logo
+.logo {
+  display: block;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  @include media-breakpoint-up(xl) {
+    padding: 1.5rem 0 0.5rem;
+    justify-content: center;
+  }
+
+  svg {
+    path {
+      &:first-child {
+        fill: var(--bs-logo-fill);
+      }
+
+      &:last-child {
+        fill: var(--bs-emphasis-color);
+      }
+    }
+  }
+}
+
+// Menu
+.menu {
+  --menu-link-color: var(--#{$prefix}emphasis-color);
+  --menu-icon-scale: 0.8;
+  --menu-icon-opacity: 0;
+  --menu-link-bg: transparent;
+  --menu-link-highlight-bg: #{rgba($blue, 0.1)};
+  --menu-link-hover-color: #{color.adjust($blue, $lightness: -2.5%)};
+
+  flex: 1 1 auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+
+  & > li {
+    padding-block: 0.75rem;
+
+    &:has(a.active) {
+      & > div {
+        --menu-link-color: var(--menu-link-hover-color);
+        --menu-icon-scale: 1;
+        --menu-icon-opacity: 1;
+      }
+    }
+
+    & > a,
+    & > div {
+      color: var(--menu-link-color);
+      text-align: center;
+      display: block;
+      font-size: $font-size-sm;
+      transition: color 200ms;
+
+      @include media-breakpoint-down(xl) {
+        text-align: left;
+        margin-bottom: 0.5rem;
+        color: var(--bs-secondary-color);
+      }
+
+      & > .ph {
+        font-size: 1.5rem;
+        position: relative;
+        isolation: isolate;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+
+        &:after {
+          content: "";
+          position: absolute;
+          inset: -0.15rem -0.8rem;
+          background-color: var(--menu-link-highlight-bg);
+          z-index: -1;
+          border-radius: 2rem;
+          transform: scale(var(--menu-icon-scale));
+          opacity: var(--menu-icon-opacity);
+          transition:
+            transform 200ms,
+            opacity 200ms,
+            background-color 200ms;
+        }
+
+        @include media-breakpoint-down(xl) {
+          display: none;
+        }
+      }
+
+      & > span {
+        display: block;
+        line-height: 1;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      & > div {
+        cursor: default;
+        outline: 0;
+      }
+
+      // Section shown in the flyout panel
+      &.previewing > div {
+        --menu-icon-scale: 1;
+        --menu-icon-opacity: 1;
+      }
+
+      // Current page's section steps back while another one is previewed
+      #sidebar.menu-open &:has(a.active):not(.previewing) > div {
+        --menu-link-color: var(--bs-emphasis-color);
+        --menu-icon-scale: 0.8;
+        --menu-icon-opacity: 0;
+      }
+    }
+
+    & > ul {
+      list-style: none;
+
+      // Section menus share one panel: only their content cross-fades
+      @include media-breakpoint-up(xl) {
+        @include hide-scrollbar();
+        overflow-y: auto;
+        position: absolute;
+        top: 0;
+        left: $sidebar-width;
+        z-index: 1;
+        width: $sidebar-panel-width;
+        height: 100%;
+        margin: 0;
+        padding: 1.5rem 0.75rem;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 200ms ease-in,
+          transform 200ms ease-in,
+          visibility 0s 200ms;
+
+        // Ride in with the panel when it opens
+        #sidebar:not(.menu-open) & {
+          transform: translate3d(var(--menu-panel-offset), 0, 0);
+        }
+      }
+
+      @include media-breakpoint-down(xl) {
+        padding: 0;
+        margin: 0 -1rem;
+      }
+
+      & > li {
+        margin-bottom: 1px;
+
+        & > a {
+          color: var(--menu-link-color);
+          background-color: var(--menu-link-bg);
+          height: 2.4rem;
+          display: flex;
+          gap: 0.8rem;
+          padding: 0 1rem;
+          align-items: center;
+          border-radius: $border-radius-pill;
+          transition: background-color 300ms;
+          white-space: nowrap;
+
+          & > .ph {
+            font-size: 1.2rem;
+          }
+
+          &.active {
+            --menu-link-color: #{$blue};
+            --menu-link-bg: var(--menu-link-highlight-bg);
+          }
+
+          &:not(.active) {
+            &:hover {
+              --menu-link-bg: var(--bs-tertiary-emphasis-bg);
+            }
+          }
+        }
+      }
+    }
+
+    &.previewing > ul {
+      @include media-breakpoint-up(xl) {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+          opacity 200ms var(--menu-swap-delay, 0ms) ease-out,
+          transform 400ms var(--menu-panel-ease),
+          visibility 0s;
+      }
+    }
+  }
+}
+
+// Flyout panel motion, shared by the panel shell and the section menus
+#sidebar {
+  --menu-panel-offset: -1.25rem;
+  --menu-panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    --menu-panel-offset: 0;
+  }
+}
+
+// Shared flyout panel shell: opens once, stays open while switching sections
+.menu-panel {
+  display: none;
+
+  @include media-breakpoint-up(xl) {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: $sidebar-width;
+    width: $sidebar-panel-width;
+    height: 100%;
+    background-color: var(--bs-sidebar-sub-bg);
+    border-right: 1px solid var(--bs-sidebar-border-color);
+    border-radius: 0 1rem 1rem 0;
+    box-shadow: 0.35rem 0 0.35rem 0 var(--bs-sidebar-box-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(var(--menu-panel-offset), 0, 0);
+    pointer-events: none;
+    transition:
+      opacity 180ms ease-in,
+      transform 200ms ease-in,
+      visibility 0s 200ms;
+
+    #sidebar.menu-open & {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition:
+        opacity 250ms ease-out,
+        transform 400ms var(--menu-panel-ease),
+        visibility 0s;
+    }
+  }
+}
+
+.menu-sub {
+  &.opened {
+    & > a {
+      &:after {
+        transform: rotate(90deg);
+      }
+
+      &:before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    & > ul {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &.active {
+    --menu-link-bg: var(--menu-link-highlight-bg);
+
+    & > a {
+      --menu-link-color: #{$blue};
+    }
+
+    & > ul {
+      display: block;
+    }
+  }
+
+  & > a {
+    position: relative;
+
+    &:after {
+      opacity: 1;
+      @include font-icon("\E13A", $font-size-sm);
+      position: absolute;
+      right: 0.8rem;
+      top: 0.6rem;
+      transition:
+        transform 300ms,
+        opacity 300ms;
+      pointer-events: none;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  & > ul {
+    padding: 0 0 0 2.25rem;
+    list-style: none;
+    overflow: hidden;
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+    display: none;
+    margin: 0;
+    will-change: height, opacity;
+    transition:
+      height 300ms,
+      opacity 400ms;
+
+    & > li {
+      & > a {
+        font-size: $font-size-md;
+        display: block;
+        padding: 0.25rem 0.75rem;
+        color: var(--menu-link-color);
+        transition: color 300ms;
+        border-radius: $border-radius-pill;
+        white-space: nowrap;
+      }
+
+      &:hover > a,
+      & > a.active {
+        --menu-link-color: #{$blue};
+      }
+
+      &:last-child {
+        padding-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// Sidebar list
+// Secondary sidebar in 2 and 3 column layouts
+// e.g contacts, messages, file manager, etc
+#sidebar-secondary {
+  height: 100vh;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  width: $sidebar-mobile-width;
+
+  @include media-breakpoint-up(xl) {
+    padding: 0 0.25rem;
+  }
+
+  @include media-breakpoint-down(xl) {
+    background-color: var(--bs-sidebar-sub-bg);
+    will-change: transform, opacity;
+    position: fixed;
+    left: 0.5rem;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+    z-index: $navbar-z-index + 3;
+    border-radius: $border-radius-xl;
+    border-right: 1px solid var(--#{$prefix}sidebar-mobile-border-color);
+    transform: translate3d(-100%, 0, 0);
+    transition:
+      transform 300ms,
+      opacity 300ms;
+    opacity: 0;
+
+    &.toggled {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+
+      .sidebar-close {
+        display: block;
+      }
+    }
+  }
+}

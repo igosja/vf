@@ -1,0 +1,96 @@
+<div class="header">
+  {{> _sidebar-toggle }}
+
+  <!-- Default header -->
+  <div id="header-default" class="align-items-center gap-4 flex-grow-1">
+    <div class="search-field search-field-kbd">
+      <i class="ph ph-magnifying-glass fs-5"></i>
+      <input type="text" class="form-control" placeholder="Search Contacts..." />
+    </div>
+
+    <i class="ms-auto"></i>
+
+    <nav class="d-flex gap-2 me-2">
+      <button type="button" class="icon ph ph-download-simple d-none d-sm-inline-flex">
+        <span class="visually-hidden">Reload</span>
+      </button>
+      <button type="button" class="icon ph ph-sort-ascending">
+        <span class="visually-hidden">Sort</span>
+      </button>
+      <button type="button" class="icon ph ph-user-circle-gear d-none d-sm-inline-flex">
+        <span class="visually-hidden">Schedule</span>
+      </button>
+      <button type="button" class="icon ph ph-info d-none d-sm-inline-flex">
+        <span class="visually-hidden">Info</span>
+      </button>
+      <button type="button" class="icon ph ph-dots-three-circle">
+        <span class="visually-hidden">more</span>
+      </button>
+    </nav>
+  </div>
+
+  <div id="header-actions" class="flex-grow-1 align-items-center gap-2 pe-2">
+    <div class="ms-7 d-none d-xl-block">
+      <div class="check-all form-check d-none d-sm-block ms-npx">
+        <input class="form-check-input" type="checkbox" id="check-all-input" />
+        <label class="form-check-label" for="check-all-input"></label>
+      </div>
+    </div>
+
+    <button type="button" class="header-action-close icon ph ph-arrow-left me-3 d-none">
+      <span class="visually-hidden"> Go back</span>
+    </button>
+
+    <div id="header-action-count" class="ps-7 ps-xl-0"></div>
+
+    <i class="ms-auto"></i>
+
+    <button type="button" class="icon ph ph-printer">
+      <span class="visually-hidden">Print</span>
+    </button>
+    <button type="button" class="icon ph ph-download-simple">
+      <span class="visually-hidden">Download</span>
+    </button>
+    <button type="button" class="icon ph ph-trash">
+      <span class="visually-hidden">Delete</span>
+    </button>
+
+    <button type="button" class="icon ph ph-box-arrow-down d-none d-sm-inline-flex">
+      <span class="visually-hidden">Hide</span>
+    </button>
+    <button type="button" class="icon ph ph-tag-simple d-none d-sm-inline-flex">
+      <span class="visually-hidden">Label</span>
+    </button>
+
+    <div class="vr opacity-25 my-2 mx-2 d-none d-sm-inline-flex"></div>
+
+    <button type="button" class="header-action-close icon ph ph-x">
+      <span class="visually-hidden">Close</span>
+    </button>
+  </div>
+
+  <!-- Header when checkbox is clicked -->
+  <div id="header-actions-preview" class="align-items-center gap-2 pe-2 flex-grow-1">
+    <button type="button" class="header-action-close icon ph ph-arrow-left me-3">
+      <span class="visually-hidden"> Go back</span>
+    </button>
+
+    <i class="ms-auto"></i>
+
+    <button type="button" class="icon ph ph-printer">
+      <span class="visually-hidden">Print</span>
+    </button>
+    <button type="button" class="icon ph ph-download-simple">
+      <span class="visually-hidden">Download</span>
+    </button>
+    <button type="button" class="icon ph ph-trash">
+      <span class="visually-hidden">Delete</span>
+    </button>
+    <button type="button" class="icon ph ph-box-arrow-down">
+      <span class="visually-hidden">Hide</span>
+    </button>
+    <button type="button" class="icon ph ph-tag-simple">
+      <span class="visually-hidden">Label</span>
+    </button>
+  </div>
+</div>

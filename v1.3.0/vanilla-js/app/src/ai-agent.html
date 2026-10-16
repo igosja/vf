@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-page="ai-agent">
+  {{> _head title="AI Agent"}}
+  <body>
+    <!-- Page loader -->
+    {{> _page-loader }}
+
+    <!-- Site sidebar -->
+    {{> _sidebar }}
+
+    <div id="content" data-simplebar>
+      <!-- Content sidebar -->
+      {{> ai-agent/_sidebar }}
+
+      <div class="content-body p-0">
+        <!-- Content header -->
+        <div class="header">
+          {{> _sidebar-toggle }}
+
+          <div class="search-field search-field-kbd">
+            <i class="ph ph-magnifying-glass fs-5"></i>
+            <input
+              id="ai-search-input"
+              type="text"
+              class="form-control"
+              placeholder="Search Chats..."
+              aria-label="Search chats"
+            />
+          </div>
+
+          <i class="ms-auto"></i>
+
+          <button
+            type="button"
+            class="icon ph ph-detective me-3"
+            data-bs-toggle="tooltip"
+            data-bs-title="Incognito chat"
+          >
+            <span class="visually-hidden">Incognito chat</span>
+          </button>
+        </div>
+
+        <div class="card ai-agent-card">
+          <div class="w-100 mw-800 m-auto px-4 pt-8 pb-16">
+            <div
+              class="fs-2 d-flex align-items-center justify-content-center gap-3 mb-4 text-body-emphasis text-center"
+            >
+              <i class="ph ph-sparkle text-orange"></i>
+              <span id="ai-greeting">Good evening, Gloria</span>
+            </div>
+
+            {{> ai-agent/_composer placeholder="How can I help you today?" }}
+
+            <div
+              id="ai-suggestions"
+              class="d-flex flex-wrap justify-content-center gap-2 mt-5"
+            ></div>
+            <div id="ai-suggestion-list" class="mt-4 d-none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    {{> _nav-bar }}
+
+    <!-- Scripts-->
+    <!-- Chat modals and snackbar -->
+    {{> ai-agent/_modals }}
+
+    {{> _script }}
+  </body>
+</html>

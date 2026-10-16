@@ -1,0 +1,127 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "width": map-merge(
+        map-get($utilities, "width"),
+        (
+          responsive: true,
+        )
+      ),
+    "theme-bg": (
+      property: background-color,
+      class: bg,
+      responsive: false,
+      state: hover,
+      values: (
+        current: currentColor,
+        "gray-100": $gray-100,
+        "gray-200": $gray-200,
+        "gray-300": $gray-300,
+        "gray-400": $gray-400,
+        "gray-500": $gray-500,
+        "gray-600": $gray-600,
+        "gray-700": $gray-700,
+        "gray-800": $gray-800,
+        "gray-900": $gray-900,
+        "theme-50": var(--#{$prefix}theme-50),
+        "theme-100": var(--#{$prefix}theme-100),
+        "theme-200": var(--#{$prefix}theme-200),
+        "theme-300": var(--#{$prefix}theme-300),
+      ),
+    ),
+    "theme-border": (
+      property: border-color,
+      class: border,
+      responsive: false,
+      values: (
+        "50": var(--#{$prefix}theme-50),
+        "100": var(--#{$prefix}theme-100),
+        "200": var(--#{$prefix}theme-200),
+        "300": var(--#{$prefix}theme-300),
+        "400": var(--#{$prefix}theme-400),
+        "orange-blue": var(--#{$prefix}border-orange-blue),
+        "theme": var(--#{$prefix}chart-pie-border-color),
+        "current": currentColor,
+      ),
+    ),
+    "theme-gradient-bg": (
+      property: background-image,
+      class: bg-gradient,
+      responsive: false,
+      state: hover,
+      values: (
+        "red": linear-gradient(45deg, rgba(255, 94, 94, 0.2) 0%, rgba(255, 94, 94, 0.1) 100%),
+        "green": linear-gradient(45deg, rgba(0, 255, 188, 0.2) 0%, rgba(0, 255, 188, 0.1) 100%),
+        "blue": linear-gradient(45deg, rgba(18, 104, 157, 0.4) 0%, rgba(0, 74, 119, 0.25) 100%),
+        "amber": linear-gradient(45deg, rgba(255, 107, 0, 0.2) 0%, rgba(255, 108, 1, 0.1) 100%),
+      ),
+    ),
+    "theme-width": (
+      property: width,
+      class: w,
+      responsive: true,
+      values: $spacers,
+    ),
+    "theme-height": (
+      property: height,
+      class: h,
+      responsive: true,
+      values: $spacers,
+    ),
+    "theme-text-color": (
+      property: color,
+      class: text,
+      responsive: false,
+      state: hover,
+      values: (
+        current: currentColor,
+        invert: var(--bs-text-invert-color),
+      ),
+    ),
+    "theme-max-width": (
+      property: max-width,
+      class: mw,
+      responsive: false,
+      values: (
+        300: 300px,
+        400: 400px,
+        600: 600px,
+        800: 800px,
+        1000: 1000px,
+        1200: 1200px,
+        1400: 1400px,
+      ),
+    ),
+    "theme-min-width": (
+      property: max-width,
+      class: mw,
+      responsive: false,
+      values: (
+        0: 0,
+      ),
+    ),
+    "theme-place-content": (
+      property: place-content,
+      class: place-content,
+      responsive: false,
+      values: (
+        "center": center,
+      ),
+    ),
+    "theme-place-items": (
+      property: place-items,
+      class: place-items,
+      responsive: false,
+      values: (
+        "center": center,
+      ),
+    ),
+  )
+);

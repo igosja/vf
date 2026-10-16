@@ -1,0 +1,84 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-start mb-5">
+      <h5 class="card-title m-0 d-flex align-items-center flex-grow-1 gap-3">
+        <div
+          class="avatar avatar-md text-primary bg-primary d-none d-sm-grid"
+          style="--bs-bg-opacity: 0.15"
+        >
+          <i class="ph ph-chart-bar fs-4"></i>
+        </div>
+
+        MRR Movement
+      </h5>
+
+      <div class="d-flex gap-px mt-n2 me-n1">
+        <a href="" class="icon ph ph-info"></a>
+        <a href="" class="icon ph ph-download-simple d-none d-sm-flex"></a>
+        <a href="" class="icon ph ph-printer d-none d-sm-flex"></a>
+      </div>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-4 g-3 mb-6 lh-sm">
+      <div class="col">
+        <div class="h-100 py-3 px-4 border rounded-3 d-flex flex-column">
+          <div class="d-flex align-items-center gap-2 fs-7 text-body-secondary mb-2">
+            Net new MRR
+            <i class="bg-orange w-2 h-2 ms-auto rounded-circle flex-shrink-0"></i>
+          </div>
+          <div class="fs-4 text-body-emphasis mt-auto lh-1">+$11.2K</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="h-100 py-3 px-4 border rounded-3 d-flex flex-column">
+          <div class="d-flex align-items-center gap-2 fs-7 text-body-secondary mb-2">
+            New business
+            <i class="bg-success w-2 h-2 ms-auto rounded-circle flex-shrink-0"></i>
+          </div>
+          <div class="fs-4 text-success mt-auto lh-1">+$10.2K</div>
+        </div>
+      </div>
+      <div class="col d-none d-md-block">
+        <div class="h-100 py-3 px-4 border rounded-3 d-flex flex-column">
+          <div class="d-flex align-items-center gap-2 fs-7 text-body-secondary mb-2">
+            Expansion revenue
+            <i class="bg-primary w-2 h-2 ms-auto rounded-circle flex-shrink-0"></i>
+          </div>
+          <div class="fs-4 text-primary mt-auto lh-1">+$4.1K</div>
+        </div>
+      </div>
+      <div class="col d-none d-md-block">
+        <div class="h-100 py-3 px-4 border rounded-3 d-flex flex-column">
+          <div class="d-flex align-items-center gap-2 fs-7 text-body-secondary mb-2">
+            Churned revenue
+            <i class="bg-danger w-2 h-2 ms-auto rounded-circle flex-shrink-0"></i>
+          </div>
+          <div class="fs-4 text-danger mt-auto lh-1">-$3.1K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart mb-5">
+      <canvas id="chart-mrr-movement"></canvas>
+    </div>
+
+    <ul class="chart-legends">
+      <li>
+        <i class="bg-success"></i>
+        New
+      </li>
+      <li>
+        <i class="bg-primary"></i>
+        Expansion
+      </li>
+      <li>
+        <i class="bg-danger"></i>
+        Churned
+      </li>
+      <li>
+        <i class="bg-orange"></i>
+        Net new MRR
+      </li>
+    </ul>
+  </div>
+</div>

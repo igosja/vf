@@ -1,0 +1,134 @@
+@import "variables";
+
+//-----------------------------------------------
+// Font icon (for before/after content)
+//-----------------------------------------------
+@mixin font-icon($content, $font-size) {
+  font-family: $font-family-icon-light;
+  content: $content;
+  font-size: $font-size;
+}
+
+//-----------------------------------------------
+// Placeholder
+//-----------------------------------------------
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    opacity: 1;
+    @content;
+  }
+  &::-moz-placeholder {
+    opacity: 1;
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+//---------------------------------------------------
+// Color mode switch for theme variables.
+// This uses Bootstrap's color mode mixin to
+// generate CSS variables for each color mode.
+//---------------------------------------------------
+@mixin generate-custom-properties($map) {
+  @include color-mode(light) {
+    @each $property, $value in $map {
+      --#{$prefix}#{$property}: #{nth($value, 1)};
+    }
+  }
+
+  @include color-mode(dark) {
+    @each $property, $value in $map {
+      --#{$prefix}#{$property}: #{nth($value, 2)};
+    }
+  }
+}
+
+//-----------------------------------------------
+// Scrollbar
+//-----------------------------------------------
+// Custom styled scrollbar
+@mixin scrollbar($bg, $thumb) {
+  scrollbar-color: $thumb $bg;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: $bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: $border-radius;
+  }
+}
+
+// Hide scrollbar
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+//---------------------------------------------------
+// Color mode switch for theme variables.
+// This uses Bootstrap's color mode mixin to
+// generate CSS variables for each color mode.
+//---------------------------------------------------
+@mixin generate-custom-propterties($map) {
+  @include color-mode(light) {
+    @each $property, $value in $map {
+      --#{$prefix}#{$property}: #{nth($value, 1)};
+    }
+  }
+
+  @include color-mode(dark) {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    @each $property, $value in $map {
+      --#{$prefix}#{$property}: #{nth($value, 2)};
+    }
+  }
+}
+
+//-----------------------------------------------
+// Squircle
+//-----------------------------------------------
+@mixin squircle-mask() {
+  -webkit-mask-image: url(/img/misc/avatat-mask-image.svg);
+  mask-image: url(/img/misc/avatat-mask-image.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border-radius: 0;
+}
+
+@mixin squircle(
+  $size,
+  $font-size: $font-size-base,
+  $icon-size: $font-size-2xl
+) {
+  --squircle-size: #{$size};
+
+  width: var(--squircle-size);
+  height: var(--squircle-size);
+  -webkit-mask-size: var(--squircle-size) var(--squircle-size);
+  mask-size: var(--squircle-size) var(--squircle-size);
+  font-size: $font-size;
+
+  &.ph,
+  .ph {
+    font-size: $icon-size;
+  }
+}

@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Project Structure |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Project Structure
+The app folder holds a standard Vite project. You write everything in src/, and Vite copies public/ into the build without changing it.
+app/
+├── index.html            The one HTML page: fonts, the first-paint script, the page loader
+├── public/
+│   └── img/              Photos, flags, browser logos, favicons
+├── src/
+│   ├── main.tsx          Starts React, the theme provider and the router
+│   ├── routes.tsx        Every page and its address
+│   ├── components/
+│   │   ├── ui/           shadcn/ui components, restyled
+│   │   ├── layout/       The frame around every page: sidebar, nav bar, content header
+│   │   ├── common/       Components the template shares across pages
+│   │   └── charts/       Chart colors, the chart legend and the map component
+│   ├── data/             The demo data each page shows, one file per subject
+│   ├── lib/              Small helpers: cn() and formatSize()
+│   ├── pages/            One folder per page
+│   ├── providers/        Light and dark mode, and the sidebar drawers
+│   ├── styles/           The stylesheets
+│   └── types/            Type declarations for packages that ship without them
+├── components.json       Settings for the shadcn/ui command line tool
+├── vercel.json           Sends every address to index.html on Vercel
+├── vite.config.ts        Vite plugins and the @ import alias
+├── tsconfig.json         TypeScript settings
+├── .prettierrc           Formatting rules
+└── package.json          Packages and scripts
+src/pages
+Each page has its own folder, and the folder path matches the page&rsquo;s address. src/pages/dashboards/crm/page.tsx is the page at /dashboards/crm.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="project-structure">Project Structure</h1>
+<p>The <code>app</code> folder holds a standard Vite project. You write everything in <code>src/</code>, and Vite copies <code>public/</code> into the build without changing it.</p>
+<pre tabindex="0"><code>app/
+├── index.html            The one HTML page: fonts, the first-paint script, the page loader
+├── public/
+│   └── img/              Photos, flags, browser logos, favicons
+├── src/
+│   ├── main.tsx          Starts React, the theme provider and the router
+│   ├── routes.tsx        Every page and its address
+│   ├── components/
+│   │   ├── ui/           shadcn/ui components, restyled
+│   │   ├── layout/       The frame around every page: sidebar, nav bar, content header
+│   │   ├── common/       Components the template shares across pages
+│   │   └── charts/       Chart colors, the chart legend and the map component
+│   ├── data/             The demo data each page shows, one file per subject
+│   ├── lib/              Small helpers: cn() and formatSize()
+│   ├── pages/            One folder per page
+│   ├── providers/        Light and dark mode, and the sidebar drawers
+│   ├── styles/           The stylesheets
+│   └── types/            Type declarations for packages that ship without them
+├── components.json       Settings for the shadcn/ui command line tool
+├── vercel.json           Sends every address to index.html on Vercel
+├── vite.config.ts        Vite plugins and the @ import alias
+├── tsconfig.json         TypeScript settings
+├── .prettierrc           Formatting rules
+└── package.json          Packages and scripts
+</code></pre><h2 id="srcpages">src/pages</h2>
+<p>Each page has its own folder, and the folder path matches the page&rsquo;s address. <code>src/pages/dashboards/crm/page.tsx</code> is the page at <code>/dashboards/crm</code>.</p>
+<pre tabindex="0"><code>pages/
+├── dashboards/           e-commerce, analytics, project-management, crm, email-marketing, saas
+├── apps/                 file-manager, contacts, mail, messages, ai-agent, photos, todo-lists, calendar
+├── user/                 profile, timeline, photos, connections, preferences
+├── pages/                invoice, pricing-tables, billing, search-results, faq, teams,
+│                         login, register, forgot-password, coming-soon, error
+├── content/              typography, figures, images, tables, icons
+├── components/           one folder per UI element, plus charts and maps
+├── forms/                elements, input-groups, layouts, templates, validation
+└── not-found.tsx         Shown for any address that has no page
+</code></pre><p><code>page.tsx</code> is the page itself, and it exports the page as its default export. A page that grows long splits into more files in the same folder:</p>
+<ul>
+<li><strong>Dashboards</strong> keep one file per card. <code>src/pages/dashboards/saas/plan-mix.tsx</code> holds the Plan Mix card, and <code>overview.tsx</code> holds the row of stat cards at the top. <code>page.tsx</code> places the cards in a grid.</li>
+<li><strong>Apps</strong> split out their sidebar, dialogs and panels. The Mail app has <code>page.tsx</code>, <code>sidebar.tsx</code> and <code>thread.tsx</code>.</li>
+<li><strong>The User pages</strong> share their cover, header and about card. These live one level up, in <code>src/pages/user/</code>.</li>
+</ul>
+<h2 id="srccomponents">src/components</h2>
+<p><strong><code>ui/</code></strong> holds the shadcn/ui components: Button, Card, Dialog, Select and the rest. The template restyles them in place, so you import and use them as they are. <a href="./components-overview.html">Components Overview</a> lists them all.</p>
+<p><strong><code>layout/</code></strong> holds the frame around the pages:</p>
+<table>
+  <thead>
+      <tr>
+          <th>File</th>
+          <th>What it is</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>app-shell.tsx</code></td>
+          <td>The frame for most pages: sidebar, nav bar, scroll area, toasts</td>
+      </tr>
+      <tr>
+          <td><code>blank-shell.tsx</code></td>
+          <td>The frame for pages that stand alone: Login, Register, Forgot Password, Coming Soon, Error</td>
+      </tr>
+      <tr>
+          <td><code>sidebar/</code></td>
+          <td>The icon rail with its flyout menu, the drawer on small screens, and the secondary sidebar some apps use</td>
+      </tr>
+      <tr>
+          <td><code>nav-bar/</code></td>
+          <td>The bar on the right with search, notifications, messages, tasks, color mode and the user menu</td>
+      </tr>
+      <tr>
+          <td><code>content-header.tsx</code></td>
+          <td>The bar at the top of each page with its title, breadcrumb and actions</td>
+      </tr>
+      <tr>
+          <td><code>route-loader.tsx</code></td>
+          <td>The loading screen between pages</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong><code>common/</code></strong> holds components the template uses on many pages, such as IconButton, Avatar, SearchField, DateRangePicker and Trend. <a href="./template-components.html">Template Components</a> covers each one.</p>
+<p><strong><code>charts/</code></strong> holds the chart colors, the chart legend and the VectorMap component, plus the extra map shapes in <code>charts/maps/</code>.</p>
+<h2 id="srcdata">src/data</h2>
+<p>Every list, table and chart in the template reads its numbers and text from a file in <code>src/data/</code>. The file names follow the subject: <code>crm.ts</code>, <code>mail.ts</code>, <code>navigation.ts</code>. Each file exports typed constants:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">type</span> Plan <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	plan: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	price: <span style="color:#81a1c1">number</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	subscribers: <span style="color:#81a1c1">number</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>	color: <span style="color:#81a1c1">string</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#81a1c1;font-weight:bold">const</span> PLAN_MIX: <span style="color:#81a1c1">Plan</span><span style="color:#eceff4">[]</span> <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Starter&#34;</span><span style="color:#eceff4">,</span> price: <span style="color:#81a1c1">12</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">1420</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-cyan-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Pro&#34;</span><span style="color:#eceff4">,</span> price: <span style="color:#81a1c1">29</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">1126</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-sky-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Business&#34;</span><span style="color:#eceff4">,</span> price: <span style="color:#81a1c1">39</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">548</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-purple-400&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#eceff4">{</span> plan<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;Enterprise&#34;</span><span style="color:#eceff4">,</span> price: <span style="color:#81a1c1">85</span><span style="color:#eceff4">,</span> subscribers: <span style="color:#81a1c1">154</span><span style="color:#eceff4">,</span> color<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;text-amber-500&#34;</span> <span style="color:#eceff4">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">];</span>
+</span></span></code></pre></div><p>Pages import these constants. To show your own data, change the values in the file, or fetch from your server and pass the result in the same shape. <a href="./working-with-data.html">Working with Data</a> explains both.</p>
+<p><code>src/data/navigation.ts</code> is special: it holds the sidebar menu. <a href="./sidebar-menu.html">Sidebar Menu</a> explains how to edit it.</p>
+<h2 id="srcstyles">src/styles</h2>
+<table>
+  <thead>
+      <tr>
+          <th>File</th>
+          <th>What it holds</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>index.css</code></td>
+          <td>The entry point. Imports Tailwind and the other files, and sets the font, the primary color and the custom animations</td>
+      </tr>
+      <tr>
+          <td><code>themes.css</code></td>
+          <td>The theme colors for light and dark mode</td>
+      </tr>
+      <tr>
+          <td><code>base.css</code></td>
+          <td>Page defaults: body text, headings, links and the default icon size</td>
+      </tr>
+      <tr>
+          <td><code>utilities.css</code></td>
+          <td>The two custom utilities, <code>avatar-mask</code> and <code>no-scrollbar</code></td>
+      </tr>
+      <tr>
+          <td><code>fullcalendar.css</code></td>
+          <td>Calendar styles, scoped to the <code>.calendar</code> wrapper</td>
+      </tr>
+      <tr>
+          <td><code>quill.css</code></td>
+          <td>Text editor styles, loaded by the RichTextEditor component</td>
+      </tr>
+      <tr>
+          <td><code>jsvectormap.css</code></td>
+          <td>Map styles, loaded by the VectorMap component</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="the--alias">The @ alias</h2>
+<p><code>vite.config.ts</code> and <code>tsconfig.json</code> both point <code>@</code> at <code>src/</code>, so an import reads the same from any folder:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ts" data-lang="ts"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> Button <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/components/ui/button&#34;</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span> PLAN_MIX <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#a3be8c">&#34;@/data/saas&#34;</span><span style="color:#eceff4">;</span>
+</span></span></code></pre></div><p>Files inside the same page folder import each other with a relative path instead, such as <code>import { PlanMix } from &quot;./plan-mix&quot;;</code>.</p>
+<h2 id="naming">Naming</h2>
+<ul>
+<li>File names use kebab case: <code>date-range-picker.tsx</code>, <code>recent-orders.tsx</code>.</li>
+<li>Components use Pascal case: <code>DateRangePicker</code>, <code>RecentOrders</code>.</li>
+<li>A page file exports its page as the default export. Every other component file uses named exports.</li>
+<li>Data constants use upper case: <code>RECENT_ORDERS</code>, <code>NAVIGATION</code>.</li>
+</ul>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#srcpages">src/pages</a></li>
+    <li><a href="#srccomponents">src/components</a></li>
+    <li><a href="#srcdata">src/data</a></li>
+    <li><a href="#srcstyles">src/styles</a></li>
+    <li><a href="#the--alias">The @ alias</a></li>
+    <li><a href="#naming">Naming</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>

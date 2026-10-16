@@ -1,0 +1,32 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["ES2023", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"types": ["vite/client"],
+
+		/* Emit is handled by Vite */
+		"noEmit": true,
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"moduleDetection": "force",
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"allowImportingTsExtensions": true,
+
+		/* Strictness */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true,
+
+		/* Path alias — resolved relative to this file (baseUrl is gone in TS 7) */
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["src", "vite.config.ts"]
+}

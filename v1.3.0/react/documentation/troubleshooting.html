@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Troubleshooting |Materia Docs</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1" />
+		<meta
+			name="description"
+			content="
+				Troubleshooting
+Answers to the problems that come up most often, grouped by when they happen.
+Installing
+npm install fails with an &ldquo;engine&rdquo; error
+React Router 8 needs Node.js 22.22 or newer, and npm refuses to install it on an older version. Check your version with node -v, install a newer Node.js from nodejs.org, and run npm install again.
+npm install prints warnings about install scripts
+Recent npm versions list packages whose install scripts they skipped. The template does not need any of them, so you can ignore these warnings.
+			
+			"
+		/>
+
+		
+
+
+	
+	<link rel="stylesheet" href="./dist/style.min.86c3e4e12dcd94f4892733a30b8ecc1dfeab884a314927256ec15ffdffce9bd2.css" />
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+<style>
+	body.font-sans {
+		font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+	}
+
+	 
+	.prose table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	 
+	.preview {
+		margin: 1.5rem 0 0.75rem;
+		overflow: hidden;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.75rem;
+	}
+
+	.preview-bar {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border-bottom: 1px solid #e2e8f0;
+		background: #f8fafc;
+	}
+
+	.preview-bar button {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		color: #475569;
+	}
+
+	.preview-bar button:hover {
+		background: #e2e8f0;
+	}
+
+	.preview-bar button[aria-pressed="true"] {
+		background: #fff;
+		color: #0f172a;
+		box-shadow: 0 1px 2px rgb(15 23 42 / 0.1);
+	}
+
+	.preview-frame {
+		display: block;
+		width: 100%;
+		height: 6rem;
+		border: 0;
+	}
+</style>
+
+<script>
+	
+	addEventListener("message", (event) => {
+		if (!event.data || event.data.preview !== "height") return;
+		for (const frame of document.querySelectorAll(".preview-frame")) {
+			if (frame.contentWindow === event.source) frame.style.height = `${event.data.height}px`;
+		}
+	});
+
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest(".preview-bar button");
+		if (!button) return;
+		const box = button.closest(".preview");
+		for (const other of box.querySelectorAll(".preview-bar button")) other.setAttribute("aria-pressed", String(other === button));
+		box.dataset.mode = button.dataset.mode;
+		box.querySelector(".preview-frame").contentWindow.postMessage({ preview: "mode", mode: button.dataset.mode }, "*");
+	});
+</script>
+
+	</head>
+
+	<body class="flex h-screen flex-col overflow-hidden font-sans">
+		<header class="z-20 flex h-20 flex-shrink-0 items-center border-b border-slate-100 bg-white px-6">
+	<button class="-ml-3.5 mr-2 grid h-12 w-14 place-items-center rounded hover:bg-slate-100 lg:hidden" id="sidebar-open">
+		<svg class="text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+			<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+			<path
+				d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+			></path>
+		</svg>
+	</button>
+
+	<a href="./index.html" class="text-xl font-bold pr-5">
+		<span class="max-sm:hidden">Materia Docs</span>
+		<span class="sm:hidden">Documentation</span>
+	</a>
+	
+	
+		<div class="border border-slate-300 rounded-md ms-auto py-1 px-3 font-medium">React</div>
+	
+</header>
+
+
+
+		<div class="flex flex-1 overflow-hidden">
+			<aside class="fixed left-0 top-0 z-50 hidden h-full w-72 overflow-y-auto border-r border-slate-100 bg-white p-6 lg:relative lg:z-0 lg:block" id="sidebar">
+	
+	<div class="sticky top-0 -mr-3 mb-3 text-right lg:hidden">
+		<button class="-ml-3.5 -mt-4 mr-2 inline-grid h-12 w-14 place-items-center rounded bg-white/75 hover:bg-slate-100 xl:hidden" id="sidebar-close">
+			<svg class="rotate-180 text-cyan-500" width="30" fill="#000000" viewBox="0 0 256 256">
+				<path d="M88,48V208H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8Z" opacity="0.5" fill="currentColor"></path>
+				<path
+					d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,152H56a8,8,0,0,0,0-16H40V120H56a8,8,0,0,0,0-16H40V88H56a8,8,0,0,0,0-16H40V56H80V200H40Zm176,48H96V56H216V200Z"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	
+
+	
+	
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+		
+		
+			
+			
+		
+	
+	
+
+	
+	
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+			
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+
+	
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Getting Started</span>
+			
+				
+					
+					<a
+						href="./quick-start.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Quick Start</a
+					>
+				
+			
+				
+					
+					<a
+						href="./project-structure.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Project Structure</a
+					>
+				
+			
+				
+					
+					<a
+						href="./pages-and-routes.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Pages and Routes</a
+					>
+				
+			
+				
+					
+					<a
+						href="./deployment.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Deployment</a
+					>
+				
+			
+				
+					
+					<a
+						href="./browser-support.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Browser Support</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dependencies.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dependencies</a
+					>
+				
+			
+				
+					
+					<a
+						href="./code-style.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Code Style and Tooling</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Design System</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./theme-tokens.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Theme Tokens</a
+					>
+				
+			
+				
+					
+					<a
+						href="./colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dark-mode.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Light and Dark Mode</a
+					>
+				
+			
+				
+					
+					<a
+						href="./typography.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Typography</a
+					>
+				
+			
+				
+					
+					<a
+						href="./icons.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Icons</a
+					>
+				
+			
+				
+					
+					<a
+						href="./tailwind.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Tailwind CSS Setup</a
+					>
+				
+			
+				
+					
+					<a
+						href="./branding.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Branding</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Layout</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./layout.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Layout Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./sidebar-menu.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Sidebar Menu</a
+					>
+				
+			
+				
+					
+					<a
+						href="./nav-bar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Nav Bar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./content-header.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Content Header</a
+					>
+				
+			
+				
+					
+					<a
+						href="./secondary-sidebar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Secondary Sidebar</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Components</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./components-overview.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Components Overview</a
+					>
+				
+			
+				
+					
+					<a
+						href="./button.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Button</a
+					>
+				
+			
+				
+					
+					<a
+						href="./badge-and-alert.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Badge and Alert</a
+					>
+				
+			
+				
+					
+					<a
+						href="./card.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Card</a
+					>
+				
+			
+				
+					
+					<a
+						href="./forms.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Forms</a
+					>
+				
+			
+				
+					
+					<a
+						href="./overlays.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Overlays</a
+					>
+				
+			
+				
+					
+					<a
+						href="./data-display.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Data Display</a
+					>
+				
+			
+				
+					
+					<a
+						href="./template-components.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Template Components</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Charts and Plugins</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./charts.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Charts</a
+					>
+				
+			
+				
+					
+					<a
+						href="./chart-colors.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Chart Colors</a
+					>
+				
+			
+				
+					
+					<a
+						href="./maps.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Maps</a
+					>
+				
+			
+				
+					
+					<a
+						href="./calendar.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Calendar</a
+					>
+				
+			
+				
+					
+					<a
+						href="./rich-text-editor.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Rich Text Editor</a
+					>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+		</div>
+	
+		
+		<div class="mb-8">
+			<span class="mb-3 block font-bold">Guides</span>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+					
+					<a
+						href="./adding-a-page.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Adding a Page</a
+					>
+				
+			
+				
+					
+					<a
+						href="./dashboard-cards.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Dashboard Cards</a
+					>
+				
+			
+				
+					
+					<a
+						href="./working-with-data.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Working with Data</a
+					>
+				
+			
+				
+					
+					<a
+						href="./removing-features.html"
+						class="
+							text-slate-500 hover:text-slate-800
+						 flex items-center py-1"
+						>Removing Features</a
+					>
+				
+			
+				
+					
+					<a
+						href="./troubleshooting.html"
+						class="
+							text-cyan-500 font-bold
+						 flex items-center py-1"
+						>Troubleshooting</a
+					>
+				
+			
+		</div>
+	
+</aside>
+
+
+
+			
+			<main class="relative z-10 flex flex-1 flex-col overflow-y-auto scroll-smooth p-8 pb-0 xl:pr-[calc(15rem+2rem)]" role="main">
+				
+	<div class="prose mx-auto w-full max-w-7xl flex-1"><h1 id="troubleshooting">Troubleshooting</h1>
+<p>Answers to the problems that come up most often, grouped by when they happen.</p>
+<h2 id="installing">Installing</h2>
+<h3 id="npm-install-fails-with-an-engine-error">npm install fails with an &ldquo;engine&rdquo; error</h3>
+<p>React Router 8 needs Node.js 22.22 or newer, and npm refuses to install it on an older version. Check your version with <code>node -v</code>, install a newer Node.js from <a href="https://nodejs.org">nodejs.org</a>, and run <code>npm install</code> again.</p>
+<h3 id="npm-install-prints-warnings-about-install-scripts">npm install prints warnings about install scripts</h3>
+<p>Recent npm versions list packages whose install scripts they skipped. The template does not need any of them, so you can ignore these warnings.</p>
+<h3 id="the-install-takes-a-long-time-or-fails-partway">The install takes a long time or fails partway</h3>
+<p>Delete <code>node_modules</code> and try again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf node_modules
+</span></span><span style="display:flex;"><span>npm install
+</span></span></code></pre></div><p>On Windows, delete the <code>node_modules</code> folder in the file explorer instead of using <code>rm</code>.</p>
+<h2 id="running-the-development-server">Running the development server</h2>
+<h3 id="the-address-in-the-browser-shows-nothing-or-a-different-app">The address in the browser shows nothing, or a different app</h3>
+<p>Another program may be using port 5173, and Vite has picked the next free port. Read the address Vite prints in the terminal, or choose a port yourself:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm run dev -- --port <span style="color:#b48ead">3000</span>
+</span></span></code></pre></div><h3 id="a-change-does-not-show-up">A change does not show up</h3>
+<p>Vite updates the page as you save. If a change still does not show, check the terminal for an error, then reload the page. For a change to <code>index.html</code> or <code>vite.config.ts</code>, stop the server with Ctrl+C and start it again.</p>
+<h2 id="styling">Styling</h2>
+<h3 id="a-tailwind-class-has-no-effect">A Tailwind class has no effect</h3>
+<p>Tailwind finds the classes you use by reading your files as text, and it only generates the classes it finds written out in full. A class built from pieces never appears in full, so Tailwind never generates it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">// Tailwind cannot see &#34;bg-emerald-500&#34; here
+</span></span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span><span style="color:#a3be8c">`bg-</span><span style="color:#a3be8c">${</span>color<span style="color:#a3be8c">}</span><span style="color:#a3be8c">-500`</span><span style="color:#eceff4">}</span> <span style="color:#eceff4">/&gt;</span>
+</span></span></code></pre></div><p>Write every class out in full, and choose between them in code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> STATUS_CLASS <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>	active<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-emerald-500&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span>	failed<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#34;bg-red-400&#34;</span><span style="color:#eceff4">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">&lt;</span><span style="color:#81a1c1">span</span> <span style="color:#8fbcbb">className</span><span style="color:#81a1c1">=</span><span style="color:#eceff4">{</span>STATUS_CLASS<span style="color:#eceff4">[</span>status<span style="color:#eceff4">]}</span> <span style="color:#eceff4">/&gt;;</span>
+</span></span></code></pre></div><p>This is why the template&rsquo;s data files store complete class names, such as <code>color: &quot;text-cyan-500&quot;</code>. The <a href="https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names">Tailwind docs on dynamic class names</a> explain this.</p>
+<h3 id="a-class-i-pass-in-classname-does-not-override-the-component">A class I pass in className does not override the component</h3>
+<p>Components join your classes with theirs through <code>cn()</code>, which lets the later class win for the same property. If yours does not win, check that it targets the same property: <code>p-4</code> overrides <code>p-6</code>, but <code>pt-4</code> only overrides the top. Classes that the component applies in a variant, such as a button&rsquo;s colors, also give way to yours.</p>
+<h3 id="the-page-flashes-light-colors-before-turning-dark">The page flashes light colors before turning dark</h3>
+<p>The script in <code>index.html</code> sets the color mode before the page paints. If you edited <code>index.html</code> and moved or removed that script, put it back in the <code>&lt;head&gt;</code>. <a href="./dark-mode.html">Light and Dark Mode</a> shows it.</p>
+<h2 id="charts-and-maps">Charts and maps</h2>
+<h3 id="a-chart-is-empty">A chart is empty</h3>
+<p>Check two things:</p>
+<ol>
+<li><strong>The container has a height.</strong> With <code>maintainAspectRatio: false</code>, the chart takes its height from its container. Give the container a class such as <code>h-66</code>.</li>
+<li><strong>The chart type is registered.</strong> The browser console then shows an error that something &ldquo;is not a registered controller&rdquo;, &ldquo;element&rdquo; or &ldquo;scale&rdquo;. Register the missing part in <code>src/components/charts/use-chart-theme.ts</code>. <a href="./charts.html">Charts</a> shows how.</li>
+</ol>
+<h3 id="a-chart-color-shows-as-black-or-does-not-change">A chart color shows as black or does not change</h3>
+<p>Chart colors must come from <code>CHART_COLORS</code>, <code>paletteColor()</code> or <code>alpha()</code>. Chart.js cannot read Tailwind classes or <code>var(--color-…)</code> strings. <a href="./chart-colors.html">Chart Colors</a> explains why.</p>
+<h3 id="a-map-redraws-all-the-time">A map redraws all the time</h3>
+<p><code>VectorMap</code> redraws whenever it receives a new <code>options</code> object. Move the options into a constant outside your component. <a href="./maps.html">Maps</a> shows the pattern.</p>
+<h2 id="typescript">TypeScript</h2>
+<h3 id="npm-run-build-stops-with-a-typescript-error">npm run build stops with a TypeScript error</h3>
+<p>The build checks the types first. The error message names the file, the line and the problem. The most common ones in a fresh change:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Message</th>
+          <th>Fix</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>'X' is declared but its value is never read</code></td>
+          <td>Delete the unused import or variable</td>
+      </tr>
+      <tr>
+          <td><code>Cannot find module '@/…'</code></td>
+          <td>Check the path. <code>@/</code> points at <code>src/</code></td>
+      </tr>
+      <tr>
+          <td><code>Property 'x' does not exist on type</code></td>
+          <td>The data does not match its type. Add the field to the type in <code>src/data/</code>, or fix the name</td>
+      </tr>
+      <tr>
+          <td><code>'X' is a type and must be imported using a type-only import</code></td>
+          <td>Write <code>import type { X }</code> or <code>import { type X }</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>Run <code>npm run typecheck</code> to see every error at once.</p>
+<h2 id="deployment">Deployment</h2>
+<h3 id="reloading-a-page-on-the-live-site-shows-a-404-page">Reloading a page on the live site shows a 404 page</h3>
+<p>The server needs a rule that sends every address to <code>index.html</code>. <a href="./deployment.html">Deployment</a> has the rule for each common host.</p>
+<h3 id="images-or-styles-are-missing-on-the-live-site">Images or styles are missing on the live site</h3>
+<p>If the site lives in a folder, such as <code>example.com/admin/</code>, Vite and React Router need to know the folder, and the image paths in the code need a prefix. <a href="./deployment.html">Deployment</a> lists the three changes.</p>
+<h3 id="the-live-site-shows-an-old-version">The live site shows an old version</h3>
+<p>Each build gives its JavaScript and CSS files new names, so browsers fetch the new versions. <code>index.html</code> itself keeps its name, so tell your host not to cache it, or to cache it for a short time. Most static hosts already do this.</p>
+<h2 id="questions-about-the-template">Questions about the template</h2>
+<h3 id="how-do-i-change-the-home-page">How do I change the home page?</h3>
+<p>The route with <code>index: true</code> in <code>src/routes.tsx</code> is the home page. It shows the E-Commerce dashboard. Point its <code>import()</code> at another page to change it, and update the <code>to: &quot;/&quot;</code> link in <code>src/data/navigation.ts</code> to match.</p>
+<h3 id="does-the-template-include-a-backend-or-a-login-system">Does the template include a backend or a login system?</h3>
+<p>No. Materia is the front end of an app. The Login and Register pages are the screens only: Login moves to the dashboard and Register does the same, with no account behind them. Connect them to your own authentication, such as your server&rsquo;s API or a service like Auth0 or Clerk.</p>
+<h3 id="can-i-use-nextjs-instead-of-vite">Can I use Next.js instead of Vite?</h3>
+<p>The components work in any React setup, but the routing and the frame use React Router. Moving to Next.js means replacing <code>src/routes.tsx</code> and the layout routes with Next.js&rsquo;s own app router.</p>
+<h3 id="how-do-i-update-the-template-to-a-new-version">How do I update the template to a new version?</h3>
+<p>The template is your code once you start changing it, so there is nothing to install. Compare the new version&rsquo;s files with yours and copy over the changes you want. A diff tool such as the one in Visual Studio Code or Git makes this quick. Start with <code>package.json</code> to pick up package updates, then the components you have not changed.</p>
+</div>
+	
+	
+	<div class="fixed right-0 top-0 hidden h-full w-60 border-l border-slate-100 pt-20 xl:block">
+		<div
+			class="p-6 [&_a]:flex [&_a]:flex-wrap [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:text-slate-500 hover:[&_a]:text-slate-900 [&_a_code]:text-xs [&_a_code]:font-[600] [&_a_code]:text-black [&_a_code]:before:content-['`'] [&_a_code]:after:content-['`']"
+		>
+			<h4 class="mb-4 text-lg font-bold text-slate-900">On this page</h4>
+
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#installing">Installing</a>
+      <ul>
+        <li><a href="#npm-install-fails-with-an-engine-error">npm install fails with an &ldquo;engine&rdquo; error</a></li>
+        <li><a href="#npm-install-prints-warnings-about-install-scripts">npm install prints warnings about install scripts</a></li>
+        <li><a href="#the-install-takes-a-long-time-or-fails-partway">The install takes a long time or fails partway</a></li>
+      </ul>
+    </li>
+    <li><a href="#running-the-development-server">Running the development server</a>
+      <ul>
+        <li><a href="#the-address-in-the-browser-shows-nothing-or-a-different-app">The address in the browser shows nothing, or a different app</a></li>
+        <li><a href="#a-change-does-not-show-up">A change does not show up</a></li>
+      </ul>
+    </li>
+    <li><a href="#styling">Styling</a>
+      <ul>
+        <li><a href="#a-tailwind-class-has-no-effect">A Tailwind class has no effect</a></li>
+        <li><a href="#a-class-i-pass-in-classname-does-not-override-the-component">A class I pass in className does not override the component</a></li>
+        <li><a href="#the-page-flashes-light-colors-before-turning-dark">The page flashes light colors before turning dark</a></li>
+      </ul>
+    </li>
+    <li><a href="#charts-and-maps">Charts and maps</a>
+      <ul>
+        <li><a href="#a-chart-is-empty">A chart is empty</a></li>
+        <li><a href="#a-chart-color-shows-as-black-or-does-not-change">A chart color shows as black or does not change</a></li>
+        <li><a href="#a-map-redraws-all-the-time">A map redraws all the time</a></li>
+      </ul>
+    </li>
+    <li><a href="#typescript">TypeScript</a>
+      <ul>
+        <li><a href="#npm-run-build-stops-with-a-typescript-error">npm run build stops with a TypeScript error</a></li>
+      </ul>
+    </li>
+    <li><a href="#deployment">Deployment</a>
+      <ul>
+        <li><a href="#reloading-a-page-on-the-live-site-shows-a-404-page">Reloading a page on the live site shows a 404 page</a></li>
+        <li><a href="#images-or-styles-are-missing-on-the-live-site">Images or styles are missing on the live site</a></li>
+        <li><a href="#the-live-site-shows-an-old-version">The live site shows an old version</a></li>
+      </ul>
+    </li>
+    <li><a href="#questions-about-the-template">Questions about the template</a>
+      <ul>
+        <li><a href="#how-do-i-change-the-home-page">How do I change the home page?</a></li>
+        <li><a href="#does-the-template-include-a-backend-or-a-login-system">Does the template include a backend or a login system?</a></li>
+        <li><a href="#can-i-use-nextjs-instead-of-vite">Can I use Next.js instead of Vite?</a></li>
+        <li><a href="#how-do-i-update-the-template-to-a-new-version">How do I update the template to a new version?</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+
+
+
+
+				<footer class="mt-10 min-h-5 border-t border-slate-100 px-8 py-5 text-center text-slate-500">
+	
+</footer>
+			</main>
+		</div>
+
+		
+
+
+	
+	<script src="./dist/app.min.c1d1416a61dba1459e54ab52f8594bbc89e201d45e651d0e2c25ccbb1fcb225c.js"></script>
+
+
+	</body>
+</html>
