@@ -1,0 +1,80 @@
+/* The first-paint loader in the root layout. Painted before React hydrates,
+   so it cannot lean on Tailwind utilities. */
+#page-loader {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: grid;
+	place-items: center;
+	background-color: rgb(237 244 251 / 0.5);
+	backdrop-filter: blur(0.5rem);
+	transition: opacity 300ms;
+}
+
+#page-loader[data-hiding] {
+	opacity: 0;
+}
+
+#page-loader > div {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 6rem;
+	height: 6rem;
+}
+
+#page-loader > div::after {
+	content: "";
+	position: absolute;
+	width: 5rem;
+	height: 5rem;
+	border: 2px solid #174069;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: page-loader-spin 1s linear infinite;
+}
+
+#page-loader path:first-child {
+	fill: #c5d9eb;
+}
+
+#page-loader path:last-child {
+	fill: #174069;
+}
+
+.dark #page-loader {
+	background-color: rgb(28 40 47 / 0.5);
+}
+
+.dark #page-loader > div::after {
+	border-color: #addaff;
+	border-right-color: transparent;
+}
+
+.dark #page-loader path:first-child {
+	fill: #2c4859;
+}
+
+.dark #page-loader path:last-child {
+	fill: #addaff;
+}
+
+@keyframes page-loader-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* The navigation loader fades in after a short delay, so a fast page never flashes it. */
+.route-loader {
+	animation: route-loader-in 300ms 150ms both;
+}
+
+@keyframes route-loader-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

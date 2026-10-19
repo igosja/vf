@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 252" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14215c" />
+      <stop offset="0.5" stop-color="#1e63d6" />
+      <stop offset="1" stop-color="#1fb5d3" />
+    </linearGradient>
+
+    <radialGradient id="glow-purple" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e26cf5" stop-opacity="0.75" />
+      <stop offset="1" stop-color="#e26cf5" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="glow-cyan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5ff3ff" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#5ff3ff" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.4" stop-color="#fff" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="400" height="252" fill="url(#base)" />
+
+  <!-- Glows -->
+  <ellipse cx="330" cy="30" rx="170" ry="130" fill="url(#glow-purple)" />
+  <ellipse cx="40" cy="250" rx="180" ry="120" fill="url(#glow-cyan)" />
+
+  <!-- Rings -->
+  <g fill="none" stroke="#fff" stroke-opacity="0.09">
+    <circle cx="360" cy="230" r="60" />
+    <circle cx="360" cy="230" r="95" />
+    <circle cx="360" cy="230" r="130" />
+    <circle cx="360" cy="230" r="165" />
+  </g>
+
+  <!-- Waves -->
+  <g fill="none" stroke="url(#wave)" stroke-width="1.25">
+    <path d="M-10 168 C 70 120, 150 210, 230 160 S 360 110, 420 150" />
+    <path d="M-10 180 C 70 132, 150 222, 230 172 S 360 122, 420 162" stroke-opacity="0.8" />
+    <path d="M-10 192 C 70 144, 150 234, 230 184 S 360 134, 420 174" stroke-opacity="0.6" />
+    <path d="M-10 204 C 70 156, 150 246, 230 196 S 360 146, 420 186" stroke-opacity="0.4" />
+  </g>
+
+  <!-- Gloss -->
+  <polygon points="120,0 230,0 110,252 0,252" fill="url(#sheen)" />
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#065f46" />
+      <stop offset="0.55" stop-color="#059669" />
+      <stop offset="1" stop-color="#10b981" />
+    </linearGradient>
+
+    <radialGradient id="glow-lime" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6ee7b7" stop-opacity="0.4" />
+      <stop offset="1" stop-color="#6ee7b7" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="glow-amber" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd166" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#ffd166" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.22" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="bar-free" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd166" stop-opacity="0.75" />
+      <stop offset="1" stop-color="#ffd166" stop-opacity="0" />
+    </linearGradient>
+
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#fff" fill-opacity="0.12" />
+    </pattern>
+  </defs>
+
+  <!-- Base -->
+  <rect width="500" height="240" fill="url(#base)" />
+  <rect width="500" height="240" fill="url(#dots)" />
+
+  <!-- Glows -->
+  <ellipse cx="80" cy="20" rx="200" ry="140" fill="url(#glow-lime)" />
+  <ellipse cx="460" cy="230" rx="170" ry="120" fill="url(#glow-amber)" />
+
+  <!-- 12 months, last 2 free -->
+  <g fill="url(#bar)">
+    <rect x="22" y="190" width="24" height="50" rx="5" />
+    <rect x="62" y="182" width="24" height="58" rx="5" />
+    <rect x="102" y="174" width="24" height="66" rx="5" />
+    <rect x="142" y="166" width="24" height="74" rx="5" />
+    <rect x="182" y="158" width="24" height="82" rx="5" />
+    <rect x="222" y="150" width="24" height="90" rx="5" />
+    <rect x="262" y="142" width="24" height="98" rx="5" />
+    <rect x="302" y="134" width="24" height="106" rx="5" />
+    <rect x="342" y="126" width="24" height="114" rx="5" />
+    <rect x="382" y="118" width="24" height="122" rx="5" />
+  </g>
+  <g fill="url(#bar-free)">
+    <rect x="422" y="110" width="24" height="130" rx="5" />
+    <rect x="462" y="102" width="24" height="138" rx="5" />
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#fff">
+    <path d="M430 40 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z" fill-opacity="0.7" />
+    <path d="M60 120 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill-opacity="0.45" />
+    <path d="M470 80 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z" fill-opacity="0.55" />
+    <circle cx="390" cy="60" r="2" fill-opacity="0.5" />
+    <circle cx="120" cy="50" r="1.5" fill-opacity="0.4" />
+  </g>
+</svg>
