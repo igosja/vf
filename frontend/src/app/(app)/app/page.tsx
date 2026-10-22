@@ -6,7 +6,7 @@ import ContentHeader from "@/components/layout/content-header/content-header";
 const AppPage: React.FunctionComponent = () => {
     return (
         <>
-            <ContentHeader title="Form Layouts" breadcrumb={["Miscellaneous", "Forms"]} toc />
+            <ContentHeader title="Form Layouts" breadcrumb={["Miscellaneous", "Forms"]}toc/>
             App page
             <Link href={'/'}>Home</Link>
             <Link href={'/blank'}>Blank</Link>

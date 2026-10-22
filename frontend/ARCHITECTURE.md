@@ -41,7 +41,7 @@ tests/
 2. Group by feature, not by file type. Create files and folders inside a feature only when needed.
 3. Other modules import a feature only via `@/features/<name>` (its `index.ts`). Inside a feature use relative imports.
 4. Dependencies go one way: `app` → `features` → `components`, `lib`, `hooks`, … Shared layers never import features or `app`. Features don't import each other in cycles.
-5. Server Components by default; `"use client"` only on leaf components.
+5. Server Components by default; `"use client"` only on leaf components that need state, effects or browser APIs. Hook modules (`use-*.ts`) get no directive: they run inside the client component that imports them.
 6. Business logic and the database live in `backend/`; `queries.ts` and `actions.ts` call its API.
 7. Middleware file in Next 16 is `src/proxy.ts`.
 

@@ -9,7 +9,7 @@ import {SearchPanel} from "@/features/search";
 import {TasksPanel} from "@/features/todo";
 import SidebarProvider from "@/providers/sidebar-provider";
 
-const AppLayout = ({children}: { children: React.ReactNode }) => {
+const AppLayout = ({children}: LayoutProps<"/">) => {
     return (
         <SidebarProvider>
             <Sidebar/>

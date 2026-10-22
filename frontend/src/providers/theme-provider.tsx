@@ -1,6 +1,6 @@
 "use client";
 
-import React, {createContext, use, useCallback, useSyncExternalStore} from "react";
+import React, {createContext, use, useSyncExternalStore} from "react";
 
 export type Theme = "light" | "dark" | "system";
 
@@ -68,7 +68,8 @@ const ThemeProvider: React.FunctionComponent<{children: React.ReactNode}> = ({ch
     const theme = useSyncExternalStore(subscribe, getTheme, () => "system" as Theme);
     const resolvedTheme = useSyncExternalStore(subscribe, getResolved, () => "light" as const);
 
-    const setTheme = useCallback((next: Theme) => {
+    // No useCallback: the React Compiler memoizes it.
+    const setTheme = (next: Theme) => {
         try {
             if (next === "system") {
                 localStorage.removeItem(STORAGE_KEY);
@@ -80,7 +81,7 @@ const ThemeProvider: React.FunctionComponent<{children: React.ReactNode}> = ({ch
         }
         applyClass(resolve(next));
         notify();
-    }, []);
+    };
 
     return <ThemeContext value={{theme, resolvedTheme, setTheme}}>{children}</ThemeContext>;
 };
