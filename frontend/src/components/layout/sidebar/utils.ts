@@ -8,7 +8,6 @@ export const matchesPath = (to: string, pathname: string) => {
     return pathname === to || pathname.startsWith(`${to}/`);
 };
 
-/** Index of the navigation section that holds the current page, or -1. */
 export const sectionOf = (pathname: string) =>
     NAVIGATION.findIndex((section) =>
         section.items.some((item) => ("children" in item

@@ -36,10 +36,12 @@ const NavList: React.FunctionComponent<NavListProps> = ({items, onNavigate}) => 
                                 >
                                     <item.icon className="size-5"/>
                                     {item.label}
-                                    <ChevronRight className="ml-auto size-3.5 transition-transform duration-300 group-data-[state=open]/sub:rotate-90"/>
+                                    <ChevronRight
+                                        className="ml-auto size-3.5 transition-transform duration-300 group-data-[state=open]/sub:rotate-90"/>
                                 </Collapsible.Trigger>
 
-                                <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                                <Collapsible.Content
+                                    className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
                                     <ul className="pt-px pb-4 pl-9">
                                         {item.children.map((child) => {
                                             const isActive = matchesPath(child.to, pathname);

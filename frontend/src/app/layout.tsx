@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import React from "react";
 import PageLoader from "@/components/layout/page-loader";
+import ThemeProvider, {THEME_SCRIPT} from "@/providers/theme-provider";
 
 import "@/styles/index.css";
 
@@ -11,11 +12,15 @@ export const metadata: Metadata = {
 
 const RootLayout = ({children}: LayoutProps<"/">) => {
     return (
-        <html lang="en">
+        // The theme script sets the colour class on <html> before React hydrates.
+        <html lang="en" suppressHydrationWarning>
+        <head>
+            <script dangerouslySetInnerHTML={{__html: THEME_SCRIPT}}/>
+        </head>
         <body>
         <PageLoader/>
         Layout
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
         </body>
         </html>
     );

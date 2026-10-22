@@ -33,7 +33,8 @@ const SidebarDrawer: React.FunctionComponent = () => {
                 <SheetDescription className="sr-only">Site navigation</SheetDescription>
 
                 <div className="no-scrollbar h-full overflow-y-auto p-6">
-                    <Link href="/" onClick={() => setOpen(false)} className="-mt-2 mb-6 flex items-center gap-3 text-emphasis-foreground">
+                    <Link href="/" onClick={() => setOpen(false)}
+                          className="-mt-2 mb-6 flex items-center gap-3 text-emphasis-foreground">
                         <Logo/>
                         <span className="text-lg font-medium">Materia</span>
                     </Link>
@@ -48,7 +49,8 @@ const SidebarDrawer: React.FunctionComponent = () => {
                     ))}
                 </div>
 
-                <SheetClose className="absolute inset-y-0 -right-3.5 my-auto h-20 w-1.5 rounded-full bg-card hover:opacity-85">
+                <SheetClose
+                    className="absolute inset-y-0 -right-3.5 my-auto h-20 w-1.5 rounded-full bg-card hover:opacity-85">
                     <span className="sr-only">Close sidebar</span>
                 </SheetClose>
             </SheetContent>

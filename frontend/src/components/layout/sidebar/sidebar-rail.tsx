@@ -11,7 +11,6 @@ import NavList from "./nav-list";
 import useSidebarFlyout from "./use-sidebar-flyout";
 import {sectionOf} from "./utils";
 
-/** Desktop (xl and up): icon rail plus one flyout panel shared by every section. */
 const SidebarRail: React.FunctionComponent = () => {
     const {pathname, previewing, switching, lists, triggers, show, hide, cancelHide, scheduleHide, onTriggerKeyDown} = useSidebarFlyout();
     const current = sectionOf(pathname);
@@ -32,7 +31,6 @@ const SidebarRail: React.FunctionComponent = () => {
                 }
             }}
         >
-            {/* Above the panel, so the panel slides out from behind it. */}
             <div className="relative z-20 flex h-full flex-col bg-sidebar">
                 <Link href="/" className="mb-4 flex justify-center pt-6 pb-2" aria-label="Home">
                     <Logo/>
@@ -75,7 +73,6 @@ const SidebarRail: React.FunctionComponent = () => {
                 </nav>
             </div>
 
-            {/* transition-all, so visibility waits out the fade and slide on the way out too. */}
             <div
                 className={cn(
                     "invisible absolute inset-y-0 left-24 z-10 w-56 -translate-x-5 rounded-r-2xl border-x border-sidebar-border bg-sidebar opacity-0 shadow-lg transition-all duration-200 ease-in",
