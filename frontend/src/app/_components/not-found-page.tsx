@@ -1,17 +1,21 @@
 import React from "react";
 import Link from "next/link";
 
-import ContentHeader from "@/components/layout/content-header/content-header";
+import {Card} from "@/components/ui/card";
 
-/** Content of the 404 page. */
+/** Content of the 404 page: a standalone card, without the sidebar and nav bar. */
 const NotFoundPage: React.FunctionComponent = () => {
     return (
-        <div className="mx-auto w-full max-w-400 pb-4">
-            <ContentHeader title="Page not found"/>
-            <div className="rounded-2xl bg-card p-6">
-                <p className="mb-4">This page does not exist yet.</p>
-                <Link href="/">Back to the dashboard</Link>
-            </div>
+        <div className="flex h-screen p-5">
+            <Card className="m-auto max-w-100 p-10 text-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="mx-auto mb-8 w-20" src="/img/misc/coming-soon.svg" alt="404"/>
+                <h2 className="mb-1 text-lg leading-tight font-medium">404</h2>
+                <p className="mb-4">We&apos;re sorry that the page you&apos;re looking for does not exist. Please check the URL and try again.</p>
+                <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
+                    Back to home page
+                </Link>
+            </Card>
         </div>
     );
 };
