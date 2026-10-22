@@ -1,5 +1,8 @@
 import type {Metadata} from "next";
 import React from "react";
+import PageLoader from "@/components/layout/page-loader";
+
+import "@/styles/index.css";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -10,6 +13,7 @@ const RootLayout = ({children}: LayoutProps<"/">) => {
     return (
         <html lang="en">
         <body>
+        <PageLoader/>
         Layout
         {children}
         </body>
