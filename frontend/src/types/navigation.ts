@@ -6,7 +6,6 @@ export type NavLink = {
     icon: LucideIcon;
 };
 
-/** A link with children opens in place instead of navigating. */
 export type NavGroup = {
     label: string;
     icon: LucideIcon;

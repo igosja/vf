@@ -1,7 +1,6 @@
 export type TodoItem = {
     id: number;
     label: string;
-    /** Background utility for the label badge. */
     color: string;
     title: string;
     description: string;

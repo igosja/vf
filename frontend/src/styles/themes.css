@@ -10,77 +10,77 @@
    ------------------------------------------------------------------------- */
 
 :root {
-	color-scheme: light;
+    color-scheme: light;
 
-	/* Surfaces and text. Text has three levels: emphasis for headings and
-	   active items, foreground for body copy, muted for hints. */
-	--background: #edf4fb;
-	--foreground: #275881;
-	--emphasis-foreground: #174069;
-	--muted-foreground: #6a95b9;
+    /* Surfaces and text. Text has three levels: emphasis for headings and
+       active items, foreground for body copy, muted for hints. */
+    --background: #edf4fb;
+    --foreground: #275881;
+    --emphasis-foreground: #174069;
+    --muted-foreground: #6a95b9;
 
-	--card: #ffffff;
-	--popover: #ffffff;
-	/* Hover and active fills. `accent` is the shade for the page background;
-	   `surface-accent` the lighter one cards and popups switch to (see below). */
-	--accent: #ddeaf6;
-	--surface-accent: #ecf3fa;
-	--secondary: #ddeaf6;
-	--muted: #ecf3fa;
+    --card: #ffffff;
+    --popover: #ffffff;
+    /* Hover and active fills. `accent` is the shade for the page background;
+       `surface-accent` the lighter one cards and popups switch to (see below). */
+    --accent: #ddeaf6;
+    --surface-accent: #ecf3fa;
+    --secondary: #ddeaf6;
+    --muted: #ecf3fa;
 
-	--border: #ecf3fa;
-	--input: #97b5cf;
-	--ring: #ddeaf6;
+    --border: #ecf3fa;
+    --input: #97b5cf;
+    --ring: #ddeaf6;
 
-	--link: #1e91ff;
+    --link: #1e91ff;
 
-	/* Layout. `sidebar` is the menu panel, `sidebar-accent` the menu hover and the icon rail. */
-	/* --sidebar: #e8f0f9; */
-	--sidebar: #ddeaf6;
-	--sidebar-accent: #d2e1ef;
-	--sidebar-border: rgb(255 255 255 / 0.75);
+    /* Layout. `sidebar` is the menu panel, `sidebar-accent` the menu hover and the icon rail. */
+    /* --sidebar: #e8f0f9; */
+    --sidebar: #ddeaf6;
+    --sidebar-accent: #d2e1ef;
+    --sidebar-border: rgb(255 255 255 / 0.75);
 
-	/* Overlays. The shadow tint is an RGB triple for rgb(... / alpha). */
-	--shadow-color: 106 149 185;
-	--backdrop: rgb(0 65 119 / 0.5);
-	--tooltip: #174069;
-	--tooltip-foreground: #ecf3fa;
+    /* Overlays. The shadow tint is an RGB triple for rgb(... / alpha). */
+    --shadow-color: 106 149 185;
+    --backdrop: rgb(0 65 119 / 0.5);
+    --tooltip: #174069;
+    --tooltip-foreground: #ecf3fa;
 
-	/* Countries without data on the dashboard maps */
-	--chart-map: color-mix(in oklab, var(--color-amber-400) 35%, transparent);
+    /* Countries without data on the dashboard maps */
+    --chart-map: color-mix(in oklab, var(--color-amber-400) 35%, transparent);
 }
 
 .dark {
-	color-scheme: dark;
+    color-scheme: dark;
 
-	--background: #1c282f;
-	--foreground: #84b0d3;
-	--emphasis-foreground: #addaff;
-	--muted-foreground: #577b99;
+    --background: #1c282f;
+    --foreground: #84b0d3;
+    --emphasis-foreground: #addaff;
+    --muted-foreground: #577b99;
 
-	--card: #1e2f39;
-	--popover: #223642;
-	--accent: #253b48;
-	--surface-accent: #253b48;
-	--secondary: #253b48;
-	--muted: #223642;
+    --card: #1e2f39;
+    --popover: #223642;
+    --accent: #253b48;
+    --surface-accent: #253b48;
+    --secondary: #253b48;
+    --muted: #223642;
 
-	--border: #253b48;
-	--input: #325164;
-	--ring: #253b48;
+    --border: #253b48;
+    --input: #325164;
+    --ring: #253b48;
 
-	--link: #007ef7;
+    --link: #007ef7;
 
-	--sidebar: #1f323d;
-	--sidebar-accent: #253b48;
-	--sidebar-border: #253b48;
+    --sidebar: #1f323d;
+    --sidebar-accent: #253b48;
+    --sidebar-border: #253b48;
 
-	--shadow-color: 27 40 47;
-	--backdrop: rgb(13 24 31 / 0.5);
-	--tooltip: #6a9dbb;
-	--tooltip-foreground: #0d0d0d;
+    --shadow-color: 27 40 47;
+    --backdrop: rgb(13 24 31 / 0.5);
+    --tooltip: #6a9dbb;
+    --tooltip-foreground: #0d0d0d;
 
-	--chart-map: color-mix(in oklab, var(--color-amber-400) 10%, transparent);
+    --chart-map: color-mix(in oklab, var(--color-amber-400) 10%, transparent);
 }
 
 /* White surfaces are lighter than the page, so one hover fill reads darker on
@@ -88,5 +88,5 @@
    its lighter shade, and every `hover:bg-accent` inside picks it up. */
 .bg-card,
 .bg-popover {
-	--accent: var(--surface-accent);
+    --accent: var(--surface-accent);
 }

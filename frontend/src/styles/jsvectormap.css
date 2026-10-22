@@ -2,19 +2,19 @@
 
 /* The map tooltip matches the chart tooltips. */
 .jvm-tooltip {
-	z-index: 10;
-	padding: 0.5rem 0.75rem;
-	border-radius: 0.375rem;
-	background-color: var(--tooltip);
-	color: var(--tooltip-foreground);
-	font-family: inherit;
-	font-size: 0.75rem;
-	box-shadow: none;
-	pointer-events: none;
+    z-index: 10;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    background-color: var(--tooltip);
+    color: var(--tooltip-foreground);
+    font-family: inherit;
+    font-size: 0.75rem;
+    box-shadow: none;
+    pointer-events: none;
 }
 
 /* SVG attributes cannot read a variable, so regions without data carry a
    placeholder fill and take the colour-mode fill from here. */
 .jvm-region[fill="INITIAL_FILL"] {
-	fill: var(--chart-map);
+    fill: var(--chart-map);
 }

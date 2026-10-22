@@ -1,6 +1,5 @@
 import type {TodoItem} from "./types";
 
-// Demo data from the template, until tasks have a backend endpoint.
 export const TODO_DATA: TodoItem[] = [
     {
         id: 1,

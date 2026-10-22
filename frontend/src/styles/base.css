@@ -1,44 +1,44 @@
 @layer base {
-	* {
-		scrollbar-width: thin;
-		scrollbar-color: var(--secondary) transparent;
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary) transparent;
 
-		@apply border-border;
+        @apply border-border;
 
-		&:focus,
-		&:focus-visible {
-			@apply outline-none;
-		}
-	}
+        &:focus,
+        &:focus-visible {
+            @apply outline-none;
+        }
+    }
 
-	html {
-		@apply bg-background;
-	}
+    html {
+        @apply bg-background;
+    }
 
-	body {
-		@apply bg-background font-sans text-sm text-foreground antialiased;
-	}
+    body {
+        @apply bg-background font-sans text-sm text-foreground antialiased;
+    }
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply text-emphasis-foreground;
-	}
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply text-emphasis-foreground;
+    }
 
-	a {
-		@apply text-link underline-offset-3;
-	}
+    a {
+        @apply text-link underline-offset-3;
+    }
 
-	code {
-		@apply font-mono text-xs break-words text-pink-400;
-	}
+    code {
+        @apply font-mono text-xs break-words text-pink-400;
+    }
 
-	/* Every icon starts at the body size and never squashes in a flex row.
-	   An icon that needs another size says so on its own class. */
-	svg.lucide {
-		@apply size-4.5 shrink-0 stroke-[1.6];
-	}
+    /* Every icon starts at the body size and never squashes in a flex row.
+       An icon that needs another size says so on its own class. */
+    svg.lucide {
+        @apply size-4.5 shrink-0 stroke-[1.6];
+    }
 }

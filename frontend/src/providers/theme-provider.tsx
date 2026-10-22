@@ -5,9 +5,7 @@ import React, {createContext, use, useCallback, useSyncExternalStore} from "reac
 export type Theme = "light" | "dark" | "system";
 
 type ThemeContextValue = {
-    /** What the visitor picked, including "system". */
     theme: Theme;
-    /** The scheme actually on screen. */
     resolvedTheme: "light" | "dark";
     setTheme: (theme: Theme) => void;
 };
@@ -15,10 +13,6 @@ type ThemeContextValue = {
 const STORAGE_KEY = "color-mode";
 const DARK_QUERY = "(prefers-color-scheme: dark)";
 
-/**
- * Runs in <head> before first paint, so a dark-mode visitor never sees a flash
- * of the light theme. Kept in sync with `readTheme` and `resolve` below.
- */
 export const THEME_SCRIPT = `(function(){try{var m=localStorage.getItem("${STORAGE_KEY}");var d=m==="dark"||(m!=="light"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.classList.add(d?"dark":"light")}catch(e){}})();`;
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -40,25 +34,18 @@ const resolve = (theme: Theme) => {
     return window.matchMedia(DARK_QUERY).matches ? "dark" : "light";
 };
 
-// Runs before subscribers re-render, not in an effect, so the class is already on <html>.
 const applyClass = (resolved: "light" | "dark") => {
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(resolved);
 };
 
-/*
- * The theme lives outside React: in localStorage and the OS setting. A small
- * external store lets the server render "system" and the browser pick up the
- * real value right after hydration, without a mismatch.
- */
 const listeners = new Set<() => void>();
 const notify = () => listeners.forEach((listener) => listener());
 
 const subscribe = (listener: () => void) => {
     listeners.add(listener);
     const query = window.matchMedia(DARK_QUERY);
-    // Follow the operating system while the visitor has not picked a side.
     const onChange = () => {
         if (readTheme() !== "system") {
             return;
