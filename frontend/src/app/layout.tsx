@@ -19,7 +19,6 @@ const RootLayout = ({children}: LayoutProps<"/">) => {
         </head>
         <body>
         <PageLoader/>
-        Layout
         <ThemeProvider>{children}</ThemeProvider>
         </body>
         </html>

@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import MenuIcon from "@/components/ui/menu-icon";
 import {useSidebar} from "@/providers/sidebar-provider";
 
 import NavButton from "./nav-button";
@@ -12,9 +13,7 @@ const MenuButton: React.FunctionComponent = () => {
 
     return (
         <NavButton onClick={openDrawer}>
-            <svg width="15" height="12" viewBox="0 0 16 13" fill="none" className="pointer-events-none">
-                <path d="M1 1H15M1 6.25H10.5455M1 11.5H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <MenuIcon/>
             <span className="sr-only">Open sidebar</span>
         </NavButton>
     );
