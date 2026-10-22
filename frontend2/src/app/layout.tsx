@@ -5,6 +5,7 @@ import { ThemeProvider, THEME_SCRIPT } from "@/providers/theme-provider";
 
 import "@/styles/index.css";
 import "@/styles/page-loader.css";
+import {LayoutProps} from "next/dist/lib/metadata/metadata-resolution-primitives";
 
 const figtree = Figtree({
 	variable: "--font-figtree",
